@@ -1,18 +1,18 @@
 class Solution {
     public String convert(String s, int n) {
         if(s.length()<3||n==1)return s;
-        String r = "";
+        StringBuilder r = new StringBuilder();
         int i=0;
         for(int row=1;row<=n;++row){
             while(i%(2*n-2)==row-1 && i<s.length()){
-                r+=s.charAt(i);
+                r.append(s.charAt(i));
                 int right=i+2*(n-row);
                 if (right<s.length()&&right>i&&right<(i+2*n-2))
-                    r+=s.charAt(right);
+                    r.append(s.charAt(right));
                 i+=2*n-2;
             }
             i=row;
         }
-        return r;
+        return r.toString();
     }
 }
