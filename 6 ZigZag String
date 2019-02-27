@@ -7,7 +7,7 @@ class Solution {
             while(i%(2*n-2)==row-1 && i<s.length()){
                 r.append(s.charAt(i));
                 int right=i+2*(n-row);
-                if (right<s.length()&&right>i&&right<(i+2*n-2))
+                if (right<s.length() && row!=1 && row!=n)
                     r.append(s.charAt(right));
                 i+=2*n-2;
             }
@@ -16,3 +16,5 @@ class Solution {
         return r.toString();
     }
 }
+
+//Use the variable in the for loop, use string builder instead of string for the speed
