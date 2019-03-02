@@ -1,0 +1,13 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        int n=0, rem=0,res=x;
+        if(x<0||(res%10==0 && x>0))return false;
+        while(res>rem){
+            rem=rem*10+res%10;
+            res/=10;
+        }
+        return rem==res||res==rem/10;
+    }
+}
+
+return 可做判断，若情况存在为True否则为False.
