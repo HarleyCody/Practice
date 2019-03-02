@@ -7,7 +7,9 @@ class Solution {
             for (int j = pattern.length() - 1; j >= 0; j--) {
                 boolean first_match = (i < text.length() && (pattern.charAt(j) == text.charAt(i) || pattern.charAt(j) == '.'));
                 if (j + 1 < pattern.length() && pattern.charAt(j + 1) == '*') {
-                    dp[i][j] = dp[i][j + 2] || first_match && dp[i + 1][j];//去除*后继续比较|| 去除text的一个重复字符，pattern不变，继续比较
+                    dp[i][j] = dp[i][j + 2] || first_match && dp[i + 1][j];
+                    //bool的if else缩写：text和pattern不一样，pattern去除*后继续比较
+                    //text和pattern一样，去除text的一个重复字符，pattern不变,继续比较
                 } else {
                     dp[i][j] = first_match && dp[i + 1][j + 1];//i.j之前字符都匹配
                 }
