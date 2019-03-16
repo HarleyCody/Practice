@@ -1,0 +1,38 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> com = new ArrayList<String>();
+        if(digits.length()==0)return com;
+        HashMap<Character, String> phone = new HashMap<Character, String>();
+        char n = digits.charAt(0);
+        phone.put('2', "abc");
+        phone.put('3', "def");
+        phone.put('4', "ghi");
+        phone.put('5', "jkl");
+        phone.put('6', "mno");
+        phone.put('7', "pqrs");
+        phone.put('8', "tuv");
+        phone.put('9', "wxyz");
+        for(int i=0;i<phone.get(n).length();++i){
+            com.add(String.valueOf(phone.get(n).charAt(i)));     //prepare the com
+        }
+        for(int j=1;j<digits.length();++j){
+            n = digits.charAt(j);
+            List<String> rlt= new ArrayList<String>();
+            for(int i=0;i<phone.get(n).length();++i)
+                for(int k=0;k<com.size();++k)
+                {
+                    rlt.add(com.get(k)+phone.get(n).charAt(i));
+                }
+            com=rlt;
+            }
+        return com;
+    }
+}
+
+1-初始化结果列表，排除空集；
+2-初始化map；
+3-把第一个按键内容转为组合列表list；
+4-循环数字按键，根据数字按键读取对应String;
+5-每一个字符添加到前一个按键组合的list中；
+6-更新组合列表
+7-输出
