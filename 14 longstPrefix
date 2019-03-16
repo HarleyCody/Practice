@@ -1,0 +1,20 @@
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length==0)return "";
+        String sb = new String(strs[0]);
+        for(int i=1;i<strs.length;++i){
+            int j=0;
+            while(j<strs[i].length() && j<sb.length() && sb.charAt(j)==strs[i].charAt(j)){
+                ++j;
+            }
+            sb=sb.substring(0,j);//更新结果字符串
+        }
+        return sb; 
+    }
+}
+
+1.初始化结果字符串；
+2.第一个字符串赋值给结果字符串；
+3.如果从第二个（i=1）开始和结果字符串进行比较;相同则子字符串位数+1；
+4.更新结果字符串
+5.输出结果
