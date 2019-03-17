@@ -1,0 +1,19 @@
+import java.util.Arrays;
+class Solution {
+    public void sortColors(int[] n) {
+        int i=0,j=-1, ta=n.length;
+        while(i<ta){
+            if(n[i]==1)i++;
+            else if(n[i]<1){//摆放0的位置，j用来记录0之前的位置
+                Sswap(n,i++,++j);//交换0到上一个0的位置之后
+            }else{
+                Sswap(n,i,--ta);//2跟最后的位置交换，往前移最后位置，总会找到比2小的值被换到前面，所以i不用++；
+            }
+        }
+    }
+    public void Sswap(int[] n, int i, int j){
+        int t = n[i];
+        n[i] = n[j];
+        n[j] = t;
+    }
+}
