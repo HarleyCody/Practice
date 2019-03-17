@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null)return l2;
+        if(l2==null)return l1;
+        ListNode rlt = new ListNode(0);
+        ListNode ope = rlt;
+        while(l1!=null||l2!=null){
+            if(l1==null && l2!=null ||((l1!=null && l2!=null) && l1.val>l2.val)){
+                ope.next = l2;
+                ope = ope.next;
+                l2 = l2.next;
+            }else if(l2==null && l1!=null ||((l1!=null && l2!=null)&& l2.val>=l1.val)){
+                ope.next = l1;
+                ope = ope.next;
+                l1 = l1.next;
+            }
+            System.out.println(ope.val);
+        }
+        return rlt.next;
+    }
+}
+
+！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！Better Solution（TC）！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null)
+            return l2;
+        else if(l2==null)
+            return l1;
+        else if(l1.val>l2.val){
+            l2.next = mergeTwoLists(l1,l2.next);
+            return l2;
+        }else{
+            l1.next = mergeTwoLists(l1.next,l2);
+            return l1;
+        } 
+    }
+}
+1.递归执行；如果有一方为null，则直接打印另一方；
+            否则如果一方的值大于另一方，则在小LN的next中存递归值。
+2.返回小LN
+
+优点：保留了完整的LN结构，无需新申请空间
+缺点：从最后一个节点往前接，头部还有l1或者l2的数据，造成浪费；
+
+能完整打印正确LN原因。每一次递归扩充一个next 结点，头结点并没有改变，直接return就能输出。
