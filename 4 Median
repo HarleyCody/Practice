@@ -41,3 +41,50 @@ class Solution {
         s1.findMedianSortedArrays(l1,l2);
     }*/
 }
+//！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+//！！！！！！！！！！！！！！！！！！！！！！！！！！！！！Better Solution！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+class Solution {
+    public double findMedianSortedArrays(int[] A, int[] B) {
+        int m = A.length;
+        int n = B.length;
+        if (m > n) { // to ensure m<=n
+            int[] temp = A; A = B; B = temp;
+            int tmp = m; m = n; n = tmp;
+        }
+        int iMin = 0, iMax = m, halfLen = (m + n + 1) / 2;
+        while (iMin <= iMax) {
+            int i = (iMin + iMax) / 2;// median of A
+            int j = halfLen - i; // median of B
+            if (i < iMax && B[j-1] > A[i]){
+                iMin = i + 1; // i is too small
+            }
+            else if (i > iMin && A[i-1] > B[j]) {
+                iMax = i - 1; // i is too big
+            }
+            else { // i is perfect
+                int maxLeft = 0;
+                if (i == 0) { maxLeft = B[j-1]; }
+                else if (j == 0) { maxLeft = A[i-1]; }
+                else { maxLeft = Math.max(A[i-1], B[j-1]); }
+                if ( (m + n) % 2 == 1 ) { return maxLeft; }
+
+                int minRight = 0;
+                if (i == m) { minRight = B[j]; }
+                else if (j == n) { minRight = A[i]; }
+                else { minRight = Math.min(B[j], A[i]); }
+
+                return (maxLeft + minRight) / 2.0;
+            }
+        }
+        return 0.0;
+    }
+}
+
+1.将数组分为两组情况，从长度小的一组中位数看起，可能出现情况：
+    a.小的一组的中位数比大的一组的中位数前一位要小，小的一组的数字太小了，往后移一位（注意边界，小于右边界值）
+    b.小的一组的中位数前一个比大的一组的中位数前一个要大，小的一组数字太大了，往前移一位--i
+    c.大数组里的数刚好大于小数组里的数（中位数）：
+        如果i=0(小数组的值全部大于大数组的值);左边最大值为b[j-1];如果j=0（小数组的值全部小于大数组的值）;左边最大值为a[i-1];
+        小数组可最大值都比大数组中位数前一个小，所以用max取小数组的值和大数组的最大值作为中位数；如果长度和为奇数，直接输出左最大值;
+        如果长度和为偶数，继续计算右边最小值;如果i=m(小数组值全部不再中位数范围内)右边最小值为b[j](比b[j-1]大)，如果j=n(大数组值全部不再中位数         范围内)右边最小值为a[i](比a[i-1]大)， 数组A，B都在范围内，则选两者最小值min。
+2. 计算中位数，输出
