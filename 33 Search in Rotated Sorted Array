@@ -1,0 +1,10 @@
+class Solution {
+    public int search(int[] n, int target) {
+        int i=0;
+        while(i!=n.length){
+            if(target==n[i])return i; //找到
+            else ++i;//没找到继续下一个
+        }
+        return -1;//遍历完了都没找到
+    }
+}
