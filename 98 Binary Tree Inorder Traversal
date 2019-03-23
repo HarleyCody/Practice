@@ -1,0 +1,27 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> rlt = new ArrayList<>();
+        Stack<TreeNode> s = new Stack<>();
+        while(root!=null||!s.empty()){//将stack里的暂存数据全部输出  root!=null保证输入为有效输入；！s.empty()保证了根节点的右子树输出;输出全部节点
+            while(root!=null){
+                s.push(root);//保存节点
+                root=root.left;//到树的最左端
+            }
+            root = s.pop();//输出最左端，父节点成为了Stack 顶
+            rlt.add(root.val);//存入链表
+            root=root.right;//root更新为右节点；左节点和父节点在迭代中是会转换的，
+        }
+        return rlt;
+    }
+}
+
+//核心思路：往左遍历，并放入Stack中，弹出一个记录一个，并更新结点为右节点，进入到第二个while的时候右节点入栈，保证了顺序。左根右的顺序。
