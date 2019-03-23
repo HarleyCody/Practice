@@ -1,0 +1,23 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode current = head;
+        ListNode pre = null;
+        while(current!=null){
+            ListNode temp = current.next;//保存指向后一个节点的地址
+            current.next = pre;//指向后面的指针指向前一个节点
+            pre=current;//更新前结点为当前节点（向右移）
+            current=temp;//当前节点移到原来的后一个节点，用到之前保存的地址
+        }
+        return pre;
+    }
+}
+// 实际过程 例如：null->1->2->3 null是pre， 1 是curr，2是curr.next 执行一次while 变为 null<-1->2->3 1是pre,2是curr,3是curr.next
+// 整个过程中变更的是关系而不是数值
