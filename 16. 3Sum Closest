@@ -1,0 +1,29 @@
+class Solution {
+    public int threeSumClosest(int[] n, int target) {
+        Arrays.sort(n);
+        int min = Integer.MAX_VALUE;
+        int ans = min,flag=1;
+        for(int i = 0; i< n.length-1; ++i){
+            if(i!=0 && n[i]==n[i-1]) continue;//跳过重复值
+            int l=i+1, r=n.length-1;
+            while(l<r){
+                min=n[i]+n[l]+n[r]-target;
+                if(min == 0) return target;
+                if(min>0){
+                    if(min<ans){
+                        ans = min;//更新最小值
+                        flag=1;//更换符号
+                    }
+                    --r;//由于太大，往小的方向走，由大于0决定
+                }else{
+                    if(-min<ans){
+                        ans=-min;
+                        flag=-1;
+                    }
+                    ++l;//由于太小，往大的方向走，由else即小于0决定
+                }
+            }
+        }
+        return ans*flag+target;
+    }
+}
