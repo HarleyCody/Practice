@@ -1,0 +1,20 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> rlt = new ArrayList<>();
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length-2; ++i){
+            if(i!=0 && nums[i]==nums[i-1]) continue;//跳过重复值，重新执行一次for，重复值在起始的第一个带入计算了
+            int l = i+1;
+            int r = nums.length-1;
+            while(l<r){
+                if(nums[l]+nums[r]==-nums[i]){
+                    rlt.add(Arrays.asList(nums[i],nums[l],nums[r]));
+                    while(l<r&&nums[l]==nums[l+1])++l;++l;System.out.println(l);//重复值已经计算过（第一次出现），需要跳过所有重复值
+                    while(l<r&&nums[r]==nums[r-1])--r;--r;System.out.println(r);//重复值已经计算过（第一次出现），需要跳过所有重复值
+                }else if(nums[l]+nums[r]>-nums[i])--r;
+                else ++l;
+            }
+        }
+        return rlt;
+    }
+}
