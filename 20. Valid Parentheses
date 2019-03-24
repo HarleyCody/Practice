@@ -1,0 +1,20 @@
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> sta = new Stack<>();
+        int i=0;
+        while(i<s.length()){
+            if(s.charAt(i)=='('||s.charAt(i)=='['||s.charAt(i)=='{')sta.push(s.charAt(i));//遇到左括号入栈
+            if(s.charAt(i)==')'){//遇到右括号出栈比较，不对直接返回false
+                if(sta.empty()||sta.pop()!='(')return false;
+            }
+            if(s.charAt(i)==']'){
+                if(sta.empty()||sta.pop()!='[')return false;
+            }
+            if(s.charAt(i)=='}'){
+                if(sta.empty()||sta.pop()!='{')return false;
+            }
+            ++i;
+        }
+        return sta.empty();//全部出栈都有匹配则为true 部分出栈则为false
+    }
+}
