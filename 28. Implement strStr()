@@ -1,0 +1,32 @@
+/*class Solution {
+    public int strStr(String hay, String ne) {
+        if(ne.length()==0) return 0;
+        int pos = -1, n=ne.length(), h=hay.length();
+        for(int i = 0;i <= h-n; ++i){
+            if(hay.charAt(i)==ne.charAt(0)){
+                String sub = hay.substring(i,i+n);
+                System.out.println(ne);
+                System.out.print(sub);
+                if(sub.equals(ne)){
+                    pos=i;
+                    break;
+                }
+            }
+        }
+        return pos;
+    }
+}*/
+class Solution {
+    public int strStr(String hay, String ne) {
+        if(ne.length()==0) return 0;
+        int pos = -1, n=ne.length(), h=hay.length();
+        for(int i = 0;i <= h-n; ++i){
+            int j=0;
+            for(j=0; j<n; ++j){
+                if(hay.charAt(i+j)!=ne.charAt(j))break;//如果对比过程中不相同，则跳出循环
+            }
+            if(j==n) return i;//如果每一个都相同，返回i;
+        }
+        return pos;
+    }
+}
