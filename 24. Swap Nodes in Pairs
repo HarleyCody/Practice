@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+ // 将基数和偶数位分为两个ListNode；
+// 分别重新插入两个ListNode
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode upHead = new ListNode(0);
+        ListNode dwHead = new ListNode(0);
+        ListNode up = upHead;
+        ListNode dw = dwHead;
+        ListNode cut = null;
+        int n=0;
+        while(head!=null){
+            if(n%2==0){//0,2,4,6 evenPos
+                ListNode tem = head.next;
+                head.next = cut;
+                up.next = head;
+                head = tem;
+                up = up.next;
+                ++n;
+            }else{//1,3,5 oddPos
+                ListNode tem = head.next;
+                head.next = cut;
+                dw.next = head;
+                head = tem;
+                dw = dw.next;
+                ++n;
+            }
+        }
+        n=0;
+        ListNode dummyHead = new ListNode(0);
+        upHead = upHead.next;
+        dwHead = dwHead.next;
+        head = dummyHead;
+        while(dwHead!=null||upHead!=null){
+            if(dwHead!=null&&n==0||upHead==null){
+                head.next = dwHead; //ListNode如果之后没有值，则该Node不能Node = Node.next.不能移向空Node。
+                dwHead = dwHead.next;
+                head = head.next;
+                ++n;
+            }
+            if(upHead!=null&&n==1||dwHead==null){
+                head.next = upHead;
+                upHead = upHead.next;
+                head = head.next;
+                --n;
+            }
+        }
+        return dummyHead.next;
+    }
+}
