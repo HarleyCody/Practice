@@ -1,0 +1,11 @@
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        if(nums.length==0||target<=nums[0])return 0;//小于等于开头放第一个
+        int i=0;
+        while(i<nums.length-1){
+            if(nums[i]<target && nums[i+1]>=target)return i+1;
+            else ++i;
+        }
+        return target>nums[nums.length-1]?nums.length:nums.length-1;//大于结尾放最后，等于结尾放最后一个之前
+    }
+}
