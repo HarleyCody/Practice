@@ -1,0 +1,21 @@
+class Solution {
+    public String countAndSay(int n) {
+        if(n==1){
+            return "1";
+        }
+        StringBuilder pre = new StringBuilder(countAndSay(--n));//StringBuilder 提速，初始值在构造函数里
+        StringBuilder ans = new StringBuilder();
+        int i=0;
+        while(i<pre.length()){
+            int count = 0,j = i; //用变量j来记录起始位置，count记录重复次数
+            char com = pre.charAt(j); // com为起始字符，和之后的字符作比较
+            while(i<pre.length() && com == pre.charAt(i)){//相同则i往后移，count+1
+                ++i;
+                ++count;
+            }
+            ans.append(count);//遇到不相同的i；出现次数在前先放入String
+            ans.append(com-48);//字符放在次数后，‘几’个‘几’的第二个几
+        }
+        return ans.toString();//由于函数类型为String，返回值转换为String
+    }
+}
