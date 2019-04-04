@@ -1,0 +1,42 @@
+class Solution {
+    public String addBinary(String a, String b) {
+        int la = a.length(), lb = b.length();
+        int digit=0,incre=0;
+        StringBuilder ans = new StringBuilder();//StringBuilder 加速
+        if(la<lb){//将String a 换为较长的String
+            String temp = a;
+            a=b;
+            b=temp;
+            int tem = la;
+            la =lb;
+            lb =tem;
+        }
+        int i=1; // length-1 为最后一个Char的index
+        while(i<=la){
+            while(i<=lb){//较短的String还没加完
+                digit = incre + a.charAt(la-i)+b.charAt(lb-i)-96;// 96 为Ascii码，char（1）=49， 49-48=1 才为实际值，做加法的时候char会用Ascii值去加减。
+                if(digit == 3){//两个字符都为1 且有进位，需要进位，当前设为1；
+                    incre = 1;
+                    digit = 1;
+                }else if (digit == 2){//需要进位incre=1，当前设为0；
+                    incre = 1;
+                    digit = 0;
+                }else incre = 0;//为1的时候不需要进位，当前就为digit；
+                ans = ans.append(digit);//增加字符到最后，此时顺位为反的
+                ++i;
+            }
+            while(lb<i&&i<=la){ //只有la还有字符没有计算
+                digit = incre + a.charAt(la-i)-48;
+                if (digit == 2){//同上
+                    incre = 1;
+                    digit = 0;
+                }else incre = 0;//同上
+                ans = ans.append(digit);
+                ++i;
+            } 
+        }
+        if(incre == 1)//都计算完了，还有进位，要向前增加一个
+            ans = ans.append(incre);//append新的放在string后面，顺序为反的
+        return ans.reverse().toString();//reverse String，顺序为正的输出。
+    }
+}
