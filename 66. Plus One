@@ -1,0 +1,22 @@
+class Solution {
+    public int[] plusOne(int[] digits) {
+        digits[digits.length-1]++;
+        int n = digits.length;
+        int incre = 0,count=0;
+        for(int i=n-1;i>=0;--i){
+            digits[i]=digits[i]+incre;
+            if(digits[i]==10){   //最后一位加了之后为10的时候，该位置为0；向前进1
+                digits[i]=0;     
+                incre = 1;      //加一
+                ++count;
+            }else               //没有超过10了，不进一
+                incre = 0;
+        }
+        if(count<n)return digits; //count记录超过10的位数，小于长度则说明不是所有位置都是9，直接输出
+        else{
+            int[] ans = new int[n+1]; //否则需要扩大一位数组，开头置为1（进位而来），之后全为0，由于初始化默认为0，不需要重新赋值；
+            ans[0]=1;
+            return ans;
+        }
+    }
+}
