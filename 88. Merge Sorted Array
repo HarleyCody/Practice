@@ -1,0 +1,9 @@
+class Solution {
+  public void merge(int[] nums1, int m, int[] nums2, int n) {
+    //System.arraycopy(nums2,0,nums1,m,n);
+    for(int i=m; i<m+n;++i){ // java 赋值会调用引用，新数组的改变会影响原数组的改变// 所以赋值只能用arraycopy 或者for循环
+        nums1[i] = nums2[i-m];
+    }
+    Arrays.sort(nums1);
+  }
+}
