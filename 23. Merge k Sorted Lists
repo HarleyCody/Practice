@@ -1,0 +1,33 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        return divideAndConqure(lists,0,lists.length-1); // 调用分治，指数级
+    }
+    public ListNode divideAndConqure(ListNode[] lists, int start, int end){//讨论分治情况，递归调用
+        if(start>end)return null;//最终情况1
+        else if(start==end-1) return mergeTwoLists(lists[start],lists[end]);//最终情况2
+        else if(start == end) return lists[start];//最终情况3
+        
+        ListNode left = divideAndConqure(lists, start, (start+end)/2);//未到最终情况，继续左右分治
+        ListNode right = divideAndConqure(lists,(start+end)/2+1, end);//未到最终情况，继续左右分治
+        return mergeTwoLists(left, right);//左右合并
+    }
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2){
+        if(l1 == null)return l2;
+        else if(l2 == null)return l1;
+        else if(l1.val <= l2.val){
+            l1.next = mergeTwoLists(l1.next,l2);
+            return l1;
+        }else{
+            l2.next = mergeTwoLists(l1,l2.next);
+            return l2;
+        }
+    }
+}
