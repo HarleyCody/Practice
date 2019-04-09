@@ -1,0 +1,52 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+            if(head == null) return null;
+    int len = 0;
+    ListNode cur = head;
+    while (cur != null) {
+        cur = cur.next;
+        len++;
+    }
+    if(k == 0 || k > len) return head;
+    int totalTimes = len / k;
+    ListNode pre = null;
+    cur = null;
+    ListNode next = head;
+    ListNode fakeHead = new ListNode(0);
+    ListNode lastTail = fakeHead;
+    ListNode lastHead = head;
+    int times = 0;
+    while (next != null) {
+        pre = cur;               // 保存前一个
+        cur = next;              // cur换到下一个
+        next = next.next;        // 下一个准备
+        cur.next = pre;          // 逆置前一个和后一个  后一个指向前一个，遍历
+        times++;
+        if(times == k) {        //遍历了K次，逆置了K次
+            totalTimes--;
+            lastTail.next = cur;//上一个尾巴连接下一个的头 0连2，1连4，3连5
+            lastTail = lastHead;//上一个的头变成尾巴
+            System.out.print(" T"+lastTail.val);
+            lastHead = next;//上一个头移到下一个（next为逆置完之后原顺序中的Cur的后一个）
+            System.out.print(" H"+lastHead.val);
+            if(totalTimes == 0) {
+                lastTail.next = next;//逆置完了，需要连接剩下的Nodes
+                break;
+            }
+            pre = null;//没有逆置完，继续准备逆置
+            cur = null;
+            times = 0;
+        }
+    }
+    return fakeHead.next;
+    }
+}
+// 逆置+连接，逆置时可能reverse完成，可能还没完成。连接时可能已经完成，可能还未完成
