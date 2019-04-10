@@ -1,0 +1,18 @@
+class Solution {
+    public List<List<Integer>> combinationSum(int[] nums, int target) {
+        List<List<Integer>> ansList = new ArrayList<>();
+        bTrack(ansList, new ArrayList<Integer>(), 0, target, nums);
+        return ansList;
+    }
+    public void bTrack(List<List<Integer>> ansList, List<Integer> ans, int start, int tar, int[] nums){
+        if(tar<0)return;
+        if(tar == 0)ansList.add(new ArrayList<>(ans));//将前一个ans放入ansList中
+        else{
+            for(int i=start;i<nums.length;++i){
+                ans.add(nums[i]);
+                bTrack(ansList, ans, i,tar-nums[i],nums);//ansList存放答案值，ans存放单次答案，随递归传入到下一次调用，上一次的终结位置，下一个递归的i起始位置，tar-nums[i]目标值，nums数组用于循环
+                ans.remove(ans.size()-1);//减去新添加的元素，回到for之后往后走一个，回溯本质：减去前一个，继续遍历
+            }
+        }
+    }
+}
