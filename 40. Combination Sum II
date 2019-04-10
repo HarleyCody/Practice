@@ -1,0 +1,22 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);//排序之后不会出现reverse的答案，如1，7 和7，1
+        int last=0;
+        List<List<Integer>> ansList = new ArrayList<>();
+        findList(ansList, new ArrayList<>(), 0, target, candidates, 0); // new ArrayList<>()就可以生成新的对象，不需要起名
+        return ansList;
+    }
+    public void findList(List<List<Integer>> ansList, List<Integer> ans, int start, int target,int[] nums, int last){
+        if(target < 0)return;
+        if(target == 0)ansList.add(new ArrayList(ans));
+        else{
+            for(int i = start; i < nums.length; ++i){
+                if(nums[i] == last)continue;//如果新加入的值和上一层递归的值一样，往下找不一样的递归
+                ans.add(nums[i]);
+                findList(ansList, ans, i+1, target-nums[i], nums, last);
+                ans.remove(ans.size()-1);
+                last = nums[i];//记录前一个值的，保证下一个值和前一个不一样就不会重复
+            }
+        }
+    }
+}
