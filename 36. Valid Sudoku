@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        HashMap<Integer,Boolean>[] row = new HashMap[9];//检查行是否有重复；
+        HashMap<Integer,Boolean>[] column = new HashMap[9];//检查列是否有重复；
+        HashMap<Integer,Boolean>[] box = new HashMap[9];//检查box是否有重复
+        for(int i=0; i<9; ++i){
+            row[i] = new HashMap<Integer,Boolean>();//初始化
+            column[i] = new HashMap<Integer,Boolean>();
+            box[i] = new HashMap<Integer,Boolean>();
+        }
+        for(int i=0; i < 9; ++i){
+            for(int j = 0; j < 9; ++j){
+                char num = board[i][j];
+                if(num != '.'){
+                    int n = (int)num;
+                    int boxIndex = (i/3)*3 + j/3; //三行和三列为一组box，i=0，1，2都为 0 j = 0,1,2都为0.取模运算
+                    if(row[i].containsKey(n) || column[j].containsKey(n) || box[boxIndex].containsKey(n))//如果包含值，不为数独
+                        return false;
+                    else{//不包含将新值放入，继续遍历
+                        row[i].put(n,true);
+                        column[j].put(n,true);
+                        box[boxIndex].put(n,true);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
