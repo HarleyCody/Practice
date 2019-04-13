@@ -1,0 +1,22 @@
+class Solution {
+	public int trap(int[] height) {
+		if(height == null || height.length <2)
+			return 0;
+
+		int ans=0;
+
+		int i=0,j = height.length-1;
+		int lMax = height[i],rMax = height[j];
+
+		while(i<j){
+			if(lMax>rMax){//右边版比较短，从右往左开始加
+				rMax = Math.max(height[j-1],rMax);//比较右边和右边前一块板，锁定大的那一块板
+				ans += rMax - Math.min(height[--j],rMax);// 右边的板前一块版比较大，往前移，height[--j]==rMax，此时最小值都一样，trap+0 否则trap加上前后板差距。短板往前移。
+			}else{//左边板比较短，往左边往右边算
+				lMax = Math.max(height[i+1],lMax);//比较左边边和左边后一块板，锁定大的那一块板
+				ans += lMax - Math.min(height[++i],lMax);//后一块版比较大，往后移，height[--j]==rMax，此时最小值都一样，trap+0 否则trap加上前后板差距。短板往后移。
+			}
+		}
+		return ans;
+	}
+}
