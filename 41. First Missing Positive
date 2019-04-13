@@ -1,0 +1,13 @@
+class Solution {
+  public int firstMissingPositive(int[] nums) {
+      boolean[] check = new boolean[nums.length+2];//+2 是因为之后的根据bool寻找的时候是从第1号寻找，所以+1刚好能从1存下所有，再+1给最后腾出位置，如果顺序都满足递增，需要打印出最后一个。
+      for(int i=0; i<nums.length; ++i){
+          if(0<nums[i] && nums[i]<=nums.length)
+              check[nums[i]]=true;
+      }
+      for(int i=1; i<check.length; ++i){
+          if(check[i]==false)return i;
+      }
+      return 1;
+  }
+}
