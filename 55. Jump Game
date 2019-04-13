@@ -1,0 +1,11 @@
+public class Solution {
+    public boolean canJump(int[] nums) {
+        int lastPos = nums.length - 1;
+        for (int i = nums.length - 1; i >= 0; i--) {//从后往前走，能走到起点==true
+            if (i + nums[i] >= lastPos) {//从i开始的原因是不用考虑边界值，如果length=0 or 1，没有前一项，从-1开始就会越界。
+                lastPos = i;//前一项能走到我的位置，寻找前前项。
+            }
+        }
+        return lastPos == 0;
+    }
+}
