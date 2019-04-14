@@ -11,3 +11,21 @@ class Solution {
 	return jumps;//返回次数
 }
 }
+public int jump(int[] nums) {
+
+        int jumps = 0;
+        int curEnd = 0;   // fastest distance we can reach in one interation
+        int curFastest = 0;   // fastest distance we can reach so far
+        int i = 0;
+        for (; i <= curEnd && i < nums.length - 1; i ++) {
+            curFastest = Math.max(curFastest, nums[i] + i);
+
+             // we have made a movement
+            if (i == curEnd && curFastest > curEnd) {
+                jumps ++;
+                curEnd = curFastest;
+            }
+        }
+
+        return curFastest >= nums.length - 1 ? jumps : 0;
+    }
