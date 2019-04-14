@@ -1,0 +1,10 @@
+class Solution {
+    public int maxProfit(int[] prices) { // 低价买入，高价卖出。一次遍历会更新最低价，或最高收益，即使有可能在最小值之前出现最高收益，之前的最高收益已经计算保存在了max里
+        int max = 0, minPrice = Integer.MAX_VALUE;
+        for(int i = 0; i < prices.length; ++i){
+            if(prices[i] < minPrice)minPrice = prices[i];// 低价买入
+            else if(max<prices[i]-minPrice) max = prices[i]-minPrice;//价高卖出，比较之前卖出的最高收益，更新最高收益。
+        }
+        return max;
+    }
+}
