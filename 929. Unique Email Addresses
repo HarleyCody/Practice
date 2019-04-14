@@ -1,0 +1,17 @@
+class Solution {
+    public int numUniqueEmails(String[] emails) {
+        HashSet<String> valid = new HashSet<String>();//HashSet 原因，覆盖重复值，只用保留一个对象，不用保留K，V pair
+        for(String email : emails){
+            int i = email.indexOf('@');//找到标志，local和domain分开
+            String domain = email.substring(i,email.length());
+            String local = email.substring(0,i);
+            if(local.contains("+")){//处理local,包含+， substring（0,+）;
+                int plus = local.indexOf('+');
+                local = local.substring(0,plus);
+            }
+            local = local.replace(".","");//处理local, ""替换.
+            valid.add(local+domain);//放入HashSet,如果有重复会覆盖
+        }
+        return valid.size();//Set大小就是unique email的个数
+    }
+}
