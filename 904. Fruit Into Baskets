@@ -1,0 +1,22 @@
+class Solution {
+    public int totalFruit(int[] tree) {//最长包含两个不同字符的子序列。
+        if(tree.length <=2) return tree.length;
+        int x = 0, y = 1, z = 0, max = 0;//三个指针，x记录第一个basket，y记录第二个basket, z搜索需要第三个basket的位置
+        while(y < tree.length && tree[x] == tree[y])++y;//找到第二个篮子的起始;
+        if(y >= tree.length) return y;
+        z = y+1;
+        while(z < tree.length){
+            while(z < tree.length &&(tree[z] == tree[x] || tree[z] == tree[y])) ++z;//第一或第二个篮子可以装，继续走
+            max = (z-x>max)? z-x:max;//找到第三个篮子的位置，减去起点位置，记录最大值;
+            y = z;//更新第二个篮子位置，第三个篮子的位置给第二个篮子
+            x = z-1;//x放到z之前准备更新第一个篮子的位置
+            while(x>=0 && tree[x] == tree[z-1]) --x;//如果x和第二个篮子的水果一样，往前寻找，找到第二个水果的起始点。
+            ++x;
+            ++z;// == y+1;方便继续新的起点新的寻找最大值;
+        }
+        return max;//O(n)遍历结束，返回最大值；
+    }
+}
+//以此类推，如果需要包含三个不同字符的最大子串需要：x：第一个字符位置, y:第二个字符起始位置，z：第三个字符起始位置；c:寻找第四个字符出现位置；
+//max = c-x or max; y=c-1while(||y==c-1)--y;++y寻找y的起点，x=y-1while（x=c-1||x=y-1）--x;++x寻找x的起点z=c;++c;
+//n个不同字符需要n+1个指针
