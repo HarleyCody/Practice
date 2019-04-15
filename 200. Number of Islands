@@ -1,0 +1,25 @@
+class Solution {
+    public int numIslands(char[][] grid){
+        if(grid == null || grid.length==0)return 0;
+        int nr = grid.length, nc = grid[0].length;
+        int ans = 0;
+        for(int i = 0; i < nr; ++i){
+            for(int j = 0; j < nc; ++j){
+                if(grid[i][j]=='1'){//找到一个未沉没的陆地，未沉没就是一个小岛
+                    ++ans;
+                    sinkIsland(i,j,grid);//沉没找到的陆地，之后继续寻找后面的小岛
+                }
+            }
+        }
+        return ans;
+    }
+    public void sinkIsland(int r, int c, char[][] grid){//沉没与找到陆地相关的所有陆地
+        int nr = grid.length, nc = grid[0].length;
+        if(r < 0 || r >= nr || c < 0 || c >= nc || grid[r][c]=='0')return;
+        grid[r][c] = '0';
+        sinkIsland(r-1, c, grid);//递归沉没上下左右
+        sinkIsland(r+1, c, grid);
+        sinkIsland(r, c-1, grid);
+        sinkIsland(r, c+1, grid);
+    }
+}
