@@ -1,0 +1,18 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if(intervals.length == 0) return new int[][]{};
+        Arrays.sort(intervals,(a,b)->a[0]-b[0]);
+        List<int[]> ans = new ArrayList<>();
+        int i = 0;
+        while(i < intervals.length){
+            int j = i+1;
+            while(j < intervals.length && intervals[i][1]>=intervals[j][0]){
+                intervals[i][1] = Math.max(intervals[j][1],intervals[i][1]);//合并前后两项，放到前一项
+                ++j;//j为下一个数组
+            }
+            ans.add(intervals[i]);//合并完成，不能合并了，保存进List
+            i=j;//j的位置作为开头查看后面能否合并；
+        }
+        return ans.toArray(new int[0][]);
+    }
+}
