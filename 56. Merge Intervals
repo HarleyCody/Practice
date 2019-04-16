@@ -13,6 +13,6 @@ class Solution {
             ans.add(intervals[i]);//合并完成，不能合并了，保存进List
             i=j;//j的位置作为开头查看后面能否合并；
         }
-        return ans.toArray(new int[0][]);
+        return ans.toArray(new int[0][]);//List 转为二维数组
     }
 }
