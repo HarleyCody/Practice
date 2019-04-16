@@ -1,0 +1,41 @@
+class Solution {
+    public List<String> subdomainVisits(String[] cpdomains) {//substring is faster than string.split
+        List<String> ans = new ArrayList<String>(){};
+        HashMap<String, Integer> hm = new HashMap<String,Integer>(); 
+        for(String l : cpdomains){
+            //substring is faster than string.split
+            int posSpace = l.indexOf(" ");
+            int val = Integer.parseInt(l.substring(0,posSpace));//get times
+            String domain = l.substring(posSpace+1);//get domain
+            
+            // put record of lowest subdomain into the hashmap with check, K:domain V:times
+            putIntoHm(hm,domain,val);
+            
+            //seperate subdomain iteratively
+            while(domain.contains(".")){
+                int posDot = domain.indexOf(".");
+                //get the last second level of subdomain
+                String subdomains = domain.substring(posDot+1);
+                // put record into hashmap with check
+                putIntoHm(hm,subdomains,val); 
+                domain = subdomains; 
+            }
+        }
+        
+        //read record from hashmap then output to List and return it.
+        Iterator<Map.Entry<String,Integer>> it = hm.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry<String, Integer> entry = it.next();
+            String records = String.valueOf(entry.getValue())+" "+entry.getKey(); // concatenate record
+            ans.add(records);
+        }
+        return ans;
+    }
+    public void putIntoHm(HashMap<String, Integer> hm, String str, int value){
+        if(hm.containsKey(str)){// check if record exist, plus previous value
+            hm.put(str,hm.get(str)+value);
+        }else{
+            hm.put(str,value); // new record, just put with value
+        }
+    }
+}
