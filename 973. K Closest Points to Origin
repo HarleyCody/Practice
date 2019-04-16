@@ -15,7 +15,7 @@ class Solution {
 
 private int helper(int[][] A, int l, int r) {
     int[] pivot = A[l]; //第一个作为pivot
-    while (l < r) {
+    while (l < r) { //循环执行，保证左边都小于pivot 右边都大于pivot
         while (l < r && compare(A[r], pivot) >= 0) r--;//从后往前找，找到一个小于pivot的点A[r];
         A[l] = A[r]; // 把A[r]换到前面；
         while (l < r && compare(A[l], pivot) <= 0) l++;//从后往前找，找到一个大于pivot的点A[l];
