@@ -1,0 +1,31 @@
+class Solution {
+      public int minMeetingRooms(int[][] intervals) {
+          int ans = 0;
+          int vacant = 0;
+          int[] s = new int[intervals.length];//记录开始时间
+          int[] e = new int[intervals.length];//记录结束时间
+          int k = 0;
+          for(int[] inter: intervals){
+              s[k] = inter[0];
+              e[k] = inter[1];
+              ++k;
+          }
+          
+          Arrays.sort(s);
+          Arrays.sort(e);
+          int i = 0, j = 0;
+          
+          while(i<s.length){
+              if(s[i]<e[j]){
+                  if(vacant == 0)++ans;//没有空房间 新开房间
+                  else --vacant;//安排空房间
+                  ++i;//给下一个人安排房间
+              }
+              else {//下一个来之前房间的人走了
+                  ++vacant;
+                  ++j;//房间使用结束时间为下一个人的使用时间；
+              }
+          }
+          return ans;
+      }
+}
