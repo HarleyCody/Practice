@@ -1,0 +1,106 @@
+class Solution {
+  public String one(int num) {
+    switch(num) {
+      case 1: return "One";
+      case 2: return "Two";
+      case 3: return "Three";
+      case 4: return "Four";
+      case 5: return "Five";
+      case 6: return "Six";
+      case 7: return "Seven";
+      case 8: return "Eight";
+      case 9: return "Nine";
+    }
+    return "";
+  }
+
+  public String twoLessThan20(int num) {
+    switch(num) {
+      case 10: return "Ten";
+      case 11: return "Eleven";
+      case 12: return "Twelve";
+      case 13: return "Thirteen";
+      case 14: return "Fourteen";
+      case 15: return "Fifteen";
+      case 16: return "Sixteen";
+      case 17: return "Seventeen";
+      case 18: return "Eighteen";
+      case 19: return "Nineteen";
+    }
+    return "";
+  }
+
+  public String ten(int num) {
+    switch(num) {
+      case 2: return "Twenty";
+      case 3: return "Thirty";
+      case 4: return "Forty";
+      case 5: return "Fifty";
+      case 6: return "Sixty";
+      case 7: return "Seventy";
+      case 8: return "Eighty";
+      case 9: return "Ninety";
+    }
+    return "";
+  }
+
+  public String two(int num) {
+    if (num == 0)
+      return "";
+    else if (num < 10)//只有个位数
+      return one(num);
+    else if (num < 20)//小于20
+      return twoLessThan20(num);
+    else {//大于二十
+      int tenner = num / 10;//记录十位数字
+      int rest = num - tenner * 10;//记录个位数字
+      if (rest != 0)//如果不是整十数
+        return ten(tenner) + " " + one(rest);//返回大于20 的结果
+      else
+        return ten(tenner);
+    }
+  }
+
+  public String three(int num) {//三位数
+    int hundred = num / 100;//保存百位数
+    int rest = num - hundred * 100;
+    String res = "";
+    if (hundred*rest != 0)//百位数不为0，或十，个位数不为0
+      res = one(hundred) + " Hundred " + two(rest);
+    else if ((hundred == 0) && (rest != 0))//百位数空百 例如1，024 百位数为0
+      res = two(rest);
+    else if ((hundred != 0) && (rest == 0))//整百
+      res = one(hundred) + " Hundred";
+    return res;//都为0就不读；
+  }
+
+  public String numberToWords(int num) {
+    if (num == 0)
+      return "Zero";
+
+    int billion = num / 1000000000;//十亿位数值
+    int million = (num - billion * 1000000000) / 1000000;
+    int thousand = (num - billion * 1000000000 - million * 1000000) / 1000;
+    int rest = num - billion * 1000000000 - million * 1000000 - thousand * 1000;
+
+    String result = "";
+    if (billion != 0)//十亿数字不为0
+      result = three(billion) + " Billion";
+    if (million != 0) {//百万位不为0
+      if (! result.isEmpty()) //每一位之间空一格
+        result += " ";
+      result += three(million) + " Million";
+    }
+    if (thousand != 0) {//千为不为0
+      if (! result.isEmpty())
+        result += " ";
+      result += three(thousand) + " Thousand";
+    }
+    if (rest != 0) {//十个位不为0
+      if (! result.isEmpty())
+        result += " ";
+      result += three(rest);
+    }
+    return result;
+  }
+}
