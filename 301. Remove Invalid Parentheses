@@ -1,0 +1,24 @@
+public class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+    List<String> ans = new ArrayList<>();
+    remove(s, ans, 0, 0, new char[]{'(', ')'});
+    return ans;
+}
+
+    public void remove(String s, List<String> ans, int last_i, int last_j,  char[] par) {
+        for (int stack = 0, i = last_i; i < s.length(); ++i) {
+            if (s.charAt(i) == par[0]) stack++;
+            if (s.charAt(i) == par[1]) stack--;
+            if (stack >= 0) continue;
+            for (int j = last_j; j <= i; ++j)// ) is more than (
+                if (s.charAt(j) == par[1] && (j == last_j || s.charAt(j - 1) != par[1]))//delete first ) or next ) after consecutive ) 
+                    remove(s.substring(0, j) + s.substring(j + 1, s.length()), ans, i, j, par);// recursive two divide paths.
+            return;
+        }// complete deleting redudant ) (from left to right)
+        String reversed = new StringBuilder(s).reverse().toString();
+        if (par[0] == '(') // finished left to right     reuse function to delete ( in case of (()
+            remove(reversed, ans, 0, 0, new char[]{')', '('});//complete deleting redundant ( (from right to left)
+        else // finished right to left
+            ans.add(reversed); // reversed has been reversed twice, due to left to right and right to left recursive. So the answer is in right order.
+    }
+}
