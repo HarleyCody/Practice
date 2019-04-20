@@ -1,0 +1,14 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs.length == 0) return new ArrayList();
+        Map<String, List> ans = new HashMap<String, List>();
+        for (String s : strs) {
+            char[] ca = s.toCharArray();
+            Arrays.sort(ca); // standardize the strings
+            String key = String.valueOf(ca); // set standard strings as key 
+            if (!ans.containsKey(key)) ans.put(key, new ArrayList());// if it is new to the hashmap, add it to hash map and new an ArrayList as its value.
+            ans.get(key).add(s);// add string to the list.
+        }
+        return new ArrayList(ans.values());// return all list 
+    }
+}
