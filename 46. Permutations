@@ -1,32 +1,66 @@
 class Solution {
+  public void backtrack(int n, ArrayList<Integer> nums, List<List<Integer>> output, int first) {
+    // if all integers are used up, all are tested
+    if (first == n)
+      output.add(new ArrayList<Integer>(nums));
+    for (int i = first; i < n; i++) { // if i = first, no swap     if i > first swap generate new permutation.
+      // place i-th integer first , start swap from i th integer
+      // in the current permutation
+      Collections.swap(nums, first, i);// swap them, the new permutation generated. 
+      // use next integers to complete the permutations
+      backtrack(n, nums, output, first + 1);//go deeper with start poin i -th integer, 
+      // backtrack
+      Collections.swap(nums, first, i);//swap backto previous state before the backtrack
+    }
+  }
+
+  public List<List<Integer>> permute(int[] nums) {
+    // init output list
+    List<List<Integer>> output = new LinkedList();
+
+    // convert nums into list since the output is a list of lists
+    ArrayList<Integer> nums_lst = new ArrayList<Integer>();
+    for (int num : nums)
+      nums_lst.add(num);
+
+    int n = nums.length;
+    backtrack(n, nums_lst, output, 0);
+    return output;
+  }
+}
+_________________________________________________________Recursive 7ms_________________________________________________________________
+class Solution {
     public List<List<Integer>> permute(int[] nums) {
         return nextpermute(nums, new ArrayList<List<Integer>>());
     }
     public List<List<Integer>> nextpermute(int[] nums, List<List<Integer>> ans){
-        
         List<Integer> trans = new ArrayList<Integer>();
         for(int i : nums){
             trans.add(i);
         }
-        if(!ans.contains(trans))ans.add(trans);
-        else return ans;
-        int end = nums.length - 2;
-        while(0 <= end && nums[end] >= nums[end+1]){
-            --end;
-        }
-        if(end >= 0){
-            int j = nums.length-1;
-            while(nums[end] >= nums[j]){
-                    --j;
+        while(!ans.contains(trans)){
+            ans.add(trans);
+            int end = nums.length - 2;
+            while(0 <= end && nums[end] >= nums[end+1]){
+                --end;
             }
-        
-            int tem = nums[j];
-            nums[j] = nums[end];
-            nums[end] = tem;
+            if(end >= 0){
+                int j = nums.length-1;
+                while(nums[end] >= nums[j]){
+                        --j;
+                }
+                int tem = nums[j];
+                nums[j] = nums[end];
+                nums[end] = tem;
             
+            }
+            revPermutation(nums, end + 1);
+            trans = new ArrayList<Integer>();
+            for(int i : nums){
+                trans.add(i);
+            }
         }
-        revPermutation(nums, end + 1);
-        return nextpermute(nums, ans);
+        return ans;
     }
     
     public void revPermutation(int[] nums, int i){
