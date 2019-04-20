@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        return nextpermute(nums, new ArrayList<List<Integer>>());
+    }
+    public List<List<Integer>> nextpermute(int[] nums, List<List<Integer>> ans){
+        
+        List<Integer> trans = new ArrayList<Integer>();
+        for(int i : nums){
+            trans.add(i);
+        }
+        if(!ans.contains(trans))ans.add(trans);
+        else return ans;
+        int end = nums.length - 2;
+        while(0 <= end && nums[end] >= nums[end+1]){
+            --end;
+        }
+        if(end >= 0){
+            int j = nums.length-1;
+            while(nums[end] >= nums[j]){
+                    --j;
+            }
+        
+            int tem = nums[j];
+            nums[j] = nums[end];
+            nums[end] = tem;
+            
+        }
+        revPermutation(nums, end + 1);
+        return nextpermute(nums, ans);
+    }
+    
+    public void revPermutation(int[] nums, int i){
+        int j = nums.length-1;
+        while(i<j){
+            int tem = nums[i];
+            nums[i] = nums[j];
+            nums[j] = tem;
+            
+            ++i; --j;
+        }
+    }
+}
