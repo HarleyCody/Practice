@@ -1,3 +1,30 @@
+/*class Solution {
+    public String minWindow(String s, String t) {
+        if(s.length() < t.length()) return "";
+        HashMap<Character, Integer> hm = new LinkedHashMap<>();
+        int start = 0, end = 0, len = Integer.MAX_VALUE;
+        for(int i = 0; i < s.length(); ++i){
+            if(t.indexOf(s.charAt(i)) != -1){
+                if(hm.size() == t.length()){
+                    hm.remove(s.charAt(i));
+                    hm.put(s.charAt(i),i);
+                }else
+                    hm.put(s.charAt(i),i);
+                
+                Map.Entry<Character, Integer> entry = hm.entrySet().iterator().next();
+                if(len > (i - entry.getValue()));
+                len = i - entry.getValue();
+                start = entry.getValue();
+                end = i;
+                System.out.print(" FKey:" + entry.getKey());
+            }
+        }
+        if(hm.size() != t.length()) return "";
+        else
+            return s.substring(start,end+1);
+    }
+}*/
+————————————————————————————————————————————————————Correct Solution————————————————————————————————————————————————————————————
 class Solution {
         public String minWindow(String s, String t) {
         int[] count = new int[128];
@@ -13,9 +40,10 @@ class Solution {
                     min = i - j;
                     res = s.substring(j, i);//更新答案
                 }
-                if(++count[s.charAt(j++)] > 0){//找到一个t中的字符,对应的字符加1,后面就直接找字符
-                    System.out.print(count[s.charAt(j)]);
-                    ++remain;}//
+                if(++count[s.charAt(j++)] > 0){//找到之前记录字符串的开头，不断更新新的开头 A times:1 C times:1 B times:1 
+                    System.out.print(s.charAt(j-1) +"times:"+count[s.charAt(j-1)]+ " ");
+                    ++remain;//如果找到开头就跳出while循环，i继续往下找和开头一样的字符。
+                }
             }
         }
         return res;
