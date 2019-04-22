@@ -29,3 +29,36 @@ class MedianFinder {
  * obj.addNum(num);
  * double param_2 = obj.findMedian();
  */
+ _____________________________________________________________Two PriorityQueue(Faster)___________________________________________________
+class MedianFinder {
+
+    /** initialize your data structure here. */
+    PriorityQueue<Integer> left = null;
+    PriorityQueue<Integer> right = null;
+    public MedianFinder() {
+        left = new PriorityQueue<>((n1, n2) -> n2 - n1);// store the smaller value
+        right = new PriorityQueue<>((n1, n2)-> n1 - n2);// store the greater value
+    }
+    
+    public void addNum(int num) {
+        left.offer(num);//get a value to a smaller queue
+        right.offer(left.poll());//give the largest value to greater queue.
+        if(right.size() > left.size())// balance two queue and make sure size of smaller queue is not smaller than greater value, so it can output the first one which is answer when the sum of size is odd. 长度为7输出第4个 == smaller.peek();
+            left.offer(right.poll());
+    }
+    
+    public double findMedian() {
+        if(left.size() == 0) return 0;
+        if(left.size() == right.size()){
+            return (left.peek()+right.peek())/2.0;
+        }
+        return (double)left.peek();
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
