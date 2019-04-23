@@ -48,3 +48,38 @@ int row:1 (H:2 L:0 R:1) (H:0 L:0 R:5) (H:2 L:2 R:3) (H:1 L:2 R:5) (H:1 L:2 R:5)
 int row:2 (H:3 L:0 R:1) (H:1 L:0 R:5) (H:3 L:2 R:3) (H:2 L:2 R:5) (H:2 L:2 R:5)
 int row:3 (H:4 L:0 R:1) (H:0 L:0 R:5) (H:0 L:0 R:5) (H:3 L:3 R:4) (H:0 L:0 R:5)
 */
+______________________________________________________________优化，自己默写后_____________________________________________________________
+class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        if(matrix.length == 0 ) return 0;
+        int r = matrix.length, c = matrix[0].length; 
+        int[] left = new int[c];
+        int[] right = new int[c];
+        int[] height = new int[c];
+        int lt = 0, rt = c, maxArea = 0;
+        Arrays.fill(right,c);
+        
+        for(int i = 0; i < r; ++i){
+            lt = 0; rt = c;
+            for(int j = 0; j < c; ++j){
+                if(matrix[i][j] == '1') ++height[j];
+                else height[j] = 0;
+            }
+            
+            for(int j = 0; j < c; ++j){
+                if(matrix[i][j] == '1') left[j] = Math.max(left[j], lt);
+                else{ left[j] = 0; lt = j+1;}
+            }
+
+            for(int j = c-1; 0 <= j; --j){
+                if(matrix[i][j] == '1') right[j] = Math.min(right[j], rt);
+                else{ right[j] = c; rt = j;}
+            }
+            
+            for(int j = 0; j < c; ++j){
+                maxArea = Math.max(maxArea, ( right[j] - left[j] ) * height[j]);
+            }
+        }
+        return maxArea;
+    }
+}
