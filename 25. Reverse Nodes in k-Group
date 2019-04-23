@@ -1,3 +1,40 @@
+——————————————————————————————————————————————————————————递归（faster）————————————————————————————————————————————————————————————————
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null){
+            return null;
+        }
+        
+        ListNode cur = head;
+        for(int i= 0; i< k-1; i++){
+            cur = cur.next; //移到第K个Node
+            if(cur == null){
+                return head;//没有第K个Node K > len
+            }
+        }
+        
+        if(cur.next !=null){
+            cur.next = reverseKGroup(cur.next, k);//逆置前K个，递归到最后一组需要逆置的尾巴地方；
+        }
+        
+        ListNode ans = reverseHelper(head, cur);//逆置最后一组的头和尾
+        return ans;
+        
+        
+    }
+    
+    public ListNode reverseHelper(ListNode head, ListNode tail){//逆置，返回头
+        ListNode poi = head;
+        while(poi != tail){
+            ListNode temp = poi.next;//保留头的下一个节点位置
+            poi.next = tail.next;//头的下一个位置指向尾巴的下一个结点
+            tail.next = poi;//尾巴的下一个结点指向头；实现逆序 例 1 2 3 4 5 （k=2）1 2 4 3 5 (4 3 逆序)，新的头结点插在旧的头节点之前。
+            poi = temp;//头移动到原始的下一个结点
+        }
+        return tail;
+    }
+}
+——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 /**
  * Definition for singly-linked list.
  * public class ListNode {
