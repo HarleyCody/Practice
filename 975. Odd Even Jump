@@ -1,0 +1,19 @@
+class Solution {
+    public int oddEvenJumps(int[] A) {
+        int n  = A.length, res = 1;
+        boolean[] higher = new boolean[n], lower = new boolean[n];
+        higher[n - 1] = lower[n - 1] = true;
+        TreeMap<Integer, Integer> map = new TreeMap<>();// TreeMap; K Color V 
+        map.put(A[n - 1], n - 1);
+        for (int i = n - 2; i >= 0; --i) {// from back to the beginning
+            Map.Entry hi = map.ceilingEntry(A[i]), lo = map.floorEntry(A[i]);
+            //ceilingEntry(K key)Returns a key-value mapping associated with the least key greater than or equal to the given key, or null if there is no such key.
+            //floorEntry(K key)Returns a key-value mapping associated with the greatest key less than or equal to the given key, or null if there is no such key.
+            if (hi != null) higher[i] = lower[(int)hi.getValue()];// can find the next higher value, so connect these two value Higher(i) = Lower(value higher than i) == true;
+            if (lo != null) lower[i] = higher[(int)lo.getValue()];// can find the next higher value, so connect these two value Low(i) = High(value lower than i) == true;
+            if (higher[i])res++;//向后减一循环，所以只能往高的值走，只能在后面的High Value能走通的时候，才++1;
+            map.put(A[i], i);  //更新树结点。
+        }
+        return res;
+    }
+}
