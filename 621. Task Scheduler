@@ -1,0 +1,48 @@
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        if(tasks.length == 0) return 0;
+        int[] taskSum = new int[26];
+        int maxSum = 0;
+        
+        // record the number of specific kind of task;
+        for(int i = 0; i < tasks.length; ++i){
+            ++taskSum[tasks[i]-'A'];
+        }
+        
+        // number of task is larger than the previous task. The largest one is at the tail;
+        Arrays.sort(taskSum); 
+        
+        // assume the tail is minimal interval.
+        int i = 26, minLength = taskSum[25];
+        
+        // if the second last one has same number with the last one, then add length, assume they are one task, but required interval decreases
+        while(0 < i && taskSum[ --i ] == taskSum[ i - 1 ]){
+            minLength += taskSum[25];
+            --n;
+        }
+        
+        // Still has space for the idle, so the minimal length == length of idel + previous minimal length  
+        if( n > 0) minLength += taskSum[25]*n-n;
+        
+        // Idle can be inserted by the tasks with lesser number; insert one kind of task a time.
+        int emptySpace = taskSum[25]*n -n;
+        while(0 < i && taskSum[--i] != 0){
+            
+            //number of idle is larger than number of next tasks; decrease emptySpace then
+            if (emptySpace > 0 && emptySpace >= taskSum[i]){
+                emptySpace -= taskSum[i];
+                
+            //number of idle is smaller than number of next tasks, but still has some spaces; use rest space(decrease tasks) and update the emptySpace status to 0;
+            }else if (emptySpace > 0 && emptySpace <= taskSum[i]){
+                taskSum[i] -= emptySpace;
+                minLength += taskSum[i];
+                emptySpace = 0; 
+            }
+            // if emptySpace is used up. Just add the number of tasks. Because the interval has been statisfied, we can increase interval for not using idle.
+            else if( emptySpace <= 0) minLength += taskSum[i];
+        }
+        
+        // get the answer
+        return minLength;
+    }
+}
