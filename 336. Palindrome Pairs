@@ -1,0 +1,35 @@
+_________________________________________________________My Solution_________________________________________________________________________
+class Solution {
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int i = 0; i < words.length; ++ i){
+            StringBuilder pre = new StringBuilder(words[i]);
+            for( int j = 0; j < words.length; ++j){
+                if(i == j || 
+                   (words[i].length() != 0 && words[j].length() != 0 && 
+                    words[i].charAt(0) != words[j].charAt(words[j].length()-1)))continue;// filter repeated and words[i] words[j] that can not be paired
+                StringBuilder lat = new StringBuilder(words[j]);
+                StringBuilder target = new StringBuilder(pre);
+                target.append(lat);//get string = word[i]+word[j] determine it is palindromic or not.
+                if(isPalindromic(target)){
+                    ans.add(Arrays.asList(i,j));
+                }
+                target.setLength(0);
+            }
+        }
+        return ans;
+    }
+    public boolean isPalindromic(StringBuilder s){
+        int n = s.length();
+        if(n%2 == 0)// if length == even that the center is n/2 - 1 and n/2
+            return judger(s, n, n/2-1, n/2);
+        return judger(s, n, n/2, n/2);// if length == odd, center is n/2;
+    }
+    public boolean judger(StringBuilder s, int len, int lmid, int rmid){// check is palindromic by expending from center to margin.
+        while(0<= lmid && rmid < len){
+            if(s.charAt(lmid--) == s.charAt(rmid++))continue;
+            return false;
+        }
+        return true;
+    }
+}
