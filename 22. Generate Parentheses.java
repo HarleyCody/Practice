@@ -12,8 +12,8 @@ class Solution {
         }
 
         if (open < max)
-            backtrack(ans, cur+"(", open+1, close, max);//回溯,左括号小于最大数量，添加左，open+1
+            backtrack(ans, cur+"(", open+1, close, max);//cur+"("， cur并未受到影响,在下一层的时候还是cur;所以是回溯,左括号小于最大数量，添加左，open+1
         if (close < open)
-            backtrack(ans, cur+")", open, close+1, max);//回溯，右括号少于左括号，添加右，close+1
+            backtrack(ans, cur+")", open, close+1, max);//回溯用这一层的cur,不是cur+")"，右括号少于左括号，添加右，close+1
     }
 }
