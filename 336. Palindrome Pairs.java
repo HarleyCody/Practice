@@ -32,10 +32,8 @@ List usage: in case of a.append(a) == 'aa' also is palindrome but invalid result
         for (int i = 0; i < words.length; ++i) {
             search(words[i], i, root, res);// 
         }
-    
         return res;
     }
-    
     
     //build tree by one word by one word build path of first one then build path of second one.
     private void addWord(TrieNode root, String word, int index) {// index is the postion of word in the words[]
@@ -44,18 +42,17 @@ List usage: in case of a.append(a) == 'aa' also is palindrome but invalid result
             int j = word.charAt(i) - 'a';
 				
             if (root.next[j] == null) {// if j does not have any children Node
-                root.next[j] = new TrieNode(); // set j as root, give it a children Node index = charAt(j) - 'a'
+                root.next[j] = new TrieNode(); // set j as root, give it a children Node index = charAt(j) - 'a' ,index is -1 for this new node
             }
 				
-            if (isPalindrome(word, 0, i)) {//  rest part and has common suffix
+            if (isPalindrome(word, 0, i)) {// rest part is palindromic
                 root.list.add(index); // index of word which is valid words and has palindromic rest part and common suffix.
             }
 				
             root = root.next[j];// change root to node [j] continue record word in reverse order.
         }
-    	
-        root.list.add(index);//root has been changed here, list is new empty list, set index to the new list.
-        root.index = index;// updata index for the new root node.
+        root.list.add(index);// a new word is recorded. if substring of the word is not word, index will still be -1 for substring.root has been changed here, list is new empty list, set index to the new list.
+        root.index = index;// updata index for the new root node(new word). -1 to the index of word.
     }
     
 /*1. each word has a suffix represented by the current TrieNode; 
@@ -65,7 +62,7 @@ List usage: in case of a.append(a) == 'aa' also is palindrome but invalid result
         //1st case : prefix of String a + latter part of a(palindrome) + whole String b = new palindrome.
         for (int j = 0; j < word.length(); ++j) {
             
-            // root.index >=0 valid word, current node is not the word being compared right now.(i != j)
+            // root.index >=0 valid word, has common suffix and palindromic rest part, current node is not the word being compared right now.(i != j)
     	    if (root.index >= 0 && root.index != i && isPalindrome(word, j, word.length() - 1)) {
     	        res.add(Arrays.asList(i, root.index));// one pair of answer;
     	    }
@@ -91,26 +88,6 @@ List usage: in case of a.append(a) == 'aa' also is palindrome but invalid result
         return true;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 _________________________________________________________My Solution_________________________________________________________________________
 class Solution {
     public List<List<Integer>> palindromePairs(String[] words) {
