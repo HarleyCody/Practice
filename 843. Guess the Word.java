@@ -5,32 +5,30 @@
  *     public int guess(String word) {}
  * }
  */
-class Solution {
+class Solution {// guess word with sum of character frequence of word character
     public void findSecretWord(String[] wordlist, Master master) {
+        Set<String> words = new HashSet<String>();
         int[] fre = new int[26];
-        HashSet<String> words = new HashSet<>();
         for(String s : wordlist){
             for(char c : s.toCharArray()){
                 ++fre[c - 'a'];
             }
             words.add(s);
         }
-        int i = 0;
-        while(++i<=10){
-            String best = bestGuess(words, fre);
-            int match = master.guess(best);
+        for(int i = 0; i < 10; ++i){
+            String guess = bestGuess(words, fre);
+            int match = master.guess(guess);
             for(Iterator<String> it = words.iterator(); it.hasNext();){
-                if(match(it.next(), best) != match)
+                if(match(it.next(), guess) != match)
                     it.remove();
             }
         }
     }
-    
     public String bestGuess(Set<String> words, int[] fre){
-        int max = 0;
-        String ans = "";
+        int count = 0, max = 0;
+        String ans ="";
         for(String s : words){
-            int count = 0;
+            count = 0;
             for(char c : s.toCharArray()){
                 count += fre[c - 'a'];
             }
@@ -41,11 +39,10 @@ class Solution {
         }
         return ans;
     }
-    
     public int match(String a, String b){
-        int ans = 0, count = 0;
-        for(int i = 0; i < 6; ++i){
-            if(a.charAt(i) == b.charAt(i))++count;
+        int count = 0;
+        for(int i = 0; i < a.length(); ++i){
+            if(a.charAt(i) == b.charAt(i)) ++count;
         }
         return count;
     }
