@@ -42,9 +42,9 @@ class Solution {
             com.put(nums[i], com.getOrDefault(nums[i],0) + 1);
         }
         List<Map.Entry<Integer,Integer>> list=new ArrayList<>();
-		list.addAll(com.entrySet());
-		ValueComparator vc=new ValueComparator();
-		Collections.sort(list,vc);
+	list.addAll(com.entrySet());
+	ValueComparator vc=new ValueComparator();
+	Collections.sort(list,vc);
         int c = 0;
         Iterator<Map.Entry<Integer,Integer>> it = list.iterator();
         it.hasNext();
