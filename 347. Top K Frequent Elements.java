@@ -41,8 +41,10 @@ class Solution {
         for(int i = 0; i < nums.length; ++i){
             com.put(nums[i], com.getOrDefault(nums[i],0) + 1);
         }
+	
         List<Map.Entry<Integer,Integer>> list=new ArrayList<>();
 	list.addAll(com.entrySet());
+	
 	ValueComparator vc=new ValueComparator();
 	Collections.sort(list,vc);
         int c = 0;
