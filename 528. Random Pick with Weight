@@ -1,0 +1,38 @@
+class Solution {
+    Random random;
+    int[] range; // transfer weight to range, rang[i]record the right end point of index i
+    
+    public Solution(int[] w) {
+        random = new Random();
+        for(int i = 1; i < w.length; ++i){
+            w[i] += w[i-1];//transfer range to weight
+        }
+        this.range = w; //give range to a global variable for seraching later;
+    }
+    
+    public int pickIndex() {
+        
+        // cannot use Array w directly because it is not a global variable;
+        int ind = random.nextInt(range[range.length - 1]) + 1;
+        int left = 0, right = range.length-1;
+        while(left < right){
+            int mid = left + (right - left)/2;
+            if(range[mid] > ind)
+                // too big narrow down right
+                right = mid;
+            else if(range[mid] < ind)
+                // to small improve left
+                left = mid +1;
+            else // got exact value
+                return mid;
+        }
+        // While brokes only when left == right in this problem, so both right or left is answer, choose any of them.
+        return left;
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(w);
+ * int param_1 = obj.pickIndex();
+ */
