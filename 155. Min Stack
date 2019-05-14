@@ -1,0 +1,43 @@
+class MinStack {
+    
+    Stack<Integer> store;
+    int min = Integer.MAX_VALUE;
+    /** initialize your data structure here. */
+    public MinStack() {
+        store = new Stack<>();
+    }
+    
+    public void push(int x) {
+        // insert min to stack only when x is new min value;
+        if(x <= min){
+            store.push(min);
+            min = x;
+        }
+        // push x into stack. min is unchanged.
+        store.push(x);
+    }
+    
+    public void pop() {
+        
+        // min can change here, check and update min
+        if( min == store.pop())// this steps makes store pop() and also check min is equal to store.pop()
+            min = store.pop();
+    }
+    
+    public int top() {
+        return store.peek();
+    }
+    
+    public int getMin() {
+        return min;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
