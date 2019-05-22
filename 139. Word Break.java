@@ -9,7 +9,7 @@ class Solution {
         for (int i = 0; i < dict.size(); ++i) {
             int end = isSubStr(s, begin, dict.get(i));
             if (end != -1) {
-                if (end == s.length() - 1 || dfs(s, dict, end + 1, memo)) return true;
+                if (end == s.length() - 1 || dfs(s, dict, end + 1, memo)) return true; // end + 1 renews begin postion 
             }
         }
         memo[begin] = -1;// after tested all words, start at this begin position cannot succeed;
