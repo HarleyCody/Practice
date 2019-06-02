@@ -1,6 +1,6 @@
 class Solution {
 public String[] reorderLogFiles(String[] logs) {
-        // Override comparator is way faster than lambda expression
+        // Override comparator is way faster than lambda expression in Arrays.sort()
         Comparator<String> myComp = new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
