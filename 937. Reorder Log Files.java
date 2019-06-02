@@ -1,6 +1,6 @@
 class Solution {
 public String[] reorderLogFiles(String[] logs) {
-        
+        // Override comparator is way faster than lambda expression
         Comparator<String> myComp = new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
@@ -15,6 +15,7 @@ public String[] reorderLogFiles(String[] logs) {
                 }
                 if (s2fc <= '9') return -1;
                 
+                // futher compare for Letter log. 
                 int preCompute = s1.substring(++s1si).compareTo(s2.substring(++s2si)); // comparing the later part of string
                 if (preCompute == 0) return s1.substring(0,s1si).compareTo(s2.substring(0,s2si));
                 return preCompute;
