@@ -9,8 +9,8 @@ class Solution {
             while(l<r){
                 if(nums[l]+nums[r]==-nums[i]){
                     rlt.add(Arrays.asList(nums[i],nums[l],nums[r]));
-                    while(l<r&&nums[l]==nums[l+1])++l;++l;System.out.println(l);//重复值已经计算过（第一次出现），需要跳过所有重复值
-                    while(l<r&&nums[r]==nums[r-1])--r;--r;System.out.println(r);//重复值已经计算过（第一次出现），需要跳过所有重复值
+                    while(l<r&&nums[l]==nums[l+1])++l;++l;//重复值已经计算过（第一次出现），需要跳过所有重复值
+                    while(l<r&&nums[r]==nums[r-1])--r;--r;//重复值已经计算过（第一次出现），需要跳过所有重复值
                 }else if(nums[l]+nums[r]>-nums[i])--r;
                 else ++l;
             }
