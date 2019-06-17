@@ -10,7 +10,7 @@ class Solution {
         
         recorder.add(n);
         int newNum = 0, digit;
-        while(n>0){
+        while(n > 0){
             digit = n % 10;
             n /= 10;
             newNum += digit * digit;
