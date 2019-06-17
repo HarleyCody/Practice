@@ -1,5 +1,24 @@
 _______________________________________________________Fastest Solution________________________________________________________
 
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int len = intervals.length, l, r, i;
+        // l is position where intervals end before newInterval, l is at intervals[l][0] > newInterval[0];
+		for (l = 0; l < len && intervals[l][1] < newInterval[0]; l++);
+        
+        // r is position where intervals overlap with newInterval
+		for (r = l; r < len && intervals[r][0] <= newInterval[1]; r++);
+        // caculate size of answerArray and innitialize newIntervals that need to be combined
+		int[][] newIntervals = new int[len + l - r + 1][];
+        // put intervals end before newIntervals into answer array; and put combined intervals
+		for (i = l; --i >= 0; newIntervals[i] = intervals[i]);
+		newIntervals[l] = l == r ? // start pos and end pos are in the same interval
+            newInterval: new int[]{Math.min(intervals[l][0], newInterval[0]), Math.max(intervals[r - 1][1], newInterval[1])};
+        // put intervals start after end of newInterval to answer Array
+		for (i = l; ++i < newIntervals.length; newIntervals[i] = intervals[r++]);
+		return newIntervals;
+    }
+}
 
 ___________________________________________________________Straight Solution___________________________________________________
 class Solution{
