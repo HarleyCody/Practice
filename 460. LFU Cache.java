@@ -24,6 +24,7 @@ public class LFUCache {
         counts.put(key, count+1);
         // remove key from count List;
         lists.get(count).remove(key);
+        // update key of least frequency
         if(count==min && lists.get(count).size()==0)
             ++min;
         if(!lists.containsKey(count+1))
