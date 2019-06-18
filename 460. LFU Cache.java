@@ -41,7 +41,7 @@ public class LFUCache {
             return;
         if(vals.containsKey(key)) {
             vals.put(key, value);
-            // get key can update lists and counts for new key.
+            // redundant key, increase frequency.
             get(key);
             return;
         } 
