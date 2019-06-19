@@ -23,3 +23,9 @@ ____________________________________________________Comparator for HashMap(only 
         List<Map.Entry<String, Integer>> sorted = new ArrayList(recorder.entrySet());
         // Sort entry
         Collections.sort(sorted, sortByInter);
+_______________________________________________________Comparator for Priority Queue_______________________________________________________
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return a[2] == b[2] ? a[1] - b[1] : b[2] - a[2];
+            }
+        });
