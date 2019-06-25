@@ -1,3 +1,39 @@
+______________________________________________________________Better Solution____________________________________________________________
+class LogSystem {
+    HashMap<String, Integer> map;
+    List<String[]> list;
+    public LogSystem() {
+        map = new HashMap<>();
+        map.put("Year", 4);
+        map.put("Month", 7);
+        map.put("Day", 10);
+        map.put("Hour", 13);
+        map.put("Minute", 16);
+        map.put("Second", 19);
+        
+        list = new ArrayList<>();
+    }
+    
+    public void put(int id, String timestamp) {
+        String[] sub = new String[2];
+        sub[0] = Integer.toString(id);
+        sub[1] = timestamp;
+        list.add(sub);
+    }
+    
+    public List<Integer> retrieve(String s, String e, String gra) {
+        int idx = map.get(gra);
+        List<Integer> res = new ArrayList<>();
+        for(String[] ele : list){// Compare by string .compareTo(), start<= log && log <= end
+            if(ele[1].substring(0, idx).compareTo(s.substring(0, idx)) >= 0 && ele[1].substring(0, idx).compareTo(e.substring(0, idx)) <= 0){
+                res.add(Integer.parseInt(ele[0]));
+            }
+        }
+        
+        return res;
+    }
+}
+______________________________________________________________My Solution________________________________________________________________
 class LogSystem {
     class Log{
         int year;
