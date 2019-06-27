@@ -90,3 +90,4 @@ eg: private String find(String str){
             weight.put(root_b, w * weight.get(a) / weight.get(b));
         }
     }
+_______________________________________________________________List with Array____________________________________________________________
