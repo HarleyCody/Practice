@@ -91,3 +91,4 @@ eg: private String find(String str){
         }
     }
 _______________________________________________________________List with Array____________________________________________________________
+List<Integer>[] graph = new ArrayList[numCourses];
