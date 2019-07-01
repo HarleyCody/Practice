@@ -1,3 +1,4 @@
+________________________________________________________Generaly Solution______________________________________________________
 class WordDistance {
     // record index of string in words array
     HashMap<String, List<Integer>> recorder;
