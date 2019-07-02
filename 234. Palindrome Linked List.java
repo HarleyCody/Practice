@@ -15,6 +15,7 @@ class Solution {
         ListNode reverseHead = null;
         // find mid node while reverse first half nodes.
         while(fast != null && fast.next != null){
+        // move fast node first, so it will not be affected by reverse process
             fast = fast.next.next;
             ListNode slowNext = slow.next;
             slow.next = reverseHead;
