@@ -1,4 +1,37 @@
-_______________________________________________________________My Solution_________________________________________________________________
+______________________________________________________________Best Solution______________________________________________________________
+class Solution {
+    // 3 dots, 4 num; 0<=num<=255 with no leading zeros
+    public List<String> restoreIpAddresses(String s) {
+        List<String> validAddresses = new ArrayList<>();
+
+        // use for to split string into 4 substring, check each one is valid or not, not start with 0 and < 255
+        // if every substring is valid, record answer
+        for (int i=1;i<s.length() && i<4;i++){ 
+            if (isValid(s.substring(0,i))){
+                for (int j=i+1;j<s.length() && j<i+4;j++){ 
+                    if (isValid(s.substring(i,j))){
+                        for (int k=j+1;k<s.length() && k<j+4;k++){ //bug
+                            if (s.length()-k>3) continue; // bug String may overflow maximal value of Integer
+                            if (isValid(s.substring(j,k)) && isValid(s.substring(k))){
+                                StringBuilder sol=new StringBuilder();
+                                sol.append(s.substring(0,i)).append(".").append(s.substring(i,j)).append(".")
+                                .append(s.substring(j,k)).append(".").append(s.substring(k));
+                                validAddresses.add(sol.toString());
+                            }
+                        }   
+                    }
+                }  
+            }
+        }
+        return validAddresses;
+    }
+    private boolean isValid(String s){
+        if (s.charAt(0)=='0' && s.length()>1) return false;
+        if (Integer.parseInt(s) > 255) return false;
+        return true;
+    }
+}
+_______________________________________________________________My Solution_______________________________________________________________
 class Solution {
     public List<String> restoreIpAddresses(String s) {
         List<String> ans = new ArrayList();
