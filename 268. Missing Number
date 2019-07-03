@@ -1,0 +1,28 @@
+______________________________________________________Best Solution____________________________________________________________
+
+class Solution {
+    // a^b^b = a XOR itself will eliminate it perse
+    // in correct number num[index] == index; xor every index reveal the answer
+    //there is a missing number, nums[i] = nums.length, so last index should be nums.length
+    public int missingNumber(int[] nums) {
+     int res=0;
+        for(int i=0;i<nums.length;i++){
+            res^=i^nums[i];
+        }
+          return res^nums.length;
+    }
+}
+___________________________________________________My Solution_________________________________________________________________
+class Solution {
+    public int missingNumber(int[] nums) {
+        int n = nums.length;
+        int[] recorder = new int[n + 1];
+        for(int i = 0; i < n; ++i){
+            recorder[nums[i]] = 1;
+        }
+        for(int i = 0; i < n; ++i){
+            if(recorder[i] == 0) return i;
+        }
+        return n;
+    }
+}
