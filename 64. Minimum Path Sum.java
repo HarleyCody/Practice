@@ -1,4 +1,24 @@
-___________________________________________________My Solution(dp)___________________________________________________________
+_____________________________________________________Best Solution(dp + recur)_________________________________________________
+class Solution {
+// use dp to reduce calcualtion, record min in dp[i][j]
+    public int traverse(int[][] grid, int x, int y, int[][] dp) {
+        if (x == grid.length || y == grid[0].length) {
+            return Integer.MAX_VALUE;
+        }
+        if (x == grid.length - 1 && y == grid[0].length - 1) {
+            return grid[x][y];
+        }
+        if (dp[x][y] != 0) {
+            return dp[x][y];
+        }
+        return dp[x][y] = Math.min(traverse(grid, x + 1, y, dp), traverse(grid, x, y + 1, dp)) + grid[x][y];
+    }
+    public int minPathSum(int[][] grid) {
+        int[][] dp = new int[grid.length][grid[0].length];
+        return traverse(grid, 0, 0, dp);
+    }
+}
+___________________________________________________My Solution(dp)_____________________________________________________________
 class Solution {
     public int minPathSum(int[][] grid) {
         
