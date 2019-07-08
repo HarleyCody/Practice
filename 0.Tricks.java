@@ -93,3 +93,5 @@ eg: private String find(String str){
     }
 _______________________________________________________________List with Array____________________________________________________________
 List<Integer>[] graph = new ArrayList[numCourses];
+____________________________________________________________for loop for character_____________________________________________
+for(char c : String.toCharArray()) is faster than for(int i = 0; i < String.length(); ++i) {String.charAt(i)}
