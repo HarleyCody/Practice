@@ -1,3 +1,17 @@
+________________________________________________________Best Solution____________________________________________________________
+class Solution {
+    public int[] prisonAfterNDays(int[] cells, int N) {
+        // every 14 days, cycle must occur, then only need to calcualte actual days(N - 1)%14 + 1. + 1 beacuse a cycle starts from first day(1th), so 1th is 0 day, 2nd is 1 day.
+        for (N = (N - 1) % 14 + 1; N > 0; --N) {
+            int[] cells2 = new int[8];
+            for (int i = 1; i < 7; ++i)
+                cells2[i] = cells[i - 1] == cells[i + 1] ? 1 : 0;
+            cells = cells2;
+        }
+        return cells;
+    }
+}
+________________________________________________________My Solution____________________________________________________________
 class Solution {
     public int[] prisonAfterNDays(int[] cells, int N) {
         // record status of every day within a cycle
