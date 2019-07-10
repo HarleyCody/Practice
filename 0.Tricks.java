@@ -97,7 +97,7 @@ ____________________________________________________________for loop for charact
 for(char c : String.toCharArray()) is faster than for(int i = 0; i < String.length(); ++i) {String.charAt(i)}
 _______________________________________________________________211 conclusion_____________________________________________________________
 if(chs[pos] != '.'){} else{} is faster than if(chs[pos] == '.'){} else{};
-conclusion: when two conditions are mutally exclusive, check major condition first(which scanrio occurs more) 
+conclusion: when two conditions are mutally exclusive, check major condition first(which scanrio occurs more).
   
   
   
