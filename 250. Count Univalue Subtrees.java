@@ -1,5 +1,6 @@
 _________________________________________________________Best Solution_________________________________________________________
 
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -21,6 +22,7 @@ class Solution {
     }
     
     private int helper(TreeNode node) {
+        // leaves node is a valid answer
         if (node.left == null && node.right == null) {
             result ++;
             return node.val;
@@ -40,6 +42,7 @@ class Solution {
         if (left == Integer.MIN_VALUE || right == Integer.MIN_VALUE) {
             return Integer.MIN_VALUE;
         }
+        // all nodes are node.val
         if (left == right && right == node.val) {
             result ++;
             return node.val;
