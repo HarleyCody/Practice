@@ -98,7 +98,8 @@ for(char c : String.toCharArray()) is faster than for(int i = 0; i < String.leng
 _______________________________________________________________211 conclusion_____________________________________________________________
 if(chs[pos] != '.'){} else{} is faster than if(chs[pos] == '.'){} else{};
 conclusion: when two conditions are mutally exclusive, check major condition first(which scanrio occurs more).
-  
-  
-  
+
+_______________________________________________________________Priority Queue(order)______________________________________________________
+while(!pq.isEmpty()) will poll element by order of comparator
+for(int i : pq){} will return by stored order, comparator will not affect( iterator will not be influenced by comparator)
   
