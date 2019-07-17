@@ -103,3 +103,5 @@ _______________________________________________________________Priority Queue(or
 while(!pq.isEmpty()) will poll element by order of comparator
 for(int i : pq){} will return by stored order, comparator will not affect( iterator will not be influenced by comparator)
   
+________________________________________________________Char Array to String__________________________________________________
+String.valueOf(charArray) is faster than sb.insert(0, char). When its reverse order, valueOf() is better
