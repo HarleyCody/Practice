@@ -1,3 +1,22 @@
+_______________________________________________________Best Solution___________________________________________________________
+public class Solution {
+    //add element from bottom to top;
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        height(root, res);
+        return res;
+    }
+    // get height , if node == null return - 1 then the height of first leaves layer will be 0
+    // add all nodes in same layer to the ans Array
+    private int height(TreeNode node, List<List<Integer>> res){
+        if(null == node)  return -1;
+        int level = 1 + Math.max(height(node.left, res), height(node.right, res));
+        // as it adds answer level by level(increase 1), so the when size == level means new level occurs, should initilize a new ArrayList for current level
+        if(res.size() == level)  res.add(new ArrayList<>());
+        res.get(level).add(node.val);
+        return level;
+    }
+}
 _______________________________________________________My Solution_____________________________________________________________
 class Solution {
     // recursion inorder.
