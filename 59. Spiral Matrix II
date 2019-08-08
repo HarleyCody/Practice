@@ -1,0 +1,33 @@
+_____________________________________________________My Solution_______________________________________________________________
+class Solution {
+    int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        fill(matrix, n);
+        return matrix;
+    }
+    public void fill(int[][] matrix, int n){
+        int x = 0, y = 0, val = 1;
+        int nX = 0, nY = 0;
+        // max turns of n matrix is (n - 1) * 4 - 1
+        for(int dir = 0; dir < n * 4; ++dir){
+            // max times of filling value to matrix.
+            for(int i = 0; i < n; ++i){
+                
+                matrix[x][y] = val;
+                
+                // get next postion
+                nX = x + dirs[dir % 4][0];
+                nY = y + dirs[dir % 4][1];
+                
+                // if next postion is not valid(out of range of filled), break( do not update x y);
+                if(nX < 0 || nX == n || nY < 0 || nY == n || matrix[nX][nY] != 0)break;
+                
+                // update x y and val
+                x = nX;
+                y = nY;
+                val += 1;
+            }
+        }
+    }
+}
