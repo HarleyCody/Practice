@@ -1,4 +1,6 @@
 ______________________________________________________________Best Solution_______________________________________________________________
+/* categorize word with length
+check word in adjascent list recurlsively to get max length*/
 class Solution {
     // previous word is same with later word with omitting one letter
     private boolean match(String pred, String word) {
@@ -66,7 +68,7 @@ class Solution {
             }
             List<String> curs = strings.get(i);
             for (String cur: curs) {
-                // 
+                // find chain fro word cur
                 ans = Math.max(ans, test(cur, i, strings));
             }
         }
