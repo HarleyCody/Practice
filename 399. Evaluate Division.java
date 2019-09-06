@@ -13,7 +13,7 @@ class Solution {
             union(a, b, values[i]);// combine a and b;
         }
         double[] res = new double[queries.size()];
-        for(int i = 0; i < queries.size(); i ++){
+        for(int i = 0; i < queries.size(); i++){
             String a = queries.get(i).get(0);
             String b = queries.get(i).get(1);
             if(find(a) == null || find(b) == null || !find(a).equals(find(b))){
@@ -29,8 +29,8 @@ class Solution {
         if(father.get(str) == null) return null;
         if(father.get(str).equals(str)) return str;
         // compress and update path as father can be reset in Union process
-        weight.put(str, weight.get(str) * weight.get(father.get(str))); // a/b , b/c -> a/c = a/b * b/c original father * ogfather / newfather 
-        father.put(str, find(father.get(str)));// update new connections, a/c 
+        weight.put(str, weight.get(str) * weight.get(father.get(str))); // a/b , c/a -> c/b = a/b * c/a original father * ogfather / newfather 
+        father.put(str, find(father.get(str)));// update new connections, c/b new father is c 
         return father.get(str);
     }
     
@@ -41,10 +41,10 @@ class Solution {
         String root_b = find(b);
         // compress path, root a is father of root b -> conduction of one queries 
         if(!root_a.equals(root_b)){
-            // update father
+            // update father, make a be father of b.
             father.put(root_b, root_a);
             // update weight between original father of b and its new father based on connection of their children
-            weight.put(root_b, w * weight.get(a) / weight.get(b));
+            weight.put(root_b, w * weight.get(a) / weight.get(b)); // a/b * c/a / d/b => c/d, change ratio between b and its new root(eg, c)
         }
     }
 }
