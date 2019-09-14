@@ -103,5 +103,11 @@ _______________________________________________________________Priority Queue(or
 while(!pq.isEmpty()) will poll element by order of comparator
 for(int i : pq){} will return by stored order, comparator will not affect( iterator will not be influenced by comparator)
   
-________________________________________________________Char Array to String__________________________________________________
+________________________________________________________Char Array to String______________________________________________________________
 String.valueOf(charArray) is faster than sb.insert(0, char). When its reverse order, valueOf() is better
+________________________________________________________HashMap find element ______________________________________________________________
+if(!recorder.containsKey(str) || recorder.get(str) < int){
+}O(2n)
+can be improved as
+if(int >= recorder.getOrDefault(str, 0)) O(n)
+
