@@ -1,3 +1,31 @@
+______________________________________________________________My Solution(O(n))________________________________________________________
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        // two pointers
+        // i records start, j records end;
+        
+        int i = 0, j = 0, sum = 0, ans = nums.length + 1;
+        // if it used to be no less than s; 
+        int flag = 0;
+        while(j < nums.length){
+            while(sum < s){
+                sum += nums[j++];
+                if(j == nums.length) break;
+            }
+            flag = sum;
+            while(sum >= s && i <= j){
+                sum -= nums[i++];
+            }
+            // used to be no less than s;
+            if(flag >= s){
+                ans = Math.min(j - i + 1, ans);
+            }
+        }
+        // nums.length + 1, add all elements but sum < s;
+        return ans == nums.length + 1 ? 0 : ans;
+    }
+}
+______________________________________________________________My Solution(Nlog(n))_________________________________________________________
 class Solution {
     public int minSubArrayLen(int s, int[] nums) {
         // start from i calculate contigously until sum >= s;
