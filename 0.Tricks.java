@@ -110,4 +110,29 @@ if(!recorder.containsKey(str) || recorder.get(str) < int){
 }O(2n)
 can be improved as
 if(int >= recorder.getOrDefault(str, 0)) O(n)
+_____________________________________________________________Quick Sort___________________________________________________________________
+Median Base:
+int pivot = arr[(h + l)/2];
+int low = l;
+int high = h;
+while(low < high){
+  while(arr[low] < pivot) low++;
+  while(arr[hight] > pivot) high--;
+  if(low <= high) swap(arr, low++, high--);
+}
+quickSort(arr, l, high);
+quickSort(arr, low , h);
+
+First Base:
+int pivot = arr[l];
+int low = l;
+int high = h;
+while(low < high){
+  while(arr[low] < pivot) low++;
+  while(arr[hight] > pivot) high--;
+  if(low < high) swap(arr, low, high);
+}
+arr[l] = pivot;
+quickSort(arr, l, low - 1);
+quickSort(arr, low , low + 1);
 
