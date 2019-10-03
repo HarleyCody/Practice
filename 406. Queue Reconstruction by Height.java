@@ -5,32 +5,32 @@ class Solution {
 	}
 	public int[][] reconstructQueueInsert(int[][] people) {
 		if(people == null || people.length < 2) return people;
-        
 		quickSortByReverseHeight(people, 0, people.length - 1);
-        
 		List<int[]> list = new ArrayList<int[]>();
-        // high -> low if height same, smaller k -> larger k;
 		for(int[] person : people) list.add(person[1], person);
 		return list.toArray(people);
 	}
-	//First Sort By Height Reverse, make sure only need to insert by k can be answer
+	//First Sort By Height Reverse
 	//If Height Is Same, Sort By Position
 	private void quickSortByReverseHeight(int[][] arr, int low, int high) {
 		if(low >= high) return;
 		int nextParitionHigh = low, nextParitionLow = high;
-		int[] pivot = arr[low + (high - low) / 2];
+		int[] pivot = arr[(high + low)/2];
 		while(nextParitionHigh < nextParitionLow) {
-            // put forward
 			while(arr[nextParitionHigh][0] > pivot[0] ||
 					(arr[nextParitionHigh][0] == pivot[0] && arr[nextParitionHigh][1] < pivot[1])){
 				nextParitionHigh++;
 			}
-            // put back
 			while(arr[nextParitionLow][0] < pivot[0] ||
 					(arr[nextParitionLow][0] == pivot[0] && arr[nextParitionLow][1] > pivot[1])){
 				nextParitionLow--;
 			}
+            // meaning of = (pivot is at right place) is to move High to tail, decreae low to head, low < high 
+            // avoid (0, 1), (0, 1) will be divided to (0,0) (0,1) continuously recurse
+            // two conditions, 1. left < right -> left++ = right--, pivot need to be consider within sort;
+            // 2. left = right pivot is at right place;
 			if(nextParitionHigh <= nextParitionLow)swap(arr, nextParitionHigh++, nextParitionLow--);
+            
 		}
 		quickSortByReverseHeight(arr, low, nextParitionLow);
 		quickSortByReverseHeight(arr, nextParitionHigh, high);
