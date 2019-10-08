@@ -1,4 +1,4 @@
-____________________________Best Solution (System.arraycopy(int[]src, int start, int[] dst, int start, int end)__________________________________   
+____________________________Best Solution (System.arraycopy(int[]src, int start, int[] dst, int start, int end)_____________________________   
 class Solution {
     public void rotate(int[] nums, int k) {
         int len = nums.length;
@@ -14,6 +14,25 @@ class Solution {
             tem[index++] = nums[i];
         }
         System.arraycopy(tem, 0, nums, 0 , len);
+    }
+}
+____________________________Best Solution (reverse whole, reverse left(k), reverse rest)_____________________________________________________
+class Solution {
+    public void rotate(int[] nums, int k) {
+        if (nums == null || nums.length == 0)
+            return;
+        k %= nums.length;
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+    
+    private void reverse(int[] nums, int i, int j) {
+        while (i < j) {
+            int temp = nums[i];
+            nums[i++] = nums[j];
+            nums[j--] = temp;
+        }
     }
 }
 ___________________________________________________Solution 2(for() copy from tem to num)____________________________________________________ 
