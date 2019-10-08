@@ -136,3 +136,7 @@ arr[l] = pivot;
 quickSort(arr, l, low - 1);
 quickSort(arr, low , low + 1);
 
+_______________________________________________________________Arrays.copyOf, System.arraycopy____________________________________________
+The difference: 
+Arrays.copyOf does not only copy elements, it also creates a new array. cannot rewrite array but create a new
+System.arrayCopy copies into an existing array.
