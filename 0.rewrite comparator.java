@@ -29,3 +29,15 @@ _______________________________________________________Comparator for Priority Q
                 return a[2] == b[2] ? a[1] - b[1] : b[2] - a[2];
             }
         });
+________________________________________________Comparator(lambada)________________________________________________________________
+Arrays.sort( arr, new Comparator<String | Integer| ...>(){
+    public int compare(String new, String old){
+        return old - new;// descending
+    }
+});
+In comparator, 2nd param is old element, 1st is new element, 
+if ascending( when new < old, need swap) swap only occurs when return negative, so == return new - old;
+if descending( when new > old, need swap) swap only occurs when return negative, so == return old - new;
+Key is getting negative result.
+
+
