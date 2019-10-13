@@ -16,17 +16,20 @@ class Solution {
                 dp[i][j] = dp[i - 1][6];
                 // can add more i;
                 if(i - rollMax[j] < 0) {
-                    sum = (sum + dp[i][j]) % divisor;
+                    dp[i][j] = dp[i - 1][6];
                 }
-                // i can be consecutive.
-                else  {
+                // i can be consecutive. + other number
+                else if(i - rollMax[j] > 0) {
                     // can consectutive j is substring in i(not only consecutive j in i)
-                    if(i - rollMax[j] > 0) dp[i][j] = (dp[i][j] - (dp[i - rollMax[j] - 1][6] - dp[i - rollMax[j] - 1][j])) % divisor + divisor;
-                    // have i - 1 j in previous - 1 remove this possibility for all j in i;
-                    else dp[i][j] = (dp[i][j] - 1) % divisor;
-                    // update sum;
-                    sum = (sum + dp[i][j]) % divisor;
+                    dp[i][j] = (dp[i][j] - (dp[i - rollMax[j] - 1][6] - dp[i - rollMax[j] - 1][j])) % divisor + divisor;
                 }
+                // i can only be consecutive j;
+                else{ 
+                    // 1 : possbility of in i - 1 all is j;
+                    dp[i][j] = (dp[i][j] - 1) % divisor;
+                }
+                // update sum;
+                sum = (sum + dp[i][j]) % divisor;
             }
             // sum of dp[i][1 ~ 6]
             dp[i][6] = sum;
