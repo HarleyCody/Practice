@@ -1,3 +1,31 @@
+____________________________________________________Best Solution_________________________________________________________________________
+class Solution {
+    public int maxEqualFreq(int[] A) {
+        int[] count = new int[100001], freq = new int[100001];
+        int res = 0, N = A.length, a,c,d;
+        for (int n = 1; n <= N; ++n) {
+            a = A[n - 1];
+            // count[a] times will change to count[a]++ times, freq should decrease first.
+            --freq[count[a]];
+            // update count;
+            c = ++count[a];
+            // update freq;
+            ++freq[count[a]];
+            
+            // all num has same freq.
+            if (freq[c] * c == n && n < N){
+                res = n + 1;
+                continue;
+            }
+            // if rest numbers is c + 1 or 1 n is a valid prefix.
+            d = n - freq[c] * c;
+            if ((d == c + 1 || d == 1) && freq[d] == 1)
+                res = n;
+        }
+        return res;
+    }
+}
+________________________________________________General Solution______________________________________________________________________
 class Solution {
     Map<Integer, Integer> count = new HashMap<>();
     Map<Integer, Integer> freq = new HashMap<>();
