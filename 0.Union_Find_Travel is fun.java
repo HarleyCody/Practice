@@ -1,9 +1,50 @@
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
-
+_______________________________________________________Best Solution(tle)_______________________________________________________________
+public class Solution {
+    static int[] connectedCities(int n, int g, int[] og, int[] dst) {
+        int[] parent = new int[n + 1];
+        int[] rank = new int[n + 1];
+        for(int i = 0; i <= n; i++){
+            parent[i] = i;
+        }
+        // only choose gcd > g to union
+        for(int i = g + 1; i <= n; i++){
+            for(int j = 2 * i; j <= n; j += i){
+                union(j, i, parent, rank);
+            }
+        }
+        int[] ans = new int[og.length];
+        for(int i = 0; i < og.length; i++){
+            if(find(og[i], parent) == find(dst[i], parent)){
+                ans[i] = 1;
+            }else{
+                ans[i] = 0;
+            }
+        }
+        return ans;
+        // Complete this function
+    }
+    private static int find(int i, int[] parent){
+        while(i != parent[i]){
+            parent[i] = parent[parent[i]];
+            i = parent[i];
+        }
+        return i;
+    }
+    
+    private static void union(int I, int J, int[] p, int[] r){
+        int i = find(I, p);
+        int j = find(J, p);
+        if(r[i] == r[j]){
+            r[i] += r[j];
+            p[j] = i;
+        }else if(r[i] > r[j]){
+            p[j] = i;
+        }else{
+            p[i] = j;
+        }
+    }
+}
+_______________________________________________________My Solution(tle)_________________________________________________________________
 public class Solution {
     static class Group{
         static int parent[];
@@ -73,29 +114,5 @@ public class Solution {
         if(j == 0)
             return i;
         return gcd(j, i % j);
-    }
-    
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        int g = in.nextInt();
-        int originCities_cnt = in.nextInt();
-        int[] originCities = new int[originCities_cnt];
-        for(int originCities_i = 0; originCities_i < originCities_cnt; originCities_i++){
-            originCities[originCities_i] = in.nextInt();
-        }
-        int destinationCities_cnt = in.nextInt();
-        int[] destinationCities = new int[destinationCities_cnt];
-        for(int destinationCities_i = 0; destinationCities_i < destinationCities_cnt; destinationCities_i++){
-            destinationCities[destinationCities_i] = in.nextInt();
-        }
-        int[] res = connectedCities(n, g, originCities, destinationCities);
-        for (int i = 0; i < res.length; i++) {
-            System.out.print(res[i] + (i != res.length - 1 ? "\n" : ""));
-        }
-        System.out.println("");
-
-
-        in.close();
     }
 }
