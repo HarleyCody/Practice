@@ -296,7 +296,7 @@ class Solution {
     }
 }
 // twoSum unique pair
-_________________________________________________My Solution__________________________________________________________________
+_________________________________________________TwoSum Unique Pair__________________________________________________________________
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         HashSet<Integer> recorder = new HashSet();
@@ -314,7 +314,7 @@ class Solution {
 }
 
 // spiral matrix
-________________________________________________________My Solution___________________________________________________________
+________________________________________________________Spiral Matrix___________________________________________________________
 class Solution {
     int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
     public int[][] generateMatrix(int n) {
@@ -346,4 +346,40 @@ class Solution {
             }
         }
     }
+}
+// favorite genres
+____________________________________________________Favorite Generes__________________________________________________________
+class Solution {
+   public Map<String, List<String>> favoritegenre(Map<String, List<String>> userMap, Map<String, List<String>> genreMap) {
+   	Map<String, List<String>> ans = new HashMap<>();
+   	Map<String, String> songtogenre = new HashMap<>();
+   	
+   	for(String genre : genreMap.keySet()) {
+		List<String> songs = genreMap.get(genre);
+   		for(String song : songs) {
+   			songstogenre.put(song, genre);
+   		}
+   	}
+       Map<String, Integer> count = new HashMap();
+       int max = 0;
+       for(String user : userMap.keySet()){
+           count = new HashMap();
+           max = 0;
+           res.put(user, new ArrayList());
+           List<String> songs = userMap.get(user);
+           
+           for(String song : songs) {
+               String genre = songstogenre.get(song);
+               int c = count.getOrDefault(genre, 0) + 1;
+               count.put(genre, c);
+               max = Math.max(c, max);
+           }
+           for (String key : count.keySet()) {
+               if (count.get(key) == max) {
+                   res.get(user).add(key);
+               }
+           }
+       }
+       return res;
+   }
 }
