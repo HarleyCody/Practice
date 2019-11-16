@@ -1,9 +1,12 @@
 // Critical Point
 // Theory:https://www.geeksforgeeks.org/articulation-points-or-cut-vertices-in-a-graph/
 ______________________________________________Critical Point O(V+E)___________________________________________________________
+class Solution {
     HashMap<Integer, HashSet<Integer>> cons = new HashMap();
     HashSet<Integer> ans;
     int time = 0;
+    // low record earliest visited vertex that can be reached from subtree rooted with cur.
+    // ids record discovery time and isVisited. -1 : unvisited
     int[] low, parent, ids;
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
         ans = new HashSet();
@@ -25,6 +28,7 @@ ______________________________________________Critical Point O(V+E)_____________
             if(ids[i] == -1)
                 dfs(cons, i);
         }
+        System.out.print(low[3]);
         System.out.print(ans);
         return new ArrayList();
     }
@@ -33,15 +37,20 @@ ______________________________________________Critical Point O(V+E)_____________
         ids[cur] = low[cur] = time++;
         for(int nei : cons.get(cur)){
             if(ids[nei] == -1){
+                // if child == 2 means cur connect two independant graph. cur is an junction
+                //so 0 is excluded from ansList
                 child++;
                 parent[nei] = cur;
                 dfs(cons, nei);
                 low[cur] = Math.min(low[nei],low[cur]);
+                // in second scenario, low[nei] >= ids[cur] means nei is discovered after cur
                 if(parent[cur] == -1 && child > 1 || parent[cur] != -1 && low[nei] >= ids[cur]){
                     ans.add(cur);
                 }
             }else if(nei != parent[cur]){
-                low[cur] = Math.min(low[cur], ids[cur]);
+                // update time as its undirect so nei can go to cur as well.
+                low[cur] = Math.min(low[cur], ids[nei]);
             }
         }
     }
+}
