@@ -54,9 +54,51 @@ class Solution {
         }
     }
 }
-
+// critical connections
+__________________________________________________Critical Connections________________________________________________________
+class Solution {
+    int[] low;
+    int[] disc;
+    boolean[] visited;
+    ArrayList<Integer>[] adjs;
+    int time = 0;
+    List<List<Integer>> ans = new ArrayList();
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        low = new int[n];
+        disc = new int[n];
+        visited = new boolean[n];
+        adjs = new ArrayList[n];
+        for(int i = 0; i < n; i++){
+            adjs[i] = new ArrayList();
+        }
+        for(List<Integer> con : connections){
+            int first = con.get(0);
+            int second = con.get(1);
+            adjs[first].add(second);
+            adjs[second].add(first);
+        }
+        dfs(0, -1);
+        return ans;
+    }
+    private void dfs(int cur, int parent){
+        visited[cur] = true;
+        disc[cur] = low[cur] = time++;
+        for(int nei : adjs[cur]){
+            if(nei == parent) continue;
+            if(!visited[nei]){
+                dfs(nei,cur);
+                low[cur] = Math.min(low[nei], low[cur]);
+                if(disc[cur] < low[nei]){
+                    ans.add(Arrays.asList(cur, nei));
+                }
+            }else{
+                low[cur] = Math.min(low[cur], disc[nei]);
+            }
+        }
+    }
+}
 // Product Suggestion
-______________________________________________________My Solutions____________________________________________________________
+______________________________________________________Product Suggestion____________________________________________________________
 import java.util.*;
 class ProSug{
     private class Trie{
@@ -104,9 +146,7 @@ class ProSug{
 }
 _____________________________________________________Play ground______________________________________________________________
 import java.util.*;
-
 public class ProductSuggestions {
-  
   public static class Trie{
     Trie[] nextLetters;
     PriorityQueue<String> pq;
@@ -346,40 +386,4 @@ class Solution {
             }
         }
     }
-}
-// favorite genres
-____________________________________________________Favorite Generes__________________________________________________________
-class Solution {
-   public Map<String, List<String>> favoritegenre(Map<String, List<String>> userMap, Map<String, List<String>> genreMap) {
-   	Map<String, List<String>> ans = new HashMap<>();
-   	Map<String, String> songtogenre = new HashMap<>();
-   	
-   	for(String genre : genreMap.keySet()) {
-		List<String> songs = genreMap.get(genre);
-   		for(String song : songs) {
-   			songstogenre.put(song, genre);
-   		}
-   	}
-       Map<String, Integer> count = new HashMap();
-       int max = 0;
-       for(String user : userMap.keySet()){
-           count = new HashMap();
-           max = 0;
-           res.put(user, new ArrayList());
-           List<String> songs = userMap.get(user);
-           
-           for(String song : songs) {
-               String genre = songstogenre.get(song);
-               int c = count.getOrDefault(genre, 0) + 1;
-               count.put(genre, c);
-               max = Math.max(c, max);
-           }
-           for (String key : count.keySet()) {
-               if (count.get(key) == max) {
-                   res.get(user).add(key);
-               }
-           }
-       }
-       return res;
-   }
 }
