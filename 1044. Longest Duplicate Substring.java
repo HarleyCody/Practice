@@ -1,3 +1,158 @@
+______________________________________________________Best Solution____________________________________________________________
+class Solution {
+    private class BSTNode {
+        int low, high;
+        BSTNode left, right;
+
+        BSTNode(int low, int high) {
+            this.low = low;
+            this.high = high;
+        }
+    }
+
+    public String longestDupSubstring(String S) {
+        char[] s = S.toCharArray();
+        int len = s.length;
+        s = Arrays.copyOf(s, len + 1);
+        s[len] = '*';
+        // dp : adjascent index having same start.(by swapping in parition)
+        // record next postion(j) of char that need to be checked, if next char is not equal, then sawp adjscence with next matched in char j.
+        int[] dp = new int[len], chs = new int[26];
+        for (int i = 0; i < len; i++) {
+            dp[i] = i;
+            chs[s[i] - 'a'] += 1;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (chs[i] == len) {
+                return S.substring(1);
+            }
+        }
+
+        BSTNode[] trees = new BSTNode[len];
+        int[] r = helper(s, dp, 0, len, trees);
+        for(BSTNode bst : trees){
+            if(bst != null){
+                System.out.println("low is " + bst.low + " high is " + bst.high);
+            }
+            else {
+                System.out.println("bst is null");
+            }
+        }
+        return String.valueOf(s, r[0], r[1]);
+    }
+
+    private int[] helper(char[] s, int[] dp, int l, int r, BSTNode[] trees) {
+        int pos = 0, max = -1;
+        while (l < r) {
+            // l can only be updated by nl, so its static, 
+            // in the partition, it will check from tail to l to find char that eaquals to l.
+            int nl = partitionAndMoveForward(s, dp, l, r);
+            if (nl - l == 1) {
+                if (0 > max) {
+                    pos = dp[l] - 1;
+                    max = 0;
+                }
+            } else if (nl - l == 2) {
+                // count = 1 cuse tail is same
+                int count = 1, a = dp[l], b = dp[l + 1];
+                if (s[a] == s[b]) {
+                    // l which is potential start, and l + 1 which is another potential duplicate start
+                    int low = Math.min(a, b), high = Math.max(a, b);
+                    // build tree by gap between two starts.(high - low)
+                    // low - 1 cuz to get middle point.(expand left and right to get length);
+                    // build tree
+                    count = searchAndUpdate(s, low - 1, high - low, trees);
+                }
+                // longer, update.
+                if (count > max) {
+                    pos = dp[l] - 1;
+                    max = count;
+                }
+            } else {
+                int[] m = helper(s, dp, l, nl, trees);
+                if (m[1] + 1 > max) {
+                    // -1, +1 cuz only start compare from sec char, first one should be added 
+                    pos = m[0] - 1;
+                    max = m[1] + 1;
+                }
+            }
+            l = nl;
+        }
+        return new int[]{pos, max};
+    }
+    
+    // search for the longest gap between two same start
+    // return the length
+    private int searchAndUpdate(char[] s, int v, int gap, BSTNode[] trees) {
+        BSTNode p = trees[gap];
+        while (p != null) {
+            //same gap same start, checked before
+            if (v < p.high && v >= p.low) {
+                return p.high - v;
+            }
+            // same gap, different start, build tree with start index.
+            if (v >= p.high && p.right != null) {
+                p = p.right;
+                continue;
+            } else if (v < p.low && p.left != null) {
+                p = p.left;
+                continue;
+            }
+            break;
+        }
+        
+        // broaden the length.
+        int len = s.length, a = v, b = v + gap;
+        while (b < len && s[a] == s[b]) {
+            ++a;
+            ++b;
+        }
+        int high = a;
+        a = v;
+        b = v + gap;
+        while (a >= 0 && s[a] == s[b]) {
+            --a;
+            --b;
+        }
+        int low = a + 1;
+
+        if (p == null) {
+            trees[gap] = new BSTNode(low, high);
+        } else if (v >= p.high) {
+            p.right = new BSTNode(low, high);
+        } else {
+            p.left = new BSTNode(low, high);
+        }
+        // length of duplicate strings;
+        return high - v;
+    }
+    // dp will match the pattern of S. eg b a n a n a, it will be 1 3 5 7 5 3
+    private int partitionAndMoveForward(char[] s, int[] dp, int l, int r) {
+        char target = s[dp[l]];
+        while (l < r) {
+            // search first not equal to tar
+            if (s[dp[l]] == target) {
+                ++dp[l];
+                ++l;
+                continue;
+            }
+            // search point eaqual to tar from tail to head;
+            if (s[dp[r - 1]] != target) {
+                --r;
+                continue;
+            }
+            
+            // dp[r - 1] first equal to tar
+            int tmp = dp[l];
+            dp[l] = dp[r - 1] + 1;
+            dp[r - 1] = tmp;
+            ++l;
+            --r;
+        }
+        return l;
+    }
+}
 _____________________________________________________Rabin-Karp Solution_______________________________________________________
 /* longestDupSubstring: set new length to search based on the result of func2*/ 
 /* search: calculate the hashvalue of string with length L
