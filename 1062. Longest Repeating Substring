@@ -1,6 +1,9 @@
 _______________________________________________________Best Solution Rabin Karp_________________________________________________________
 class Solution {
-
+  // record rolling hashcode of string
+  // h = pow(a,i) * char[0] + pow(a,i-1) * char[1] + ... + pow(a,0) * char[i]
+  // transfor for substring[0~3] => substring[1~4] h0 = substring 0~3 h1: substring 1~4
+  // h1 = h0 - char[0] * pow(a,i)(ie old head) + char[4](ie, new tail)
   public int search(int L, int a, long modulus, int n, int[] nums) {
     // compute the hash of string S[:L]
     long h = 0;
