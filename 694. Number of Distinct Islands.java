@@ -25,6 +25,7 @@ class Solution {
             if(nx < 0 || ny < 0 || nx >= map.length || ny >= map[0].length || map[nx][ny] == 0) continue;
             sinkIsland(nx, ny, path, (char)i);
         }
+        // boarder of island;
         return path.append('b');
     }
 }
