@@ -1,6 +1,6 @@
 ________________________________________________________Best Solution__________________________________________________________
 class Solution {
-// reocrd dirctions change of path of island
+// reocrd dirctions change of path of and boarder of island
     int[] dirs = new int[]{0, 1, 0, -1, 0};
     int[][] map;
     HashSet<String> recorder = new HashSet();
