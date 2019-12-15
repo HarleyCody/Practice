@@ -3,81 +3,62 @@ class Solution {
 // mainly different is use Deque to bfs
 // calculate abs distance between cur to tar, if 0 return dis otherwise add adjs
 // if abs between adj to tar is less than cur to tar, put to head(deque push) otherwise if it is valid put to tail
-// 
-    static final int[][] offsets = {{-1,0}, {1,0}, {0,-1}, {0,1}};
-        public int cutOffTree(List<List<Integer>> forest) {
-        int rows = forest.size();
-        int columns = forest.get(0).size();
-        int[][] matrix = new int[rows][columns];
-
-        int[][] rcAndVal = new int[rows*columns][];
-
-        for (int i = 0; i < rows; i++) {
-            List<Integer> row = forest.get(i);
-            for (int j=0; j<columns; j++) {
-                matrix[i][j] = row.get(j);
-                int rcAndValIndex = i*columns + j;
-                rcAndVal[rcAndValIndex] = new int[] {i, j, row.get(j)};
+class Solution {
+    int[] dirs = new int[]{0, 1, 0, -1, 0};
+    int R, C;
+    public int cutOffTree(List<List<Integer>> forest) {
+        R = forest.size();
+        C = forest.get(0).size();
+        
+        int[][] rcValue = new int[R * C][];
+        int idx = 0;
+        for(int i = 0; i < R; ++i){
+            List<Integer> f = forest.get(i);
+            for(int j = 0; j < C; ++j){
+                idx = i * C + j;
+                rcValue[idx] = new int[]{i, j, f.get(j)};
             }
         }
-
-        Arrays.sort(rcAndVal, (a,b) -> a[VAL] - b[VAL]);
-        
-        int steps = 0;
-        
-        int currentR = 0;
-        int currentC = 0;
-        final int VAL = 2;
-        final int ROW = 0;
-        final int COL = 1;
-        for (int i = 0; i < rcAndVal.length; i++) {
-            int[] rcv = rcAndVal[i];
-            int row = rcv[ROW];
-            int col = rcv[COL];
-            if (rcv[VAL] <= 1)  
-                continue; 
-            int path = findShortestPath(currentR, currentC, row, col, matrix);
-            if (path < 0) 
-                return -1;
-            steps += path;
-            currentR = row;
-            currentC = col;
+        Arrays.sort(rcValue, (x, y) -> x[2] - y[2]);
+        int ans = 0;
+        int[] cur = new int[]{0, 0};
+        for(int i = 0; i < rcValue.length; ++i){
+            if(rcValue[i][2] <= 1) continue;
+            int[] next = rcValue[i];
+            int minSteps = bfs(cur, next, rcValue, forest);
+            if(minSteps == -1) return -1;
+            ans += minSteps;
+            cur = next;
         }
-        
-        return steps;
+        return ans;
     }
-    
-    public int findShortestPath(int fromRow, int fromCol, int toRow, int toCol, int[][] matrix) { 
-        int steps = 0;
-        boolean[][] visited = new boolean[matrix.length][matrix[0].length];
-        Deque<int[]> visit = new ArrayDeque<>(); 
+    private int bfs(int[] start, int[] end, int[][] maps, List<List<Integer>> forest){
+        boolean[][] visited = new boolean[R][C];
+        Deque<int[]> dq = new LinkedList();
+        dq.offer(new int[]{start[0], start[1], 0});
         
-        visit.offer(new int[] {fromRow, fromCol, 0});
-        
-        while (visit.size() != 0) {
-            int[] node = visit.poll();
-            int row = node[0];
-            int col = node[1];
+        while(!dq.isEmpty()){
+            int[] cur = dq.poll();
             
-            if (!visited[row][col]) {
-                visited[row][col] = true;
-                int distance = node[2];
-                int nodeDistanceToTarget = Math.abs(row - toRow) + Math.abs(col-toCol);
-                if (nodeDistanceToTarget == 0) { return distance; }
-                else {
-                    for (int[] offset : offsets) {
-                        int r = row + offset[0];
-                        int c = col + offset[1];
-                        int adjDistanceToTarget = Math.abs(r - toRow) + Math.abs(c-toCol);
-                        int[] adjNode = new int[] {r, c, distance + 1};
-                        // must be valid node as adj < nodeDis, adj must be in maps
-                        if (adjDistanceToTarget < nodeDistanceToTarget && matrix[r][c] != 0) 
-                            visit.push(adjNode);
-                        else if (r>=0 && r < matrix.length && c>=0 && c < matrix[0].length && matrix[r][c] != 0) 
-                            visit.offer(adjNode);
+            if(!visited[cur[0]][cur[1]]){
+                visited[cur[0]][cur[1]] = true;
+                
+                int curToTarget = Math.abs(cur[0] - end[0]) + Math.abs(cur[1] - end[1]);
+                if(curToTarget == 0) return cur[2];
+                
+                for(int j = 0; j < 4; ++j){
+                    int nx = cur[0] + dirs[j];
+                    int ny = cur[1] + dirs[j + 1];
+                    
+                    int adjToTarget = Math.abs(nx - end[0]) + Math.abs(ny - end[1]);
+                    if(nx < 0 || ny < 0 || nx == R || ny == C || visited[nx][ny] || forest.get(nx).get(ny) == 0) continue;
+                // adjToTarget < curToTarget, it must be in map do not need to check overflow. so 56 can swap with line 54
+                    if(adjToTarget < curToTarget){
+                        dq.push(new int[]{nx, ny, cur[2] + 1});
+                    }else{
+                        dq.offer(new int[]{nx, ny, cur[2] + 1});
                     }
-
-                }      
+                }
             }
         }
         return -1;
