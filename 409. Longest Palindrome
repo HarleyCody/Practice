@@ -1,0 +1,22 @@
+______________________________________________________My Solution______________________________________________________________
+class Solution {
+// record frequence 
+//even frequence: add all even
+//odd frequence: first odd add odd(use all of this char) rest of odd add (ood-1 = even)(use even number of this char);
+    public int longestPalindrome(String s) {
+        int[] rec = new int[60];
+        char[] chs = s.toCharArray();
+        int odd = 0, even = 0;
+        for(char c : chs){
+            ++rec[c - 'A'];
+        }
+        for(int i = 0; i < 60; ++i){
+            if(rec[i] % 2 == 0){
+                even += rec[i];
+            }else{
+                odd = odd == 0? rec[i] : odd + rec[i] - 1;
+            }
+        }
+        return odd + even;
+    }
+}
