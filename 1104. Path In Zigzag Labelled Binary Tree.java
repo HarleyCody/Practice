@@ -1,5 +1,7 @@
 _________________________________________________________My Solution(logN)___________________________________________________________
 class Solution {
+// maximal number of node in level i = pow(2, i), min = pow(2, i), max = start + pow(2, i) - 1
+// eg, level 3. start is pow(2, 3) = 8, it contains pow(2,3) = 8 nodes, they are 8,9,10,11,12,13,14,15. max is 15 (8 + 8 - 1);
     public List<Integer> pathInZigZagTree(int label) {
         //search from bot to top
         LinkedList<Integer> ans = new LinkedList();
