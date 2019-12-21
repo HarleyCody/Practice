@@ -143,4 +143,4 @@ System.arrayCopy copies into an existing array.
 
 ____________________________________________________String Tricks(split, equals)______________________________________________
 S.startsWith(str) faster than S.substring().quals(str);
-s.substring(0, indexOf("/") faster than S.split("/")[2];
+s.substring(0, indexOf("/")) faster than S.split("/")[2];
