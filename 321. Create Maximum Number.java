@@ -1,5 +1,6 @@
 _________________________________________________________Best Solution___________________________________________________________________
 class Solution {
+// choose one by one
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
         int canSkip = nums1.length + nums2.length - k;
         return helper(nums1, 0, nums2, 0, k, canSkip, 1).result;
