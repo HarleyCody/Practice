@@ -1,4 +1,5 @@
 class TrafficLight {
+    // synchronzied to make sure greenOnA will not be changed symultaneuously
     boolean greenOnA = true;
     public TrafficLight() {
         
