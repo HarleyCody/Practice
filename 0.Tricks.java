@@ -144,3 +144,9 @@ System.arrayCopy copies into an existing array.
 ____________________________________________________String Tricks(split, equals)______________________________________________
 S.startsWith(str) faster than S.substring().quals(str);
 s.substring(0, indexOf("/")) faster than S.split("/")[2];
+
+____________________________________________________HashMap SubMap()___________________________________________________________
+1: HashMap.subMap(from key, to key);
+2: HashMap.subMap(from key, boolean, to key, boolean); boolean claims the key is inclusive or not
+
+Submap can be used as reducing the range of searching, faster the program.
