@@ -1,0 +1,65 @@
+________________________________________________________________Best Solution___________________________________________________________
+class Solution {
+    // two for loop
+    //1 make sure left > right by skip extra right
+    //2 make sure right == left by skip extra left
+    public String minRemoveToMakeValid(String s) {
+        int openCount = 0;
+        char[] sArr = s.toCharArray();
+        int begin = 0;
+        int end = s.length();
+        
+        // Valid position for next character to put.
+        int idx = 0;
+        for(int i=0; i<sArr.length; i++) {
+            if(sArr[i] == '(') {
+                openCount++;
+            } else if(sArr[i] == ')') {
+                if(openCount == 0) {
+                    continue;
+                }
+                openCount--;
+            }
+            // drop extra )
+            sArr[idx++] = sArr[i];
+        }
+        end = idx;  // exclusive
+        if(openCount != 0) {
+            int closeCount = 0;
+            idx--;
+            for(int i=idx; i>=0; i--) {
+                if(sArr[i] == ')') {
+                    closeCount++;
+                } else if(sArr[i] == '(') {
+                    if(closeCount == 0) {
+                        continue;
+                    }
+                    closeCount--;
+                }
+                sArr[idx--] = sArr[i];
+            }
+            begin = idx + 1;
+        }
+        return new String(sArr).substring(begin, end);
+    }
+}
+________________________________________________________________Compact Solution___________________________________________________________
+class Solution {
+    // set impossible to * and replace all of them
+    // impossible means left < right and when all done left > right
+    // stack record the idx of left
+    public String minRemoveToMakeValid(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i < sb.length(); ++i) {
+            if (sb.charAt(i) == '(') st.add(i);
+            if (sb.charAt(i) == ')') {
+                if (!st.empty()) st.pop();
+                else sb.setCharAt(i, '*');
+            }
+        }
+        while (!st.empty())
+            sb.setCharAt(st.pop(), '*');
+        return sb.toString().replaceAll("\\*", "");
+    }
+}
