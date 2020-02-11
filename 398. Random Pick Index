@@ -1,0 +1,47 @@
+_________________________________________________________________Best Solution_____________________________________________________________
+class Solution {
+// find one by one 
+    int[] _nums;
+    Random _rand;
+
+    public Solution(int[] nums) {
+        _nums = nums;
+        _rand = new Random();
+    }
+    
+    public int pick(int target) {
+        int count = 0; 
+        for (int i = 0; i < _nums.length; i++) {
+            if (_nums[i] == target) {
+                count++;
+            }
+        }
+        int select = _rand.nextInt(count);
+        for (int i = 0; i < _nums.length; i++) {
+            if (_nums[i] == target) {
+                if (select-- == 0) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+}
+__________________________________________________________________My Solution______________________________________________________________
+class Solution {
+    HashMap<Integer, List<Integer>> recorder = new HashMap();
+    public Solution(int[] nums) {
+        for(int i = 0; i < nums.length; ++i){
+            List<Integer> adjs = recorder.getOrDefault(nums[i], new ArrayList());
+            adjs.add(i);
+            recorder.put(nums[i], adjs);
+        }
+    }
+    
+    public int pick(int target) {
+        List<Integer> list = recorder.get(target);
+        Random rand = new Random();
+        int i = rand.nextInt(list.size());
+        return list.get(i);
+    }
+}
