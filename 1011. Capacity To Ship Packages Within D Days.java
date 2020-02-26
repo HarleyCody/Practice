@@ -7,14 +7,13 @@ class Solution {
         int len = weights.length;
         if(len == 1) return weights[0];
         
-        int min = 0, max = 0;
+        // set min and max to narrow down the range
+        int min = 0, max = (500 * weights.length) / D;
         
-        for(int i : weights){
-            max += i;    
-        }
-    
         while(min < max){
             int mid = (min + max) / 2;
+            
+            // mid > actual weight
             if(canShip(weights, D, mid)){
                 max = mid;
             }else{
@@ -23,6 +22,7 @@ class Solution {
         }
         return max;
     }
+    // check if can be ship with weight limitation
     private boolean canShip(int[] weights, int day, int limit){
         int len = weights.length;
         int w = 0, d = 0;
