@@ -1,3 +1,44 @@
+__________________________________________________________________Best Solution___________________________________________________________
+class Solution {
+    public String solveEquation(String equation) {
+        int xPreFactor = 0;
+        int tmp = 0;
+        int constant = 0;
+        boolean left = true;
+        int sign = 1;
+        for (int i = 0; i < equation.length(); i++){
+            char ch = equation.charAt(i);
+            //calculate num
+            if (Character.isDigit(ch)){
+                tmp = 10 * tmp + (ch - '0');
+            }else if (ch == 'x'){
+                //collect coefficient
+                if (tmp == 0){
+                    if (i > 0 && equation.charAt(i - 1) == '0') tmp = 0;
+                    else xPreFactor = left? xPreFactor + sign * 1: xPreFactor - sign * 1;
+                }else{
+                    xPreFactor = left? xPreFactor + sign * tmp: xPreFactor - sign * tmp;
+                    tmp = 0;
+                }
+            }else if (ch == '+' || ch == '-'){
+                constant = left? constant + sign * tmp: constant - sign * tmp;
+                tmp = 0;
+                sign = ch == '+'? 1: -1;
+            }else{
+                left = false;
+                constant += sign * tmp;
+                sign = 1;
+                tmp = 0;
+            }
+        }
+        constant -= sign * tmp;
+        if (xPreFactor == 0 && constant == 0) return "Infinite solutions";
+        else if (xPreFactor == 0) return "No solution";
+        int ret = (-1) * constant / xPreFactor;
+        return "x=" + String.valueOf(ret);
+    }
+}
+____________________________________________________________________My Solution___________________________________________________________
 class Solution {
     // read from left to right;
     
