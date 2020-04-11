@@ -1,4 +1,4 @@
-___________________________________________________________________Best Solution_________________________________________________________
+__________________________________________________________Best Solution(MultiThread)_________________________________________________________
 import java.util.concurrent.locks.ReentrantLock; 
 import java.util.concurrent.locks.Condition; 
 
