@@ -1,4 +1,6 @@
 class Solution {
+    // construct from back to start is faster because the graph could be A - B and C, B - D 
+    // find from A to D it will check C, but find from D to A it will not check C at all
     // ArrayList for storing
     List<List<String>> res = new ArrayList<>();
     // LinkedList for manipulating
