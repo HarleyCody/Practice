@@ -1,3 +1,83 @@
+____________________________________________________________________Best Solution_______________________________________________________
+// BFS construct the graph from both side, start and end depends on who has less node to traverse;
+// DFS from end to start
+class Solution {    
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> res = new ArrayList<>();
+        Set<String> dict = new HashSet<>(wordList);
+        if(!dict.contains(endWord))
+            return res;
+        
+        Set<String> begin = new HashSet<>();
+        Set<String> end = new HashSet<>();
+        
+        begin.add(beginWord);
+        end.add(endWord);
+        
+        Map<String, List<String>> map = new HashMap<>();
+        bfs(begin, end, dict, map, false);
+        
+        List<String> list = new ArrayList<>();
+        list.add(beginWord);
+        dfs(beginWord, endWord, res, list, map);
+        
+        return res;
+    }
+    
+    private void bfs(Set<String> begin, Set<String> end, Set<String> dict, Map<String, List<String>> map, boolean reverse) {
+        if(begin.isEmpty()) return;
+        if(begin.size() > end.size()) {
+            bfs(end, begin, dict, map, !reverse);
+            return;
+        }
+        
+        boolean finish = false;
+        Set<String> temp = new HashSet();
+        dict.removeAll(begin);
+        for(String w : begin) {
+            char[] ch = w.toCharArray();
+            
+            for(int i = 0; i < ch.length; i++) {
+                char old = ch[i];
+                for(char c = 'a'; c <= 'z'; c++) {
+                    ch[i] = c;
+                    String newWord = new String(ch);
+                    
+                    if(dict.contains(newWord)) {
+                        if(end.contains(newWord))
+                            finish = true;
+                        else
+                            temp.add(newWord);
+                        String key = reverse ? newWord : w;
+                        String val = reverse ? w : newWord;
+                        if(!map.containsKey(key)) 
+                            map.put(key,new ArrayList());
+                        map.get(key).add(val);
+                    }
+                }
+                ch[i] = old;
+            }
+        }
+        if(!finish)
+            bfs(temp, end, dict, map, reverse);
+    }
+    
+    private void dfs(String begin, String end, List<List<String>>res, List<String> list, Map< String, List<String>> map ) {
+        if(begin.equals(end)) {
+            res.add(new ArrayList(list));
+            return;
+        }
+        
+        if(!map.containsKey(begin))
+            return;
+        for(String str : map.get(begin)) {
+            list.add(str);
+            dfs(str, end, res, list, map);
+            list.remove(list.size() - 1);
+        }
+    }
+}
+____________________________________________________________________BFS + DFS Solution_______________________________________________________
 class Solution {
     // construct from back to start is faster because the graph could be A - B and C, B - D 
     // find from A to D it will check C, but find from D to A it will not check C at all
