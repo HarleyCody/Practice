@@ -26,6 +26,7 @@
  *     public List<NestedInteger> getList();
  * }
  */
+________________________________________________________________My Solution(dfs)_______________________________________________________
 class Solution {
     // record depth recursivly calcualte sum for every list;
     int curDepth = 1;
@@ -41,5 +42,31 @@ class Solution {
             }
         }
         return ans;
+    }
+}
+________________________________________________________________bfs Solution____________________________________________________________
+class Solution {
+    //BFS 
+    public int depthSum(List<NestedInteger> nestedList) {
+        if(nestedList == null){
+            return 0;
+        }
+
+        int sum = 0, level = 1;
+        Queue<NestedInteger> queue = new LinkedList<NestedInteger>(nestedList);
+        while(queue.size() > 0){
+            int size = queue.size();
+            for(int i = 0; i < size; i++){
+                NestedInteger ni = queue.poll();
+
+                if(ni.isInteger()){
+                    sum += ni.getInteger() * level;
+                }else{
+                    queue.addAll(ni.getList());
+                }
+            }
+            level++;
+        }
+        return sum;
     }
 }
