@@ -27,7 +27,7 @@
  * }
  */
 class Solution {
-    // record depth recur calcualte sum for every list;
+    // record depth recursivly calcualte sum for every list;
     int curDepth = 1;
     public int depthSum(List<NestedInteger> nestedList) {
         int ans = 0;
