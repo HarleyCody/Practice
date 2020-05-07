@@ -1,4 +1,4 @@
-
+________________________________________________________________My(Best) Solution____________________________________________________________
 class Solution {
     //rule, move left to right and connect right to lastNode of left;
     TreeNode lastNode = null;
