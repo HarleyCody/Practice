@@ -1,3 +1,4 @@
+____________________________________________________________________Best Solution________________________________________________________
 class Foo {
     // use two flag to control order
     // while loop to wait for previous precedure done
