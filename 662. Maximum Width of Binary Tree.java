@@ -1,3 +1,23 @@
+_____________________________________________________________Best Solution_________________________________________________________________
+// improvement, do not worry about update min value, as it goes from left to right, min is set by add
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        List<Integer> lefts = new ArrayList<>();
+        return dfs(root, lefts, 1, 0);
+    }
+    
+    public int dfs(TreeNode root, List<Integer> lefts, int order, int depth){
+        //base case
+        if(root == null){
+            return 0;
+        }
+        //extend the lefts list everytime reach to a new depth
+        if(depth>=lefts.size()){
+           lefts.add(order); 
+        }
+        return Math.max(order + 1 - lefts.get(depth), Math.max(dfs(root.left, lefts, 2*order, depth + 1), dfs(root.right, lefts, 2*order+1, depth+1)));
+    }
+}
 _____________________________________________________________My(Best) Solution_________________________________________________________________
 class Solution {
     // serialize the level of tree
