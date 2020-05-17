@@ -1,4 +1,5 @@
 __________________________________________________________My Solution O(n + m)___________________________________________________________________
+// search from top right, if 0 move ++row else --col to reach minimal;
 class Solution {
     public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
         List<Integer> info = binaryMatrix.dimensions();
