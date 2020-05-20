@@ -1,3 +1,4 @@
+____________________________________________________________________Best Solution__________________________________________________________
 class Solution {
     //update min if its smaller than min
     //update mid if min < i < mid;
