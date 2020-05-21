@@ -1,4 +1,23 @@
+_______________________________________________________________________Best Solution______________________________________________________
+// 3 pass, traverse all num; known max
+// record freq of num, if its 3 add to ans;
+class Solution {
+    public List<Integer> arraysIntersection(int[] arr1, int[] arr2, int[] arr3) {
+        int tmp[]=new int[2001];
+        List<Integer> res = new ArrayList();
+        for(int i=0;i<arr1.length;i++)tmp[arr1[i]]++;
+        for(int i=0;i<arr2.length;i++)tmp[arr2[i]]++;
+        for(int i=0;i<arr3.length;i++) {
+            tmp[arr3[i]]++;
+            if (tmp[arr3[i]] == 3) {
+                res.add(arr3[i]);
+            }
+        }
+        return res;
+    }
+}
 ________________________________________________________________________My Solution______________________________________________________
+// one pass traverse part num, unkown max
 // get max of three, try to move pointers to meet max
 // can meet add, otherwise, all move to next;
 class Solution {
