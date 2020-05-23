@@ -1,3 +1,44 @@
+_____________________________________________________________Best Solution_______________________________________________________________
+// same mem and dfs but dfs without for loop, dfs directly, 2ms faster
+class Solution {
+    public int longestIncreasingPath(int[][] matrix) {
+        if (matrix.length == 0) {
+            return 0;
+        }
+        // do dfs from each index
+        // keep arr of known paths
+        int[][] known = new int[matrix.length][matrix[0].length];
+        int longest = 1;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                longest = Math.max(longest, dfs(matrix, known, i, j));
+            }
+        }
+        return longest;
+    }
+    
+    private int dfs(int[][] matrix, int[][] known, int i, int j) {
+        if (known[i][j] > 0) {
+            return known[i][j];
+        }
+        int max = 1;
+        if (i >= 1 && matrix[i][j] < matrix[i - 1][j]) {
+            max = Math.max(max, 1 + dfs(matrix, known, i - 1, j));
+        }
+        if (j >= 1 && matrix[i][j] < matrix[i][j - 1]) {
+            max = Math.max(max, 1 + dfs(matrix, known, i, j - 1));
+        }
+        if (i < matrix.length - 1 && matrix[i][j] < matrix[i + 1][j]) {
+            max = Math.max(max, 1 + dfs(matrix, known, i + 1, j));
+        }
+        if (j < matrix[i].length - 1 && matrix[i][j] < matrix[i][j + 1]) {
+            max = Math.max(max, 1 + dfs(matrix, known, i, j + 1));
+        }
+        known[i][j] = max;
+        return max;
+    }
+}
+______________________________________________________________My Solution_______________________________________________________________
 class Solution {
     // mem + recursion find(dfs)
     // dp[i][j] the max path start from i, j;
