@@ -9,6 +9,7 @@ class Solution {
         int max = 1;
         
         for(int num : nums){
+            // reduce to O(n) by only checking new head
             if(hs.contains(num - 1)) continue;
             int currMax = 1;
             while(hs.contains(num + 1)){
