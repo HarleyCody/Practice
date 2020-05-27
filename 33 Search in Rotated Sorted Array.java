@@ -1,4 +1,44 @@
-_________________________________________________________________O(logN)valid Solution___________________________________________
+_______________________________________________________________Best Solution_____________________________________________________________
+class Solution {
+    // creteria for binary search
+    // one of two halves of divided nums is sorted
+    // if num is in sorted range, keep searching in range;
+    // otherwise searching the other part(Unsorted part);
+    public boolean search(int[] nums, int target) {
+        if (nums.length == 0) return false;
+        
+        return search(nums, target, 0, nums.length - 1);
+    }
+    
+    public boolean search(int[] nums, int target, int low, int high) {
+        System.out.println("searching in range " + low + " " + high);
+        int mid = (low + high) / 2;
+        
+        if (nums[mid] == target) {
+            return true;
+        }
+        
+        if (low > high) {
+            return false;
+        }
+        
+        if (nums[low] <= nums[mid]) { // The left half of the array is sorted
+            if (nums[low] <= target && nums[mid] >= target) { // The element exists in the left half
+                return search(nums, target, low, mid - 1);    
+            } else { // The element exists in the right half
+                return search(nums, target, mid + 1, high);
+            }
+        }
+        
+		// The right half of the array is sorted
+        if (nums[mid] <= target && nums[high] >= target) { // The element exists in the right half
+            return search(nums, target, mid + 1, high);
+        } else { // The element exists in the left half
+            return search(nums, target, low, mid - 1);
+        }
+    }
+}
+_________________________________________________________________O(logN)Naive binary search Solution___________________________________________
 class Solution {
     public int search(int[] nums, int target) {
         if(nums.length == 0) return -1;
