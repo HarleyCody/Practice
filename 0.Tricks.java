@@ -150,3 +150,22 @@ ____________________________________________________HashMap SubMap()____________
 2: HashMap.subMap(from key, boolean, to key, boolean); boolean claims the key is inclusive or not
 
 Submap can be used as reducing the range of searching, faster the program.
+  
+____________________________________________________________Comparable Class Exercise____________________________________________________________
+In Question 407 trapping water 2
+//Impletement Comparable and compareTo(Object other){}
+class Solution {
+    private static class Wall implements Comparable<Wall> {
+        int row;
+        int col;
+        int value;
+        Wall(int row, int col, int value){
+            this.row = row;
+            this.col = col;
+            this.value = value;
+        }
+        @Override
+        public int compareTo(Wall wall) {
+            return value - wall.value;
+        }
+    }
