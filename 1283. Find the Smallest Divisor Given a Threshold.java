@@ -2,6 +2,7 @@ ______________________________________________________________Best Solution_____
 class Solution {
     // Improvement: 1 sum += (x + divisor - 1) / divisor
     // 2 val > threshold use l = m + 1 first
+    // 3 l start from 1 not 0
     public int smallestDivisor(int[] nums, int threshold) {
         int left = 1, right = 1000000;
         while (left < right) {
