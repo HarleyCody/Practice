@@ -18,6 +18,8 @@ class Solution {
 ________________________________________________________________Improved Solution(Best)___________________________________________________
 class Solution {
     // Improvement, only related to previous status, so use varaible not array to proceed dp;
+    // rob1: from first to second last, rob2: from second to last
+    // do not calculate rob1 from start to last => do not have to consider when rob1 != rob2 and update rob1 to from frist to second last
     public int rob(int[] nums) {
         int len = nums.length; 
         if(len == 0){
@@ -26,32 +28,26 @@ class Solution {
         if(len == 1){
             return nums[0];
         }
-        
-        int max1 = 0, max2 = 0;
+        //do not rob first
+        int max1 = 0;
         int notRob = 0, rob = nums[1], prevRob = 0;
         for(int i = 2; i < len; ++i){
             prevRob = rob;
             rob = notRob + nums[i];
             notRob = Math.max(notRob, prevRob);
         }
+        max1 = Math.max(notRob, rob);
         
-        max2 = Math.max(notRob, rob);
-        
-        prevRob = 0;
-        notRob = 0;
-        rob = nums[0];
-        for(int i = 1; i < len; ++i){
+        // do not rob last
+        int max2 = 0;
+        notRob = 0; rob = nums[0]; prevRob = 0;
+        for(int i = 1; i < len - 1; ++i){
             prevRob = rob;
             rob = notRob + nums[i];
             notRob = Math.max(notRob, prevRob);
         }
-        max1 = Math.max(notRob, rob);
+        max2 = Math.max(notRob, rob);
         
-        if(max2 == max1){
-            return max2;
-        }
-        
-        max1 = Math.max(notRob, prevRob);
         return Math.max(max1, max2);
     }
 }
