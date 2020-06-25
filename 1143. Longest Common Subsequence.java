@@ -1,3 +1,27 @@
+__________________________________________________________________________Best Solution(Imporved 1d dp)___________________________________________________________________
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {    
+        final char[] t1 = text1.toCharArray(), t2 = text2.toCharArray();
+        final int l2 = t2.length;
+
+        int[] inc = new int[l2 + 1];
+
+        for (char c : t1) {
+            int prev = 0;
+            for (int j = 0; j < l2; j++) {
+                int tmp = inc[j + 1];
+                if (c == t2[j]) {
+                    inc[j + 1] = prev + 1;
+                } else if (inc[j] > inc[j + 1]) {
+                    inc[j + 1] = inc[j];
+                }
+                prev = tmp;
+            }
+        }
+
+        return inc[l2];
+    }
+}
 ____________________________________________________________________________My Solution(Imporved dp)___________________________________________________________________
 class Solution {
 //two scenarios equal or not
