@@ -1,3 +1,4 @@
+________________________________________________________________________________________Best Solution_______________________________________________________________________________
 class Solution {
     // one scan get height layer by layer, once heights differ than 1 return -1, reach bottom go up;
     public boolean isBalanced(TreeNode root) {
