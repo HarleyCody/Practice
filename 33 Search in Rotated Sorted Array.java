@@ -11,7 +11,6 @@ class Solution {
     }
     
     public boolean search(int[] nums, int target, int low, int high) {
-        System.out.println("searching in range " + low + " " + high);
         int mid = (low + high) / 2;
         
         if (nums[mid] == target) {
