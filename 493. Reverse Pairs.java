@@ -1,3 +1,32 @@
+_______________________________________________________________________________Best Solution____________________________________________________________________________________
+class Solution {
+    public int reversePairs(int[] nums) {
+        return mergeSort(nums, 0, nums.length, new int[nums.length]);
+    }
+    private int mergeSort(int[] nums, int lo, int hi, int[] temp) {
+        if (hi - lo < 2) return 0;
+        int mid = (lo + hi) >> 1;
+        int cur = mergeSort(nums, lo, mid, temp) + mergeSort(nums, mid, hi, temp);
+        //find first element > nums[r] * 2 accumulate num
+        for (int irp = lo, r = mid; irp < mid && r < hi; ++r) {
+            irp = nextGT(nums, irp, mid, (long) nums[r] << 1);
+            cur += mid - irp;
+        }
+        System.arraycopy(nums, lo, temp, lo, hi - lo);
+        // merge sort low to hi (merge sort temp[lo ~ mid] and temp[mid ~ hi])
+        for (int l = lo, r = mid, i = lo; l != mid; ++i, ++l) {
+            while (r != hi && temp[r] < temp[l]) nums[i++] = temp[r++];
+            nums[i] = temp[l];
+        }
+        return cur;
+    }
+    
+    // find next greater than targer
+    private int nextGT(int[] nums, int lo, int mid, long target) {
+        while (lo < mid && nums[lo] <= target) ++lo;
+        return lo;
+    }
+}
 __________________________________________________________________________________Bit____________________________________________________________________________________
 public class Solution {
     //https://leetcode.com/problems/reverse-pairs/discuss/97268/General-principles-behind-problems-similar-to-%22Reverse-Pairs%22
