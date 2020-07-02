@@ -1,5 +1,6 @@
 __________________________________________________________________________________Best Solution________________________________________________________________________________
 class Solution {
+    // conunt and extend one by one, 
     public boolean isNStraightHand(int[] hand, int W) {
         
         boolean[] visited = new boolean[hand.length];
