@@ -80,3 +80,56 @@ while(low < high){
 arr[l] = pivot;
 quickSort(arr, l, low - 1);
 quickSort(arr, low , low + 1);
+
+________________________________________________________________________Merge Sort________________________________________________________________________
+Merge sort can do both sort and check relation between left and right part, eg how many numbers in right are less than num[l]
+Can only concentrate on half of nums and count the num that num[l] < num[r] and update cnt[l] by += num
+(image how to do this in both sorted num array)
+private void mergesort(int[] nums, int start, int end){
+    if(end <= start){
+        return;
+    }
+    int mid = (start + end) / 2;
+    mergesort(nums, start, mid);
+    mergesort(nums, mid + 1, end);
+
+    merge(nums, start, end);
+}
+private void merge(int[] nums, int start, int end){
+    int mid = (start + end) / 2;
+    int l = start;
+    int r = mid+1;
+    int rightcount = 0;    	
+    int[] new_indexes = new int[end - start + 1];
+
+    // right is in the later part, so if num[r] < num[l], it should add num that l < r;
+    int sort_index = 0;
+    while(l <= mid && r <= end){
+        // calcualte how many nums are less than l;
+        if(nums[indexes[r]] < nums[indexes[l]]){
+            // place r at sort_index
+            new_indexes[sort_index] = indexes[r];
+            ++rightcount;
+            ++r;
+        }else{
+            // update count to l, as nums[r] >= nums[l] means the num in right later than r are all larger than nums[l];
+            // count is accumlative, count from small range to big range, as only concentrate on the other half,
+            new_indexes[sort_index] = indexes[l];
+            count[indexes[l]] += rightcount;
+            ++l;
+        }
+        ++sort_index;
+    }
+    while(l <= mid){
+        new_indexes[sort_index] = indexes[l];
+        count[indexes[l]] += rightcount;
+        ++l;
+        ++sort_index;
+    }
+    while(r <= end){
+        new_indexes[++sort_index] = indexes[++r];
+    }
+    for(int i = start; i <= end; ++i){
+        indexes[i] = new_indexes[i - start];
+    }
+}  
