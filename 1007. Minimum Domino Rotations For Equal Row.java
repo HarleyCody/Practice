@@ -2,6 +2,9 @@ __________________________________________________________________Concise Soluti
 class Solution {
     // only one number from {A[0], B[0]} can form equal value arr
     // if A can form assured that B cannot form the value, so just return ans when All is A
+    
+    // As only one can form, this can also be solved by get set 1 - 6 and retain number that occurs every time
+    // in the end there will not be one number left
     public int minDominoRotations(int[] A, int[] B) {
         int n = A.length;
         for (int i = 0, a = 0, b = 0; i < n && (A[i] == A[0] || B[i] == A[0]); ++i) {
