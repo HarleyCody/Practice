@@ -133,3 +133,24 @@ private void merge(int[] nums, int start, int end){
         indexes[i] = new_indexes[i - start];
     }
 }  
+__________________________________________________________________________________TreeMap Sorted by key______________________________________________________________________
+Sorted by key both (logN) at get and put
+but when check range it can use FloorKey and CielingKey to find closes smaller and larger value, both O(logN)
+class MyCalendar {
+    TreeMap<Integer, Integer> calendar;
+
+    MyCalendar() {
+        calendar = new TreeMap();
+    }
+
+    public boolean book(int start, int end) {
+        Integer prev = calendar.floorKey(start),
+                next = calendar.ceilingKey(start);
+        if ((prev == null || calendar.get(prev) <= start) &&
+                (next == null || end <= next)) {
+            calendar.put(start, end);
+            return true;
+        }
+        return false;
+    }
+}
