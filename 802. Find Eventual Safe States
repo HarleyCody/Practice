@@ -1,0 +1,44 @@
+_____________________________________________________________________________My Solution_______________________________________________________________________
+class Solution {
+    // dfs reach to bottom, derives current from later part
+    List<Integer> ans = new ArrayList();
+    boolean[] visited;
+    int[] status;
+    int n;
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        n = graph.length;
+        status = new int[n];
+        visited = new boolean[n];
+        
+        for(int i = 0; i < n; ++i){
+            if(status[i] == 1 || check(graph, i)){
+                ans.add(i);
+            }
+        }
+        return ans;
+    }
+    
+    private boolean check(int[][] graph, int s){
+        if(visited[s]){
+            return false;
+        }
+        if(graph[s].length == 0){
+            status[s] = 1;
+            return true;
+        }
+        
+        if(status[s] != 0){
+            return status[s] == 1;
+        }
+        
+        visited[s] = true;
+        boolean isSafe = true;
+        for(int i : graph[s]){
+            isSafe &= check(graph, i);
+        }
+        
+        status[s] = isSafe ? 1 : -1;
+        visited[s] = false;
+        return isSafe;
+    }
+}
