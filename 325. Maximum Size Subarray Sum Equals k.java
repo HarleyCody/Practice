@@ -1,3 +1,29 @@
+________________________________________________________________Best Solution________________________________________________________________________________________
+class Solution {
+    // two sum
+    // use hashmap to record sum and index, i alwyas be the leftest index for sum[i];
+    // sum[i] - k == sum[left], i is right point, left is left point
+    // i - left + 1 == length, as nums[idx] include idx, so the left = idx + 1
+    // i - idx - 1 + 1 = i - idx;
+    public int maxSubArrayLen(int[] nums, int k) {
+        if (nums.length == 0) return 0;
+        
+        int max = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        for (int i=0; i<nums.length; i++) {
+            nums[i] += (i == 0 ? 0 : nums[i-1]);
+            map.putIfAbsent(nums[i], i);
+        }
+        
+        for (int i=nums.length-1; i >= max; i--) {
+            if (map.containsKey(nums[i] - k)) max = Math.max(max, i - map.get(nums[i]-k));           
+        }
+        
+        return max;
+        
+    }
+}
 __________________________________________________________________My Solution________________________________________________________________________________________
 class Solution {
     // tarSum = sum - prevSum[i] - latSum[j];
