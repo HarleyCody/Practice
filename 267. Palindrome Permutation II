@@ -1,0 +1,58 @@
+class Solution {
+    // place char in ansChars one by one
+    // construct string through ansChars
+    // input contains two chars with odd freq will return empty list directly
+    // for char == null, it should be char == 0;
+    List<String> ans = new ArrayList();
+    int[] freq = new int[256];
+    char[] chs;
+    int len;
+    public List<String> generatePalindromes(String s) {
+        chs = s.toCharArray();
+        len = chs.length; 
+        for(char c : chs){
+            ++freq[c];
+        }
+        
+        char midChar = 0;
+        for(int i = 0; i < 256; ++i){
+            if(freq[i] % 2 == 1){
+                if(midChar != 0){
+                    return ans;
+                }
+        
+                midChar = (char)i;
+            }
+        }
+        
+        char[] ansChars = new char[len];
+        int mid = (len - 1) / 2;
+        if(midChar != 0){
+            ansChars[mid] = midChar;
+            --freq[midChar];
+            --mid;
+        }
+        
+        construct(ansChars, mid, midChar == 0 ? mid + 1 : mid + 2);
+        
+        return ans;
+    }
+    
+    private void construct(char[] ansChs, int lPos, int rPos){
+        if(lPos == -1){
+            ans.add(new String(ansChs));
+        }
+        
+        for(int i = 0; i < 256; ++i){
+            if(freq[i] == 0){
+                continue;
+            }
+            
+            ansChs[lPos] = (char)i;
+            ansChs[rPos] = (char)i;
+            freq[i] -= 2;
+            construct(ansChs, lPos - 1, rPos + 1);
+            freq[i] += 2;
+        }
+    }
+}
