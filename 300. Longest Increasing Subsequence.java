@@ -50,8 +50,6 @@ class Solution {
         return low;
     }
 }
-
-
 __________________________________________________________My Solution______________________________________________________________________
 class Solution {
     public int lengthOfLIS(int[] nums) {
