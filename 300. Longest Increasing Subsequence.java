@@ -1,3 +1,22 @@
+___________________________________________________________________Best Solution_________________________________________________________
+public class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        int len = 0;
+        for (int num : nums) {
+            int i = Arrays.binarySearch(dp, 0, len, num);
+            if (i < 0) {
+                i = -(i + 1);
+            }
+            dp[i] = num;
+            if (i == len) {
+                // largest element among dp, i is len. in current dp
+                ++len;
+            }
+        }
+        return len;
+    }
+}
 _____________________________________________________Better Solution with Binary Search___________________________________________________
 class Solution {
     public int lengthOfLIS(int[] nums) {
@@ -52,24 +71,5 @@ class Solution {
             ans = Math.max(dp[i], ans);
         }
         return ans;
-    }
-}
-___________________________________________________________________Better Solution_________________________________________________________
-public class Solution {
-    public int lengthOfLIS(int[] nums) {
-        int[] dp = new int[nums.length];
-        int len = 0;
-        for (int num : nums) {
-            int i = Arrays.binarySearch(dp, 0, len, num);
-            if (i < 0) {
-                i = -(i + 1);
-            }
-            dp[i] = num;
-            if (i == len) {
-                // largest element among dp, i is len. in current dp
-                ++len;
-            }
-        }
-        return len;
     }
 }
