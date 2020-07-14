@@ -52,12 +52,12 @@ class Solution {
 }
 __________________________________________________________My Solution______________________________________________________________________
 class Solution {
+    //dp[i] longest increase subsequence until nums[i];
     public int lengthOfLIS(int[] nums) {
         int len = nums.length, ans = 0, max = 1;
         if(len < 2) return len;
         int dp[] = new int[len];
         dp[0] = 1;
-        if( len < 2) return len;
         for(int i = 1; i < len; ++i){
             max = 0;
             for(int j = 0; j < i; ++j ){
