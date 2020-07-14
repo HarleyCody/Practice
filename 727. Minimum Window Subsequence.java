@@ -15,6 +15,7 @@ class Solution {
                     //check optimization from right to left of T
                     // find start
                     while(--tindex >= 0) {
+                        // as tindex == tlen, before --tindex and sindex should compare with tlen - 1
                         while(s[sindex--] != t[tindex]);
                     }
                     // go back to the first point they met
