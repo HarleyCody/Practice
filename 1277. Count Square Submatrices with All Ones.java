@@ -1,3 +1,37 @@
+_____________________________________________________________________________Best Solution___________________________________________________________________________
+class Solution {
+    // dp
+    // matrix[i][j] record the max length of matrix that can be form with point[i][j] being the right bottom corner;
+    // current matrix[i][j] = min(left, top, left top);
+    public int countSquares(int[][] matrix) {
+        int row = matrix.length, col = matrix[0].length;
+        int count = 0;
+        for(int i=0; i<row; i++) {
+            count += matrix[i][0];
+        }
+        for(int j=1; j<col; j++) {
+            count += matrix[0][j];
+        }
+        
+        for(int i=1; i<row; i++) {
+            for(int j=1; j<col; j++) {
+                if(matrix[i][j] != 1) continue;
+                int a = matrix[i][j-1];
+                int b = matrix[i-1][j-1];
+                int c = matrix[i-1][j];
+                if(a != 0 && b != 0 && c != 0) {
+                    int min = Math.min(a, Math.min(b,c));
+                    // min is the number of squares that has matrix(i,j) as right bottom coner, side > 1;
+                    // + 1 as matrix[i][j] is square with side = 1;
+                    matrix[i][j] = min + 1;
+                }
+                // 
+                count += matrix[i][j];
+            }
+        }
+        return count;
+    }
+}
 ______________________________________________________________________________My Solution______________________________________________________________________________
 class Solution {
     //get height of consecutive 1
