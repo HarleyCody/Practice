@@ -36,8 +36,8 @@ Arrays.sort( arr, new Comparator<String | Integer| ...>(){
     }
 });
 In comparator, 2nd param is old element, 1st is new element, 
-if ascending( when new < old, need swap) swap only occurs when return negative, so == return new - old;
-if descending( when new > old, need swap) swap only occurs when return negative, so == return old - new;
+if ascending( when new < old, need swap) swap only occurs when return positive, so == return new - old;
+if descending( when new > old, need swap) swap only occurs when return positive, so == return old - new;
 Key is getting negative result.
 
 
