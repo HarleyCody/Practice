@@ -1,6 +1,8 @@
 class Solution {
     // sliding window get certain range of valid array
     // calculate the number of subsequence
+    // pow[high - low] means start from low with rest high - low numbers to construct sequence(total hight - low + 1 nums)
+    // so there is not duplicate as it has start from low 
     private static final int MOD = 1000000007;
     public int numSubseq(int[] nums, int target) {
         long[] modPow = new long[nums.length + 1];
