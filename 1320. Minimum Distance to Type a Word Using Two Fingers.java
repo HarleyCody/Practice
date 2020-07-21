@@ -1,3 +1,46 @@
+________________________________________________________________________________My Best Solution________________________________________________________________________
+class Solution {
+    // improve use array instead of hashMap
+    // dfs + memoization
+    // recorder[i][hash] record the minDis when charAt(i)[fin1 * 27 + fin0]
+    int ans = Integer.MAX_VALUE;
+    int[][] recorder;
+    public int minimumDistance(String word) {
+        recorder = new int[word.length()][730];
+        return type(word.toCharArray(), 0, 26, 26);
+    }
+    
+    private int type(char[] chs, int idx, int fin0, int fin1){
+        if(idx == chs.length){
+            return 0;
+        }
+        
+        Integer key = fin0 * 27 + fin1;
+        if(recorder[idx][key] != 0){
+            return recorder[idx][key];
+        }
+        
+        int ans = Integer.MAX_VALUE;
+        
+        int[] tar = getPos(chs[idx] - 'A');
+        int curDis = fin0 == 26 ? 0 : getDis(tar, getPos(fin0));
+        
+        ans = Math.min(ans, curDis + type(chs, idx + 1, chs[idx] - 'A', fin1));
+        curDis = fin1 == 26 ? 0 : getDis(tar, getPos(fin1));
+        ans = Math.min(ans, curDis + type(chs, idx + 1, fin0, chs[idx] - 'A'));
+        
+        recorder[idx][key] = ans;
+        return ans;
+    }
+    
+    private int[] getPos(int hash){
+        return new int[]{hash / 6, hash % 6};
+    }
+    
+    private int getDis(int[] a, int[] b){
+        return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+    }
+}
 ________________________________________________________________________________My Solution________________________________________________________________________
 class Solution {
     // dfs + memoization
