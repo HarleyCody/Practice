@@ -38,6 +38,14 @@ public int checkRecord(int n) {
     return pow(A, n + 1)[5][2];
 }
 ___________________________________________________________________________________DP Solution O(n) ____________________________________________________________________________
+// When n ≥ 4, the 3 formulas
+
+// A(n) = noAP(n - 1) + noAL(n - 1), n ≥ 2.
+// noAP(n) = noAP(n - 1) + noAL(n - 1), n ≥ 2.
+// noAL(n) = noAP(n - 1) + noAP(n - 2), n ≥ 3.
+// can be simplified to
+
+// A(n) = A(n - 1) + A(n - 2) + A(n - 3), n ≥ 4.
 https://leetcode.com/problems/student-attendance-record-ii/discuss/101643/Share-my-O(n)-C%2B%2B-DP-solution-with-thinking-process-and-explanation
 public class Solution {
     long M = 1000000007;
