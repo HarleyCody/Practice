@@ -3,6 +3,8 @@ class Solution {
     // bit mask will only record bit difference between two numbers which only appear once
     // eg 3(011) 5 (101) bitmask (110)
     // lowbit represent the difference between these two numbers;
+    // as lowbit, only one of ans number will contains this bit, other number contains this bit will be XOR by the other same one
+    // find first by lowbit and the otherone is calculated by bitmask ^x to trade off x 
     public int[] singleNumber(int[] nums) {
         // difference between two numbers (x and y) which were seen only once
         int bitmask = 0;
@@ -18,8 +20,7 @@ class Solution {
 
         return new int[]{x, bitmask^x};
     }
-}
-________________________________________________________________________________My Solution________________________________________________________________________
+}______________________________________________________________________________My Solution________________________________________________________________________
 // hash set only record number appears once
 class Solution {
     public int[] singleNumber(int[] nums) {
