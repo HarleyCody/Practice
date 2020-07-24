@@ -5,6 +5,7 @@ class Solution {
         while (sx < tx && sy < ty)
             if (tx < ty) ty %= tx;
             else tx %= ty;
+        // can reach to the final point
         return sx == tx && sy <= ty && (ty - sy) % sx == 0 ||
                sy == ty && sx <= tx && (tx - sx) % sy == 0;
     }
@@ -19,7 +20,6 @@ class Solution {
     }
     
     private boolean search (int sx, int sy, int tx, int ty){
-        //System.out.println("searching at " + sx + " " + sy);
         if(sx > tx || sy > ty){
             return false;
         }
