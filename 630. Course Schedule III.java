@@ -1,3 +1,30 @@
+________________________________________________________________________________Bestt PQ Solution________________________________________________________________________________
+class Solution {
+    public int scheduleCourse(int[][] courses) {
+        Arrays.sort(courses, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] - o2[1];
+            }
+        });
+        
+        PriorityQueue<Integer> q = new PriorityQueue<Integer>((a, b) -> b - a);
+        
+        int time = 0;
+        for(int[] c: courses) {
+            // improved
+            // if current courses is most time consuming then continue;
+            if(time + c[0] <= c[1]) {
+                q.offer(c[0]);
+                time += c[0];
+            } else if(!q.isEmpty() && q.peek() > c[0]) {
+                time += c[0] - q.poll();
+                q.offer(c[0]);
+            }
+        }
+        return q.size();
+    }
+}
 ________________________________________________________________________________PQ Solution________________________________________________________________________________
 class Solution {
     // nlog,
