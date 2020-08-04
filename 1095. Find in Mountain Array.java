@@ -1,8 +1,8 @@
 class Solution {
-    
     // find peakId then find in left part and right part
     // find peak by comparing it with left val and right val
     // find left and right part by comparing its value, normal binary search
+    
     public int findInMountainArray(int target, MountainArray mountainArr) {
         int len = mountainArr.length();
 
@@ -55,6 +55,6 @@ class Solution {
                 }
             }
         }
-        return isAscending ? (ma.get(r) == tar ? r : -1)  : ma.get(l) == tar ? l : -1;
+        return ma.get(r) == tar ? r : -1;
     }
 }
