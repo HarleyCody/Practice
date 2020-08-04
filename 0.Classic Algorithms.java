@@ -74,3 +74,30 @@ public class Solution {
         }
     }
 }
+_________________________________________________________________________________Binary Seach_________________________________________________________________________
+// start from left to right, choose mid, right only change when it is possible eaqual to target;
+// otherwise change left = m + 1;
+// return right only
+
+//Ascending order;
+while(l < r){
+  int m = (l + r) / 2;
+  if(arr[m] >= tar){
+      r = m;
+  }else{
+      l = m + 1;
+  }
+  return r;
+}
+//Descending order;
+while(l < r){
+  int m = (l + r) / 2;
+  if(arr[m] > tar){
+      l = m - 1;
+  }else{
+      r = m;
+  }
+  return r;
+  
+  
+}
