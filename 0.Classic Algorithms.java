@@ -97,7 +97,33 @@ while(l < r){
   }else{
       r = m;
   }
-  return r;
-  
-  
+  return r; 
 }
+____________________________________________________________________________Longest Palindrom Subsequence________________________________________________________________
+private int lengthOfLPS(String s) {
+    int L = s.length();
+    if (L < 2) {
+        return L;
+    }
+    char[] ca = s.toCharArray();
+    int[] curr = new int[L];
+    int[] prev = new int[L];
+    for (int i = L - 1; i >= 0; --i) {
+        curr[i] = 1;
+        for (int j = i + 1; j < L; ++j) {
+            curr[j] = ca[i] == ca[j] ? 2 + prev[j - 1] : curr[j] = Math.max(prev[j], curr[j-1]);
+        int[] tmp = prev;
+        prev = curr;
+        curr = tmp;
+    }
+    return prev[L-1];
+}
+____________________________________________________________________________Longest Common String________________________________________________________________
+  public int minInsertions(String s) {
+      int n = s.length();
+      int[][] dp = new int[n+1][n+1];
+      for (int i = 0; i < n; ++i)
+          for (int j = 0; j < n; ++j)
+              dp[i + 1][j + 1] = s.charAt(i) == s.charAt(j) ? dp[i][j] + 1 : Math.max(dp[i][j + 1], dp[i + 1][j]);
+      return n - dp[n][n];
+  }
