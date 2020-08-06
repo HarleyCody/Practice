@@ -1,3 +1,36 @@
+_____________________________________________________________________________Best Solution____________________________________________________________________________
+//Guess palindrom one by one, increase one unit and try to make valid palindrome;
+class Solution {
+    public String nearestPalindromic(String n) {
+        Long num = Long.parseLong(n);
+        Long temp = num;
+        Long largeBound = num-1;
+        Long smallBound = num+1;
+        long unit = 1;
+        for(int i = 0; i < n.length() / 2 - 1; ++i){
+            unit = unit * 10;
+        }
+        System.out.println(unit);
+        while(largeBound <= num){
+            largeBound = makePalidromic(temp += unit);
+        }
+        while(smallBound >= num){
+            smallBound = makePalidromic(temp -= unit);
+        }
+        return num - smallBound <= largeBound - num ? String.valueOf(smallBound) : String.valueOf(largeBound);
+    }
+    
+    private long makePalidromic(long num){
+        char[] arr = String.valueOf(num).toCharArray();
+        int left = 0;
+        int right = arr.length-1;
+        while(left < right){
+            arr[right--] = arr[left++];
+        }
+        return Long.parseLong(new String(arr));
+    }
+}
+_______________________________________________________________________________My Solution____________________________________________________________________________
 //find upper and lower compare then return;
 //find upper, +1 from center to sides to check if its ':' which leads overflow
 //find lower, if input is all zero, return all 9, -1from center to sides to check if its '/', which leads overflow
