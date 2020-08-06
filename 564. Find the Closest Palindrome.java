@@ -10,7 +10,6 @@ class Solution {
         for(int i = 0; i < n.length() / 2 - 1; ++i){
             unit = unit * 10;
         }
-        System.out.println(unit);
         while(largeBound <= num){
             largeBound = makePalidromic(temp += unit);
         }
