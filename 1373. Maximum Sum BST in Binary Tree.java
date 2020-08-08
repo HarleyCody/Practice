@@ -1,3 +1,49 @@
+________________________________________________________________________Best Solution_____________________________________________________________________
+// check leftMax and right min make sure Lmax < cur < Rmin and collect ans
+class Solution {
+    int greatestBSTSum = 0;
+    public int maxSumBST(TreeNode root) {
+        getBSTSum(root);
+        return greatestBSTSum;
+    }
+    
+    private int getBSTSum(TreeNode thisNode) {
+        if (thisNode == null) {
+            return 0;
+        }
+        
+        int left = getBSTSum(thisNode.left);
+        int right = getBSTSum(thisNode.right);
+        if (left == Integer.MIN_VALUE || right == Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+        if (thisNode.left != null) {
+            TreeNode greatestLeft = thisNode.left;
+            while (greatestLeft.right != null) {
+                greatestLeft = greatestLeft.right;
+            }
+            if (greatestLeft.val >= thisNode.val) {
+                return Integer.MIN_VALUE;
+            }
+        }
+        if (thisNode.right != null) {
+            TreeNode smallestRight = thisNode.right;
+            while (smallestRight.left != null) {
+                smallestRight = smallestRight.left;
+            }
+            if (smallestRight.val <= thisNode.val) {
+                return Integer.MIN_VALUE;
+            }
+        }
+        
+        int sum = left + right + thisNode.val;
+        if (sum > greatestBSTSum) {
+            greatestBSTSum = sum;
+        }
+        return sum;
+    }
+}
+_________________________________________________________________________My Solution________________________________________________________________________________________
 // bottom up, post order 
 // record min max in each subtree.
 // if in curNode it cannot be form BST, sign set to zero, val,min,max == cur.val(means bst ends here, continue bottom up);
@@ -38,7 +84,6 @@ class Solution {
             curVal += l[1] + r[1];
             ans = Math.max(ans, curVal);
         }
-        
         return new int[]{curSign, curVal, curMin, curMax};
     }
 }
