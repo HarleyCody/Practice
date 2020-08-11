@@ -1,8 +1,7 @@
 ________________________________________________________________________________Best Solution________________________________________________________________________________
-// low hight record boarder the lower day and higher day that first left, and bulb will turn on
-// check range
-// bNum only have k + 1 slot to check
-// improved from 2nd best solution, does not need math.max and return directly
+// low hight record boarder the lower idx and higher idx that first left, and bulb will turn on
+// check range day by day so must be empty if find any position
+// space compressed by % bSize as there might be some bulbs never light up.
 class Solution {
     public int kEmptySlots(int[] bulbs, int k) {
         int n = bulbs.length;
@@ -32,6 +31,7 @@ class Solution {
                 }
             }
         }
+        
         return -1;
     }
 }
