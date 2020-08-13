@@ -1,3 +1,41 @@
+________________________________________________________________________________Best Solution (1ms faster)________________________________________________________________________________
+// treat ans chars[] as stack, modify chars directly
+// donot need for loop to compose every time
+class CombinationIterator {
+    char[] cur, dic;
+    boolean hasNext;
+    int n;
+    public CombinationIterator(String characters, int L) {
+        cur = characters.substring(0, L).toCharArray();
+        dic = characters.toCharArray();
+        n = dic.length;
+        hasNext = true;
+    }
+    
+    public String next() {
+        if(!hasNext) return "";
+        String res = new String(cur);
+        int L = cur.length;
+        int i = cur.length - 1, j = dic.length - 1;
+        while(i >= 0 && cur[i] == dic[j]){
+            i--;
+            j--;
+        }
+        if(i == -1){
+            hasNext = false;
+        }else{
+            int index = String.valueOf(dic).indexOf(cur[i]);
+            for( int k = i; k < L; k++) {
+                cur[k] = dic[++index];
+            }
+        }
+        return res;
+    }
+    
+    public boolean hasNext() {
+        return hasNext;
+    }
+}
 ________________________________________________________________________________My Best Solution________________________________________________________________________________
 // use array and index pointer instead of stack to record character postions of ans string
 class CombinationIterator {
