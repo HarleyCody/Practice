@@ -1,6 +1,12 @@
 ____________________________________________________________Best Solution____________________________________________________________
 class Solution {
-    // instead of using pq, create a comparable class
+    // rules, start from boundary to collect water,
+    // wall with min height will dfs first, as how much water a hole can contains depends on the lowest wall around it.
+    // as visit wall from low to high, when low visited a hole, fill that hole with the wall value.
+    // only lable visited from high and low walls as they cannot collect the wall.( water is collected by current wall);
+    // if meet higher wall, save it to pq, otherwise collect water by min - height
+    
+    // instead of using lambda, create a comparable class
     private int water = 0;    
     private boolean[][] visited;
     // faster speed, cause some node has been visited but still in pq, so use count to record times
@@ -61,11 +67,7 @@ class Solution {
 
 
     public void fill(int row, int col, int min, PriorityQueue<Wall> pq, int[][] heightMap) {
-        if (row < 0 || col < 0) {
-            return;
-        } else if (row >= heightMap.length || col >= heightMap[0].length) {
-            return;
-        } else if (visited[row][col]) {
+        if (row < 0 || col < 0 || row >= heightMap.length || col >= heightMap[0].length || visited[row][col]) {
             return;
         } else if (heightMap[row][col] >= min) {
             Wall wall1 = new Wall(row, col, heightMap[row][col]);
