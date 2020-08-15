@@ -1,5 +1,6 @@
 ______________________________________________________Best Solution(pq + bfs)__________________________________________________
 //use dq to bfs, dq is inserted by detour distance
+//min dis = manhatan dis + 2 detour dis. as detour will go out and get back.
 class Solution {
     int N;
     int M;
