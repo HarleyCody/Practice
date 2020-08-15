@@ -1,4 +1,76 @@
 ______________________________________________________Best Solution(pq + bfs)__________________________________________________
+//use dq to bfs, dq is inserted by detour distance
+class Solution {
+    int N;
+    int M;
+    List<List<Integer>> forest;
+    public int cutOffTree(List<List<Integer>> forest) {
+        this.forest=forest;
+        N = forest.size();
+        if(N==0) return 0;
+        M = forest.get(0).size();
+        if(M==0) return 0;
+        PriorityQueue<int[]> pq = getForestByHeight();
+        int cost=0;
+        int[] prevTree = new int[]{0,0,0};
+        while(!pq.isEmpty()){
+            int[] nextTree = pq.poll();
+            int nextCost=getCost(prevTree,nextTree);
+            if(nextCost==-1) return -1;
+            prevTree=nextTree;
+            cost+=nextCost;
+        }
+        
+        return cost;
+    }
+    
+    private int getCost(int[] prevTree,int[] nextTree){
+        boolean[] visited = new boolean[M*N];
+        int tR=nextTree[1];
+        int tC=nextTree[2];
+        ArrayDeque<int[]> dq = new ArrayDeque();
+        dq.addFirst(new int[]{0,prevTree[1],prevTree[2]});
+        while(!dq.isEmpty()){
+            int[] curr = dq.pollFirst();
+            int extra = curr[0];
+            int sR = curr[1];
+            int sC = curr[2];
+            if(sR<0 || sC<0 || sR==N || sC==M || visited[sR*M+sC] || forest.get(sR).get(sC)==0 ) continue;
+            visited[sR*M+sC] =true;
+            // distance = Mathattan dis + detour distance 
+            if(sR==tR && sC==tC) return Math.abs(tR-prevTree[1])+Math.abs(tC-prevTree[2])+2*curr[0];
+            
+            if(sR>tR) dq.addFirst(new int[]{extra,sR-1,sC});
+            else dq.addLast(new int[]{extra+1,sR-1,sC});
+          
+            if(sR<tR) dq.addFirst(new int[]{extra,sR+1,sC});
+            else dq.addLast(new int[]{extra+1,sR+1,sC});
+           
+            if(sC>tC) dq.addFirst(new int[]{extra,sR,sC-1});
+            else dq.addLast(new int[]{extra+1,sR,sC-1});
+           
+            if(sC<tC) dq.addFirst(new int[]{extra,sR,sC+1});
+            else dq.addLast(new int[]{extra+1,sR,sC+1});
+             
+        }
+        return -1;
+    }
+    
+    private PriorityQueue<int[]> getForestByHeight(){
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0]-b[0]);
+        int i=0;
+        for(List<Integer> row : forest){
+            int j=0;
+            for(int height:row){
+                if(height>1) pq.add(new int[]{height,i,j});
+                j++;
+            }
+            i++;
+        }
+        return pq;
+    }
+}
+______________________________________________________Best Solution(pq + bfs)__________________________________________________
 class Solution {
 // mainly different is use Deque to bfs
 // calculate abs distance between cur to tar, if 0 return dis otherwise add adjs
