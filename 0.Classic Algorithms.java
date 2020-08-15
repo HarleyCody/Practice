@@ -128,3 +128,13 @@ public int minInsertions(String s) {
             dp[i + 1][j + 1] = s.charAt(i) == s.charAt(j) ? dp[i][j] + 1 : Math.max(dp[i][j + 1], dp[i + 1][j]);
     return dp[n][n];
 }
+____________________________________________________________________________Reverse ListNode________________________________________________________________
+    private void reverse(ListNode h, ListNode t){
+        ListNode p = h, c = h.next, n = h.next;
+        while(p != t){
+            n = n.next;
+            c.next = p;
+            p = c;
+            c = n;
+        }
+    }
