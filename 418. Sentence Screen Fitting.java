@@ -1,6 +1,10 @@
 ______________________________________________________________________________Best Solution______________________________________________________________________________
-// simulate one by one will TLE
 public class Solution {
+    // Sliding window to calcualte length of sentence start at word i;
+    // calcualte word by word and sentence by sentce to get total words can get
+    // totalword / num of words in sentece = sentence;
+    // dp[i] in a row start at i end at dp[i]; num of words = dp[i] - i;
+    
     // record end of starting from every word; to see how far a word can go;
     // only calculate row rows, num of word of each line is dp[start] - start;
     // update start to dp[start] / n; and calcualte next line;
@@ -18,7 +22,7 @@ public class Solution {
             // we can use it to count how many words one row has.
             while(len + sentence[prev % n].length() <= cols) len += sentence[prev++ % n].length() + 1;
             dp[i] = prev;
-            System.out.println("end at word " + sentence[prev % n]);
+            //System.out.println("end at word " + sentence[prev % n]);
         }
         int count = 0;
         // add line by line
