@@ -1,59 +1,52 @@
-_________________________________________________________My Solution(Array)____________________________________________________
+_________________________________________________________________________Best Solution(Array)______________________________________________________________________
 class MovingAverage {
-    // deque can add element to tail and remove outdated data from head;
-    // deque is faster than queue;
-    public Deque<Integer> q;
-    public int sum;
-    public int sz ;
+    // one pointers recorder tail(should be updated) to count sum;
+    // tail records value of previous kth element, subtract first and then update array
+    private int window;
+    private int[] array;
+    private double sum = 0.0;
+    private int tail = 0;
+    private int count = 0;
+
     /** Initialize your data structure here. */
     public MovingAverage(int size) {
-        q = new LinkedList<>() ;
-        sum = 0 ;
-        sz = size; 
+        window = size;
+        array = new int[size];
     }
-    // deque is faster than queue when it addLast rather than add removeFirst rather than remove() or poll();
+    
     public double next(int val) {
-        if(q.size() < sz){
-            sum += val ; 
-            q.addLast(val) ;
-        }
-        else if ( q.size() == sz){
-            int front = q.removeFirst() ; 
-            sum -= front; 
-            sum += val; 
-            q.addLast(val) ; 
-        }
-        return (sum * 1.0)/(q.size() * 1.0) ;
+        if(count < window)
+            count++;
+        sum -= array[tail];
+        sum += val;
+        array[tail] = val;
+        tail = (tail + 1) % window;
+        return sum / count;
     }
 }
-
-_________________________________________________________My Solution(Queue)____________________________________________________
+_________________________________________________________________________My Solution(List)______________________________________________________________________
 class MovingAverage {
-    // record val for sake of deleting when the size is reached.
-    Queue <Integer> recorder;
-    int s, nums, ans;
+    // maintain k value within sliding windows
+    // update sliding windows and sum.
     /** Initialize your data structure here. */
+    LinkedList<Integer> list = new LinkedList();
+    int size;
+    double sum = 0;
     public MovingAverage(int size) {
-        recorder = new LinkedList();
-        this.s = size;
-        nums = 0;
-        ans = 0;
+        this.size = size;
     }
-    // keep recording and adding to ans when the size is not reached, otherwise, delete firstone in the queue and add new val;
+    
     public double next(int val) {
-        if(nums < s){
-            ++nums;
+        sum += val;
+        list.offer(val);
+        double ans = 0.0;
+        if(list.size() > size){
+            sum -= list.poll();
+            ans = sum / size;
         }else{
-            ans -= recorder.poll();
+            ans = sum / list.size();
         }
-        ans +=val;
-        recorder.offer(val);
-        return (double) ans / nums;
+        
+        return ans;
     }
 }
-
-/**
- * Your MovingAverage object will be instantiated and called as such:
- * MovingAverage obj = new MovingAverage(size);
- * double param_1 = obj.next(val);
- */
