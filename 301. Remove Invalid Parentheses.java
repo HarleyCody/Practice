@@ -1,7 +1,12 @@
+_____________________________________________________________________________Best Solution_____________________________________________________________________________
 public class Solution {
+    // from left to right delete extra )
+    // from right to left delete extra (
+    // add answer;
+    // two pass;
     public List<String> removeInvalidParentheses(String s) {
-    List<String> ans = new ArrayList<>();
-    remove(s, ans, 0, 0, new char[]{'(', ')'});
+        List<String> ans = new ArrayList<>();
+        remove(s, ans, 0, 0, new char[]{'(', ')'});
     return ans;
 }
 
@@ -22,3 +27,4 @@ public class Solution {
             ans.add(reversed); // reversed has been reversed twice, due to left to right and right to left recursive. So the answer is in right order.
     }
 }
+_____________________________________________________________________________My Solution_____________________________________________________________________________
