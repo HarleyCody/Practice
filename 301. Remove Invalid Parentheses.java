@@ -28,3 +28,48 @@ public class Solution {
     }
 }
 _____________________________________________________________________________My Solution_____________________________________________________________________________
+// try every combination and filter results
+class Solution {
+    HashSet<String> total = new HashSet();
+    int maxLen = 0;
+    public List<String> removeInvalidParentheses(String s) {
+        build(s.toCharArray(), 0, 0, new StringBuilder());
+        
+        List<String> ans = new ArrayList();
+        for(String str : total){
+            if(str.length() == maxLen){
+                ans.add(str);
+            }
+        }
+        
+        return ans;
+    }
+    
+    private void build(char[] chs, int i, int cnt, StringBuilder sb){
+        if(cnt < 0){
+            return;
+        }
+        while(i < chs.length && chs[i] != ')' && chs[i] != '('){
+            sb.append(chs[i++]);
+        }
+        if(i == chs.length){
+            if(cnt == 0){
+                String ansStr = sb.toString();
+                maxLen = Math.max(ansStr.length(), maxLen);
+                total.add(sb.toString());
+            }
+            return;
+        }
+        StringBuilder next = new StringBuilder(sb);
+        build(chs, i + 1, cnt, next);
+        if(chs[i] == ')'){
+            next = new StringBuilder(sb);
+            next.append(chs[i]);
+            build(chs, i + 1, cnt - 1, next);
+        }else{
+            next = new StringBuilder(sb);
+            next.append(chs[i]);
+            build(chs, i + 1, cnt + 1, next);
+        }
+    }
+}
