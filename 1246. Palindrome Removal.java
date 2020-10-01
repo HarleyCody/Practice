@@ -1,5 +1,10 @@
-____________________________________________________________________________________Best Solution________________________________________________________________________
 class Solution {
+    /*
+        treat A[i] ~ A[k] isPalindrom so the times of deleting A[i] ~ A[k] is A[i + 1][k - 1]
+        eg. 2 -> 1 121-> 1      2,3 -> 2  1,2,3,1-> 2( delete 2 or 3 -> 1,3,1 or 1,2,1, then delete panlindrom) 
+        if (A[i] == A[K])
+            dp[i][j] = Math.min(dp[i + 1][K - 1] + dp[K + 1][j], dp[i][j]);            
+    */
     public int minimumMoves(int[] A) {
         int N = A.length;
         //  declare dp array and initialize it with 0s
