@@ -1,11 +1,58 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+________________________________________________________________________________My Solution________________________________________________________________________________
+// Merge sort
+// for the tail do not need to merge one by one as it is already sorted, just connect the head of the tail
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+
+        ListNode slow = head, fast = head;
+        ListNode prev = slow;
+        while(fast != null && fast.next != null){
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        prev.next = null;
+
+        ListNode h1 = sortList(head);
+        ListNode h2 = sortList(slow);
+        
+        if(h1 == null){
+            return h2;
+        }
+        if(h2 == null){
+            return h1;
+        }
+        
+        ListNode ans = null;
+        if(h1.val < h2.val){
+            ans = h1;
+            h1 = h1.next;
+        }else{
+            ans = h2;
+            h2 = h2.next;
+        }
+        
+        ListNode h = ans;
+        while(h1 != null && h2 != null){
+            if(h1.val < h2.val){
+                h.next = h1;
+                h = h.next;
+                h1 = h1.next;
+            }else{
+                h.next = h2;
+                h = h.next;
+                h2 = h2.next;
+            }
+        }
+        ListNode tail = h1 == null ? h2 : h1;
+        h.next = tail;
+        return ans;
+    }
+}
+_________________________________________________________________________________Best Solution________________________________________________________________________________
 class Solution {
     public ListNode sortList(ListNode head) {
         if(head == null || head.next == null)return head;//只有一个节点或者没有节点的时候返回，奇偶情况
