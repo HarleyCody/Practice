@@ -1,10 +1,14 @@
 _______________________________________________________________Best Solution__________________________________________________________
 // insert number one by one;
 // binary search, find the pre longest increasing subsequence(LIS) for num[i];
+    //Key. records in the list is sorted in descending order by this binary seach, 
+    //as it search longest length, the later part will be element larger than it
+    
 // as the num is insert from left to right, so once found, it must be in the left of num[i];
 // find correct position to insert into the list of (LIS) as binary search may only find minMax and maxMin for num[i]
 // list(dp) record the last number of LIS and times(accumulated by same length in previous number)
 // return the results in longest length;
+
 class Solution {
     public int findNumberOfLIS(int[] nums) {
         int size = nums.length;
