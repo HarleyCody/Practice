@@ -3,6 +3,17 @@ ________________________________________________________________________________
 // T = round for test
 // x = minimal number of pigs
 // N = number of buckets
+
+// use log to transfer base and get X directly
+class Solution {
+  public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+    int states = minutesToTest / minutesToDie + 1;
+    return (int) Math.ceil(Math.log(buckets) / Math.log(states));
+  }
+}
+
+_________________________________________________________________________________________My Solution____________________________________________________________________________
+// derived from best solution
 class Solution {
     public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
         int base = minutesToTest / minutesToDie + 1;
