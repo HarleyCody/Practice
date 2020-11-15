@@ -171,4 +171,7 @@ class Solution {
     }
 _________________________________________________________________________________Char is null_________________________________________________________________________________
   use c == 0 instead of c == null
+________________________________________________________________________________Arrays.asList vs new ArrayList() + add________________________________________________________
+ Arrays.asList retrurn Arrays$ArrayList, fixed size can not be added and removed.
+ new ArrayList() + add() will be faster and agilie to add and remove
   
