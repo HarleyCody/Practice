@@ -1,4 +1,46 @@
 __________________________________________________________________My Solution___________________________________________________________
+// find the rotated point previous O(n) the rest O(logN);
+// time complexity (O(m1) + O(logm2))
+class Solution {
+    public boolean search(int[] nums, int target) {
+        int len = nums.length;
+        if(len == 0){
+            return false;
+        }
+        
+        int bp = 0;
+        while(bp < len - 1 && nums[bp] <= nums[bp + 1]){
+            if(nums[bp] == target){
+                return true;
+            }
+            ++bp;
+        }
+        if(nums[bp] == target){
+            return true;
+        }
+        
+        return find(nums, target, bp + 1, len - 1);
+    }
+    
+    private boolean find(int[] nums, int target, int l, int r){
+        int m = 0;
+        while(l <= r){
+            m = (l + r) / 2;
+            if(nums[m] == target){
+                return true;
+            }
+            
+            if(nums[m] > target){
+                r = m - 1;
+            }else{
+                l = m + 1;
+            }
+        }
+        
+        return false;
+    }
+}
+__________________________________________________________________My Solution___________________________________________________________
 class Solution {  
     // find rotate point and binary search
     public boolean search(int[] nums, int target) {
