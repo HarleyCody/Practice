@@ -1,3 +1,35 @@
+_____________________________________________________________________________My Solution_____________________________________________________________________________
+// two pointers
+// right ends at 3, if the last one is valid, r should be at len + 1 instead of len;
+// when r reach the end, do not need to calcualte left anymore, just breal;
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int[] freq = new int[256];
+        char[] chs = s.toCharArray();
+        
+        int len = chs.length, ans = 0;
+        int l = 0, r = 0, num = 0;
+        while(r < len){
+            while(r < len && num < 3){
+                ans = Math.max(ans, r - l);
+                ++freq[chs[r]];
+                num += freq[chs[r]] == 1 ? 1 : 0;
+                ++r;
+            }
+            ans = num < 3 ? Math.max(ans, r - l) : ans;
+            // key to be faster
+            if(r == len){
+                break;
+            }
+            --freq[chs[l]];
+            num -= freq[chs[l]] == 0 ? 1 : 0;
+            ++l;
+        }
+        
+        return ans;
+    }
+}
+_____________________________________________________________________________My Solution_____________________________________________________________________________
 class Solution {
     //Sliding window to count freq and num of unique char
     //num reach to 3 update ans with r - l;
