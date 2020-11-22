@@ -1,3 +1,46 @@
+___________________________________________________________________________Best Solution_____________________________________________________________________________
+// Instead of using number == 2 to record, use two chars to assure the char number is <= 2;
+// if one of char match s.charAt(i) continue to find the third one
+// if s.charAt(i) is third one, the previous one of third one is first one, third one will be second one
+// go from right to left to find the pos of the first one(l is first one, r is the third one)
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int n = s.length();
+        
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+        
+        char[] sAsArr = s.toCharArray();
+        
+        int i = 0, j = 1;
+        char x = sAsArr[i];
+        char y = sAsArr[j];
+        int max = 0;
+        
+        while (x == y && j < n) {
+            y = sAsArr[j++];
+        }
+        
+        max = Math.max(max, j - i);
+
+        while (j < n) {
+            if (sAsArr[j] == x || sAsArr[j] == y) {
+                j++;
+            } else {
+                i = j - 1;
+                x = sAsArr[i];
+                while (i >= 0 && x == sAsArr[i - 1]) {
+                    i--;
+                }
+                y = sAsArr[j++];
+            }
+            max = Math.max(max, j - i);
+        }
+                
+        return max;
+    }
+}
 _____________________________________________________________________________My Solution_____________________________________________________________________________
 // two pointers
 // right ends at 3, if the last one is valid, r should be at len + 1 instead of len;
