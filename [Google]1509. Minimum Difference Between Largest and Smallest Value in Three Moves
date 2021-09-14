@@ -1,0 +1,58 @@
+// Get 4 min and 4 max in O(n);
+// dfs to find the min differen by make moves in 4 min and 4 max 2^3
+class Solution {
+    public int minDifference(int[] nums) {
+        if(nums.length < 5) return 0;
+        int[] max = new int[4];
+        int[] min = new int[4];
+        int[] freqMax = new int[4];
+        int[] freqMin = new int[4];
+        Arrays.fill(max, Integer.MIN_VALUE);
+        Arrays.fill(min, Integer.MAX_VALUE);
+        
+        for(int n : nums){
+            for(int i = 0; i < 4; ++i){
+                if(n <= max[i])continue;
+                if(n == max[i]) ++freqMax[i];
+                else move(max, freqMax, i, n);
+                break;
+            }
+            
+            for(int i = 0; i < 4; ++i){
+                if(n > min[i])continue;
+                if(n == min[i]) ++freqMin[i];
+                else move(min, freqMin, i, n);
+                break;
+            }
+        }
+        return getMinDiff(max, freqMax, min, freqMin, 0, 0, 3);
+    }
+    
+    private void move(int[] nums, int[] freq, int idx, int n){
+        for(int i = nums.length - 1; i > idx; --i){
+            nums[i] = nums[i - 1];
+            freq[i] = freq[i - 1];
+        }
+        nums[idx] = n;
+        freq[idx] = 1;
+    }
+    
+    private int getMinDiff(int[] max, int[] maxFreq, int[] min, int[] minFreq, int maxAt, int minAt, int moves){
+        if(max[maxAt] == min[minAt]) return 0;
+        
+        int ans = max[maxAt] - min[minAt];
+        if(moves == 0) return ans;
+        
+        int nMax = maxFreq[maxAt] == 1? maxAt + 1 : maxAt;
+        int nMin = minFreq[minAt] == 1? minAt + 1 : minAt;
+        --maxFreq[maxAt];
+        ans = Math.min(ans, getMinDiff(max, maxFreq, min, minFreq, nMax, minAt, moves - 1));
+        ++maxFreq[maxAt];
+        
+        --minFreq[minAt];
+        ans = Math.min(ans, getMinDiff(max, maxFreq, min, minFreq, maxAt, nMin, moves - 1));
+        ++minFreq[minAt];
+        
+        return ans;
+    }
+}
