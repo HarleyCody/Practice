@@ -1,3 +1,44 @@
+_______________________________________________________________________________Best Solution_______________________________________________________________________________
+// find min 4 and max 4
+// Difference: no need for dfs to find min diff, sliding window from min and max, window size is 3
+class Solution {
+    public int minDifference(int[] nums) {
+        if(nums.length < 5) return 0;
+        int[] max = new int[4];
+        int[] min = new int[4];
+        Arrays.fill(max, Integer.MIN_VALUE);
+        Arrays.fill(min, Integer.MAX_VALUE);
+        
+        for(int n : nums){
+            for(int i = 0; i < 4; ++i){
+                if(n >= max[i]){
+                    move(max, i, n);
+                    break;
+                }
+            }
+            
+            for(int i = 0; i < 4; ++i){
+                if(n <= min[i]){
+                    move(min, i, n);
+                    break;
+                }
+            }
+        }
+        int ans = max[0] - min[1];
+        for(int i = 0; i < 4; ++i){
+            ans = Math.min(ans, max[i] - min[3 - i]);
+        }
+        return ans;
+    }
+    
+    private void move(int[] nums, int idx, int n){
+        for(int i = nums.length - 1; i > idx; --i){
+            nums[i] = nums[i - 1];
+        }
+        nums[idx] = n;
+    }
+}
+________________________________________________________________________________My Solution________________________________________________________________________________
 // Get 4 min and 4 max in O(n);
 // dfs to find the min differen by make moves in 4 min and 4 max 2^3
 class Solution {
