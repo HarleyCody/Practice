@@ -1,4 +1,4 @@
-// Best Solution: Diff implement sort manually(quicksort)
+// Best Solution: Diff implement sort manually(quicksort), only need to compare time instead of calcualting distance
 class Solution {
    public int carFleet(int target, int[] position, int[] speed) {
         int n = position.length;
