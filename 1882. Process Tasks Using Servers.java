@@ -1,5 +1,6 @@
 //My Solution: Using used and idle pq to store the server with specific order, every time assign the server until there is no server available 
 //then increase the time
+//!! There could be multiple server running at the same time, so assign the server as much as possible at same time
 class Solution {
     class Server{
         int weight;
