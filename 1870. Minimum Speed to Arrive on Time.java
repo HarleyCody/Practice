@@ -1,11 +1,8 @@
 //Best Solution: Narrow down the time range before doing the binary search
 //Right bound = Max distance or Max distance / numbers after decimal
-
 class Solution {
-    
     int[] dist;
     int n;
-    
     public int minSpeedOnTime(int[] dist, double hour) {
         this.dist = dist;
         n = dist.length;
