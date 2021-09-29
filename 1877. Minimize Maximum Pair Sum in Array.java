@@ -1,4 +1,4 @@
-//Best Solution: Due to the range is fixed and range of number is relative small,
+//Best Solution: Due to the range is fixed and range of number is relative small
 //Use insertion sort instead of binary sort, insertion sort record the frequence of number like a freqMap but arr gives order
 class Solution {
     public int minPairSum(int[] nums) {
