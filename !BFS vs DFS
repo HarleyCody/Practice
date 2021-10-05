@@ -1,0 +1,4 @@
+BFS: Shortest path, path with weight(dijstra and A*), graph is bipartite
+DFS: Find all path, detecting cycles in a graph
+
+BFS is harder to deploy in distribute system because it requires shared data in different thread.
