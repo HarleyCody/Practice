@@ -174,4 +174,19 @@ ________________________________________________________________________________
 ________________________________________________________________________________Arrays.asList vs new ArrayList() + add________________________________________________________
  Arrays.asList retrurn Arrays$ArrayList, fixed size can not be added and removed.
  new ArrayList() + add() will be faster and agilie to add and remove
-  
+ 
+__________________________________________________________________Check if one string contains all character in the other String______________________________________________
+       private boolean pre_word(String a, String b){
+        if(a.length() + 1 != b.length())
+            return false;
+        int i = 0, j = 0;
+        while(i < a.length() && j < b.length()){
+            if(a.charAt(i)==b.charAt(j)){
+                i++;
+            }
+            j++;
+        }
+        if(i == a.length())
+            return true;
+        return false;
+    }
