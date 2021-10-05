@@ -1,3 +1,40 @@
+//Best Solution: sort by length to make it 1 dimensions and do not need to compare word by deleting, using two pointers.
+public class Solution {
+    public int longestStrChain(String[] words) {
+        int [] dp = new int[words.length];
+        int ans = 0;
+
+        Arrays.sort(words,new Comparator<String>() {
+            public int compare(String s1,String s2) {
+                return s1.length() - s2.length();
+            }
+        });
+
+        for(int i = 1; i < words.length; i++) {
+            for(int j = 0; j < i; j++)
+                if(pre_word(words[j],words[i])) {
+                    dp[i]=Math.max(dp[i],dp[j]+1);
+                    ans=Math.max(ans,dp[i]);
+                }
+        }
+        return ans + 1;
+    }
+    
+    private boolean pre_word(String a, String b){
+        if(a.length() + 1 != b.length())
+            return false;
+        int i = 0, j = 0;
+        while(i < a.length() && j < b.length()){
+            if(a.charAt(i)==b.charAt(j)){
+                i++;
+            }
+            j++;
+        }
+        if(i == a.length())
+            return true;
+        return false;
+    }
+}
 //My Solution: from long word to short word do not need to try a - z to compare, just delete one from long word
 //             dp to record the result
 public class Solution {
