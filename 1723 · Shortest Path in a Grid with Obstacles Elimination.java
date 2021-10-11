@@ -1,3 +1,46 @@
+//Best Solution improved by me: Doing check in for loop to reduce a level of recursion
+public class Solution {
+    /**
+     * @param grid: a list of list
+     * @param k: an integer
+     * @return: Return the minimum number of steps to walk
+     */
+    
+    int ans = Integer.MAX_VALUE;
+    int[] dirs = {0, 1, 0, -1, 0};
+    int R;
+    int C;
+    public int shortestPath(int[][] grid, int k) {
+        R = grid.length;
+        C = grid[0].length;
+        if(R * C == 1) return 0;
+
+        grid[0][0] = -1;
+        find(grid, 0, 0, k, 0);
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+
+    private void find(int[][] grid, int sx, int sy, int limit, int steps){
+        int nx = 0;
+        int ny = 0;
+        int temp;
+        for(int i = 0; i < 4; ++i){
+            nx = sx + dirs[i];
+            ny = sy + dirs[i + 1];
+            if(nx < 0 || nx == R || ny < 0 || ny == C || grid[nx][ny] == -1) continue;
+            if(nx == R - 1 && ny == C - 1){
+                ans = Math.min(ans, steps + 1);
+                return;
+            }
+            temp = grid[nx][ny];
+            if(limit - temp < 0 || ans == R + C - 2 || ans < steps) continue;
+
+            grid[nx][ny] = -1;
+            find(grid, nx, ny, limit - temp, steps + 1);
+            grid[nx][ny] = temp;
+        }
+    }
+}
 //Best Solution: DFS, finding stops when the path is Row + Col - 2 or limit is reached
 public class Solution {
     public int n, m, mmin;
