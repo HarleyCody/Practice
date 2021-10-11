@@ -29,10 +29,12 @@ class Solution {
 
         for (int t = 3; t <= target; ++t) {
             int k = 32 - Integer.numberOfLeadingZeros(t);
+            // sum of previous speed == current pos, sum of speed is a distance derives from keeping accelerating
             if (t == (1<<k) - 1) {
                 dp[t] = k;
                 continue;
             }
+            // k - 1 is the move that is before the t;
             for (int j = 0; j < k-1; ++j)
                 dp[t] = Math.min(dp[t], dp[t - (1<<(k-1)) + (1<<j)] + k-1 + j + 2);
             if ((1<<k) - 1 - t < t)
