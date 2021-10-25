@@ -1,10 +1,35 @@
-/**
- * // This is the Master's API interface.
- * // You should not implement it, or speculate about its implementation
- * interface Master {
- *     public int guess(String word) {}
- * }
- */
+//Best Solution: Binary Seach, do not need to sort, only guess the word in the middle
+//Clean the candidates by comparing match, minimize the candidate size by two pointers
+class Solution {
+    public void findSecretWord(String[] wordlist, Master master) {
+        int count = 0;
+        int length = wordlist.length;
+        while(count<10){
+            int idx = length/2;
+            String selected = wordlist[idx];
+            int matches = master.guess(selected);
+            for(int i = 0; i < length; i++){
+                if(helper(wordlist[i],selected)!=matches){
+                    length--;
+                    wordlist[i] = wordlist[length];
+                }
+            }
+            count++;
+        }
+    }
+    public int helper(String s, String t){
+        int res = 0;
+        for(int i = 0; i < 6; i++){
+            if(s.charAt(i)==t.charAt(i))
+                res++;
+        }
+        return res;
+    }
+}
+
+//Naive Solution: Guess Word by the calculating score of each word, find best guess by hightest score
+// Score == sum of frequence;
+// Clean word candidates after guess with match
 class Solution {// guess word with sum of character frequence of word character
     public void findSecretWord(String[] wordlist, Master master) {
         Set<String> words = new HashSet<String>();
