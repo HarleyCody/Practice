@@ -1,3 +1,13 @@
+//Recursion: Slower
+class Solution {
+    public String convertTo7(int num) {
+        if (num < 0)
+            return '-' + convertTo7(-num);
+        if (num < 7)
+            return num + "";
+        return convertTo7(num / 7) + num % 7;
+    }
+}
 //My Solution: Reminder in reverse order is answer, n = n / 7;
 // ans is in Reverse order!
 class Solution {
