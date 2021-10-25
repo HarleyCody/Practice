@@ -1,3 +1,20 @@
+//Best Solution: Find the left and right child and merget to root, use preorder traverse to match postorder number
+class Solution {
+    int preIndex = 0;
+    int postIndex = 0;
+    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        TreeNode curr = new TreeNode(preorder[preIndex++]);
+        if(curr.val != postorder[postIndex]){
+            curr.left = constructFromPrePost(preorder, postorder);
+        }
+        if(curr.val != postorder[postIndex]){
+            curr.right = constructFromPrePost(preorder, postorder);
+        }
+        
+        ++postIndex;
+        return curr;
+    }
+}
 //My Solution: Narrow down the range by second of preorder and last second of postorder
 // second of preorder must be left child, last second of post order could be right child
 // if they are same then only need to connect the left
