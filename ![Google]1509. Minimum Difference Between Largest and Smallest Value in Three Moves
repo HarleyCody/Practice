@@ -7,36 +7,36 @@ class Solution {
         if(nums.length < 5) return 0;
         int[] max = new int[4];
         int[] min = new int[4];
-        Arrays.fill(max, Integer.MIN_VALUE);
-        Arrays.fill(min, Integer.MAX_VALUE);
-        
+        max[0] = max[1] = max[2] = max[3] = Integer.MIN_VALUE;
+        min[0] = min[1] = min[2] = min[3] = Integer.MAX_VALUE;
         for(int n : nums){
-            for(int i = 0; i < 4; ++i){
-                if(n >= max[i]){
+            for(int i = 0; i < 4 && n >= max[3]; ++i){
+                if(max[i] <= n){
                     move(max, i, n);
                     break;
                 }
-            }
-            
-            for(int i = 0; i < 4; ++i){
-                if(n <= min[i]){
+            } 
+            for(int i = 0; i < 4 && n <= min[3]; ++i){
+                if(min[i] >= n){
                     move(min, i, n);
                     break;
                 }
             }
         }
-        int ans = max[0] - min[1];
+
+        int ans = max[0] - min[0];
         for(int i = 0; i < 4; ++i){
             ans = Math.min(ans, max[i] - min[3 - i]);
         }
+        
         return ans;
     }
     
-    private void move(int[] nums, int idx, int n){
-        for(int i = nums.length - 1; i > idx; --i){
-            nums[i] = nums[i - 1];
+    private void move(int[] arr, int idx, int n){
+        for(int i = 3; i > idx; --i){
+            arr[i] = arr[i - 1];
         }
-        nums[idx] = n;
+        arr[idx] = n;
     }
 }
 ________________________________________________________________________________My Solution________________________________________________________________________________
