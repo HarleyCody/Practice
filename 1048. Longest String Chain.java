@@ -1,78 +1,128 @@
+//Best Solution: Try to link the chain by the word in specific length;
+//Try to match by DFS and Memoization
+//wordIndice[len][0] records the size of words with length
+//wordIndice[len][i] records the index of word in words Array so it can get the words directly and retrive index to do the momization more efficiently
+//mem[len][i] record the result for word at words[wordIndice[len][i]]
+class Solution {
+    static final int LONGEST_WORD_LEN = 16;
+    
+    public int longestStrChain(String[] words) {
+        int maxFrequency = 0;
+        int maxWordLen = 0;
+        int[] lenCounts = new int[LONGEST_WORD_LEN + 1];
+        for (String word : words) {
+            maxFrequency = Math.max(maxFrequency, ++lenCounts[word.length()]);
+            maxWordLen = Math.max(maxWordLen, word.length());
+        }
+            
+        int[][] wordIndice = new int[maxWordLen + 1][maxFrequency + 1];
+
+        for (int i = 0; i < words.length; i++) {
+            int len = words[i].length();
+            wordIndice[len][++wordIndice[len][0]] = i;
+        }
+        
+        int[][] memo = new int[maxWordLen + 1][maxFrequency + 1];
+
+        int ans = 1;
+        for (int len = maxWordLen; len > ans; len--){
+            for (int wordIdx = wordIndice[len][0]; wordIdx >= 1 && len > ans; --wordIdx){
+                ans = Math.max(ans, findPath(len, wordIdx, wordIndice, memo, words));
+            }
+        }
+            
+        return ans;
+    }
+
+    private int findPath(int len, int wordIdx, int[][] wcs, int[][] memo, String[] words) {
+        if(len == 1) return 1;
+        if(memo[len][wordIdx] > 0) return memo[len][wordIdx];
+        String curWord = words[wcs[len][wordIdx]];
+        
+        int ans = 0;
+        for (int preIdx = wcs[len - 1][0]; preIdx >= 1 && ans + 1 < len; preIdx--) {
+            if (isMatch(curWord, words[wcs[len - 1][preIdx]])){
+                ans = Math.max(ans, findPath(len - 1, preIdx, wcs, memo, words));
+            }
+        }
+            
+        memo[len][wordIdx] = ans + 1;
+        return ans + 1;
+    }
+
+    private boolean isMatch(String preWord, String curWord) {
+        boolean misMatch = false;
+        int preIdx = 0;
+        int curIdx = 0;
+        while(curIdx < curWord.length()){
+            if(curWord.charAt(curIdx++) != preWord.charAt(preIdx++)){
+                if(misMatch) return false;
+                misMatch = true;
+                --curIdx;
+            }
+        }
+        
+        return true;
+    }
+}
 ______________________________________________________________Best Solution_______________________________________________________________
 /* categorize word with length
 check word in adjascent list recurlsively to get max length*/
 class Solution {
-    // previous word is same with later word with omitting one letter
-    private boolean match(String pred, String word) {
-        if (word.length() - pred.length() != 1) {
-            return false;
-        }
-        int i = 0;
-        int j = 0;
-        boolean inserted = false;
-        while (j < pred.length()) {
-            if (word.charAt(i) != pred.charAt(j)) {
-                if (inserted) {
-                    // has omitted once
-                    return false;
-                }
-                // omit once;
-                inserted = true;
-                i++;
-            } else {
-                // check next letter of each letter in pred and word.
-                i++;
-                j++;
+    int[] mem;
+    List<String>[] collector = new ArrayList[16];
+    HashMap<String, Integer> indice = new HashMap();
+    public int longestStrChain(String[] words) {
+        int len = words.length;
+        mem = new int[len];
+        for(String word : words){
+            len = word.length();
+            if(collector[len - 1] == null){
+                collector[len - 1] = new ArrayList();
             }
+            collector[len - 1].add(word);
         }
-        return true;
-    }
-    // start from word s to find possbile longest chain
-    private int test(String s, int idx, List<List<String>> strings) {
-        // in case of next our of boundary
-        if (idx == 15) {
-            return 1;
-        }
-        // list with longer length
-        List<String> nexts = strings.get(idx + 1);
-        // begin from length 1. Basic scenario.
+        
+        len = words.length;
         int ans = 1;
-        for (String next: nexts) {
-            // comparing current string with strings in list with longer length;
-            if (match(s, next)) {
-                // s can be next with adding one letter.
-                // recursively get max length, accumulate from bottom to top, if no match add 1 from 1
-                ans = Math.max(ans, test(next, idx + 1, strings) + 1);
-            }
+        for(int i = 0; i < words.length; ++i){
+            if(ans >= words[i].length()) continue;
+            ans = Math.max(ans, find(words, i));
         }
-        // if there is no match, return 1;
+        
         return ans;
     }
     
-    public int longestStrChain(String[] words) {
-        // collect words with same length;
-        List<List<String>> strings = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
-            strings.add(new ArrayList<>());
+    private int find(String[] words, int idx){
+        int len = words[idx].length();
+        if(len == 1 || collector[len - 2] == null) return 1;
+        if(mem[idx] > 0) return mem[idx];
+        
+        String preWord = words[idx];
+        int ans = 0;
+        for(int i = 0; i < words.length; ++i){
+            if(words[i].length() != len - 1 || ans >= words[i].length()) continue;
+            if(match(words[i], preWord)){
+                ans = Math.max(ans, find(words, i));
+            }
         }
-        for (String word: words) {
-            strings.get(word.length() - 1).add(word);
+        mem[idx] = ans + 1;
+        return ans + 1;
+    }
+    
+    private boolean match(String curWord, String preWord){
+        boolean misMatch = false;
+        int pIdx = 0;
+        int cIdx = 0;
+        while(cIdx < curWord.length()){
+            if(curWord.charAt(cIdx++) != preWord.charAt(pIdx++)){
+                if(misMatch) return false;
+                misMatch = true;
+                --cIdx;
+            }
         }
         
-        int ans = 0;
-        for (int i = 0; i < 16; i++) {
-            
-            // imppsoible to get larger length with starting from next word list. 15 - i rest length 
-            if (ans > 15 - i) {
-                break;
-            }
-            List<String> curs = strings.get(i);
-            for (String cur: curs) {
-                // find chain fro word cur
-                ans = Math.max(ans, test(cur, i, strings));
-            }
-        }
-        return ans;
+        return true;
     }
 }
 ______________________________________________________________My Solution_________________________________________________________________
