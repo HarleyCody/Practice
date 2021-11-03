@@ -9,7 +9,7 @@ class Solution {
     String ans = "";
     public String longestWord(String[] words) {
         for(String word : words){
-            add(word);
+            add(root, word);
         }
         
         for(TrieNode node : root.kids){
@@ -19,16 +19,17 @@ class Solution {
         return ans;
     }
     
-    private void add(String word){
-        TrieNode node = root;
-        char[] chs = word.toCharArray();
-        for(char c : chs){
-            if(node.kids[c - 'a'] == null){
-                node.kids[c - 'a'] = new TrieNode();
+    private void add(TrieNode root, String word) {
+        for(int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if(root.kids[ch - 'a'] == null) {
+                root.kids[ch - 'a'] = new TrieNode();
             }
-            node = node.kids[c - 'a'];
+            
+            root = root.kids[ch - 'a'];
         }
-        node.word = word;
+        
+        root.word = word;
     }
     
     private void find(TrieNode node){
