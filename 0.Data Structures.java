@@ -1,4 +1,33 @@
-______________________________________________________________________________Binary Index Tree______________________________________________________________________________
+_____________________________________________________________________________Trie_______________________________________________________________________________
+//In add use charAt is faster than toCharArray
+private void add(TrieNode root, String word) {
+        for(int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if(root.kids[ch - 'a'] == null) {
+                root.kids[ch - 'a'] = new TrieNode();
+            }
+            
+            root = root.kids[ch - 'a'];
+        }
+        
+        root.word = word;
+    }
+    
+    private String find(TrieNode node){
+        String rlt = node == root ? "" : node.word;
+        
+        String nRlt;
+        for(TrieNode n : node.kids){
+            if(n == null || n.word == null) continue;
+            nRlt = find(n);
+            if(rlt.length() < nRlt.length()){
+                rlt = nRlt;
+            }
+        }
+        
+        return rlt;
+    }
+______________________________________________________________________________Binary Index Tree________________________________________________________________
 class BinaryIndexTree{
     int[] tree;
 
