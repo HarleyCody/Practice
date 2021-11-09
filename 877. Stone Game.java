@@ -1,3 +1,11 @@
+//Best Solution: If I am the first player, before I make the choice, I can calculate the sum of all elements the index of which is even as well as the sum of all elements the index of which is odd, if sum(odd) > sum(even), everytime I just pick up odd elements, vice versa.
+//By this strategy must win. This strategy works because the length of piles array is even.
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        return true;
+    }
+}
+
 //My Solution: Memic while process, count and compare
 class Solution {
     public boolean stoneGame(int[] piles) {
