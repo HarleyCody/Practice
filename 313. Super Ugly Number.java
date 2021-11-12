@@ -20,6 +20,7 @@ class Solution {
 
         for (int i = 0; i < n; i++) {
             uglyNumbers[i] = prev;
+            //Using timePrimes.length instead of len will be faster as do not need len as reference to get tempPrimes.length
             for (int j = 0; j < tempPrimes.length; ++j) {
                 if (tempPrimes[j] == prev) {
                     tempPrimes[j] = primes[j] * uglyNumbers[indexes[j]];
