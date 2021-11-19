@@ -14,3 +14,29 @@ class Solution {
         return ans;
     }
 }
+//Dp Solution: Break previous or not break current, get min
+class Solution {
+    int[][] dp;
+    public int twoEggDrop(int n) {
+        dp = new int[n+1][3];
+        return helper(n , 2);
+    }
+    public int helper(int f , int e){
+        if(f == 0 || f == 1)
+            return f;
+        
+        if(e == 1)
+            return f;
+        if(dp[f][e] != 0)
+            return dp[f][e];
+        
+        int ans = Integer.MAX_VALUE;
+        
+        for(int k = 1; k<f ;k++){
+            int tmp = 1 + Math.max(helper( k - 1 , e - 1) , helper(f - k , e) );
+            
+            ans = Math.min( ans , tmp );
+        }
+        return dp[f][e] = ans;
+    }
+}
