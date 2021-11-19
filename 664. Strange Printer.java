@@ -14,7 +14,7 @@ class Solution {
         cur[chs[0] - 'a'] = 0;
         int size = 1;
         
-        //set index from current index to next same char for sake of finding middle faster
+        //!!set index from current index to next same char for sake of finding middle faster, reverse order, from larget to small so dp has to start from len - 1 to 0
         for (int i = 1; i < len; ++i) {
             if (chs[i - 1] == chs[i]) 
                 continue;
