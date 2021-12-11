@@ -1,3 +1,25 @@
+// Best Solution: use constant space to sum up the number of box for specific type.
+class Solution {
+    public int maximumUnits(int[][] boxTypes, int truckSize) {
+        int[] recorder = new int[1001];
+        for(int[] boxType : boxTypes){
+            recorder[boxType[1]] += boxType[0];
+        }
+        
+        int ans = 0;
+        int idx = 1000;
+        int use = 0;
+        while(0 <= idx && truckSize > 0){
+            if(recorder[idx] > 0){
+                use = Math.min(truckSize, recorder[idx]);
+                ans += use * idx;
+                truckSize -= use;
+            }
+            --idx;
+        }
+        return ans;
+    }
+}
 //My Solution: Greedy, get box that has more units first
 class Solution {
     public int maximumUnits(int[][] boxTypes, int truckSize) {
