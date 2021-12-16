@@ -1,4 +1,33 @@
-//Best Solution: Use linkedlist and add two number at a time
+//Best Solution: use linkedlist and backtrack
+//Improve from tacktrack below by using linkedlist instead of ArrayList
+class Solution {
+    List<List<Integer>> ans = new ArrayList();
+    public List<List<Integer>> getFactors(int n) {
+        getFactors(n, 2, new LinkedList<Integer>());
+        return ans;
+    }
+    
+    private void getFactors(int n, int start, LinkedList<Integer> cur){
+        if(n == 1){
+            if(cur.size() < 2) return;
+            ans.add(new ArrayList(cur));
+            return;
+        }
+        int end = (int)Math.sqrt(n);
+        for(int i = start; i <= end; ++i){
+            if(n % i == 0){
+                cur.offer(i);
+                getFactors(n / i, i, cur);
+                cur.removeLast();
+            }
+        }
+        
+        cur.offer(n);
+        getFactors(1, n, cur);
+        cur.removeLast();
+    }
+} 
+//General Solution: Use linkedlist and add two number at a time
 class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> ans = new LinkedList<>();
