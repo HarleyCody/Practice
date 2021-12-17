@@ -6,6 +6,7 @@ class Solution {
         for (int i = 1; i <= n; i++) {
             dp[i] = dp[i - 1] + 1;
             for (int j = 3; j < i; j++) {
+                // -2: j < i so i is paste, j is copy, j - 1 is select, j - 2 is source
                 dp[i] = Math.max(dp[i], dp[j - 2] * (i - j + 1));
             }
         }
