@@ -1,4 +1,111 @@
-//Best Solution: DFS find boundary and calculate the area by (right - left + 1) * (bot - top + 1);
+//Best Solution: Use binary serach to determine the boundary(As there is only one black region), TC Math.max(log(height), log(width))
+class Solution {
+    
+    boolean hasBlackPixelRow(char[][] image, int j) {
+        int n = image.length;
+        for (int i = 0; i < n; i++) {
+            if (image[i][j] == '1') {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    boolean hasBlackPixelColumn(char[][] image, int i) {
+        int m = image[0].length;
+        for (int j = 0; j < m; j++) {
+            if (image[i][j] == '1') {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public int minArea(char[][] image, int x, int y) {
+        int n = image.length;
+        int m = image[0].length;
+        
+        
+        int left_column;
+        int right_column;
+        
+        int up_row;
+        int down_row;
+        
+        //lower column
+        int lo = 0;
+        int hi = y;
+        
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            
+            if (hasBlackPixelRow(image, mid)) {
+                hi = mid;
+            }
+            else {
+                lo = mid + 1;
+            }
+        }
+        
+        left_column = lo;
+        
+        //higher column
+        lo = y;
+        hi = m - 1;
+        
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            if (lo == mid) mid++;
+            
+            if (hasBlackPixelRow(image, mid)) {
+                lo = mid;
+            }
+            else {
+                hi = mid - 1;
+            }
+        }
+        
+        right_column = lo;
+        
+        //lower row
+        lo = 0;
+        hi = x;
+        
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            
+            if (hasBlackPixelColumn(image, mid)) {
+                hi = mid;
+            }
+            else {
+                lo = mid + 1;
+            }
+        }
+        
+        up_row = lo;
+        
+        //higher column
+        lo = x;
+        hi = n - 1;
+        
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            if (lo == mid) mid++;
+            
+            if (hasBlackPixelColumn(image, mid)) {
+                lo = mid;
+            }
+            else {
+                hi = mid - 1;
+            }
+        }
+        
+        down_row = lo;
+           
+        return (right_column - left_column + 1) * (down_row - up_row + 1);
+    }
+}
+//My better Solution: DFS find boundary and calculate the area by (right - left + 1) * (bot - top + 1);
 class Solution {
     int left;
     int right;
