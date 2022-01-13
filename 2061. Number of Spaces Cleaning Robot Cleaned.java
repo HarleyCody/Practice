@@ -1,4 +1,5 @@
 //Best Solution: use room for visited array, 0, 1 for object 2, 3, 4, 5 for directions
+//Best Solution: use room for visited array, 0, 1 for object 2, 3, 4, 5 for directions
 class Solution {
     int[][] g;
     int[][] d = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
@@ -21,9 +22,9 @@ class Solution {
 
         if (g[x][y] == 0) {
             g[x][y] = curDir + 2;
-            return 1 + helper(x + d[curDir % 4][0], y + d[curDir % 4][1],curDir);
+            return 1 + helper(x + d[curDir][0], y + d[curDir][1],curDir);
         }
-        return helper(x + d[curDir % 4][0], y + d[curDir % 4][1], curDir);
+        return helper(x + d[curDir][0], y + d[curDir][1], curDir);
     }
 
 
