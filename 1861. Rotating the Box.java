@@ -1,3 +1,42 @@
+//Best Solution: filled row by row use the same coordinate transfer, collect stone and the other point use to paint. meet at obstacle
+class Solution {
+    public char[][] rotateTheBox(char[][] box) {
+        int N = box.length;
+        int M = box[0].length;
+        char[][] boxT = new char[M][N];
+        
+        for(int i=N-1; i>=0; i--) {
+            fillBox(box[i], boxT, N, M, i);
+        }
+        return boxT;
+    }
+    
+    private void fillBox(char[] row, char[][] box, int N, int M, int idx) {
+        int i = M - 1;
+        int j = M - 1;
+        int stones = 0;
+        while(i>=0) {
+            stones = 0;
+            while(i >= 0 && row[i] != '*') {
+                if(row[i] == '#') stones++;
+                i--;
+            }
+            while(j > i) {
+                if(stones > 0) {
+                    box[j][N - idx - 1] = '#';
+                    stones--;
+                }
+                else box[j][N - idx - 1] = '.';
+                j--;
+            }
+            if(i>=0) {
+                box[j][N-idx-1] = '*';
+                j--;
+                i--;
+            }
+        }
+    }
+}
 //My Solution: record number of rocks in the same row and transfer it into col * row
 //Coordiante transfer, ogR = row - 1 - nCol, ogCol = newRow;
 //update number of rocks while tranfering from bot to up and left to right; stop update while(number of rock == 0);
