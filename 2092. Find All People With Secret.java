@@ -1,3 +1,48 @@
+//Best Solution: BFS only find the person who knows the secret earlier and try to find new person and update his knowTime
+class Solution {
+    public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
+        int[] time = new int[n];
+        Arrays.fill(time,-1);
+        Queue<int[]> q = new LinkedList<>();
+        time[0] = 0;
+        time[firstPerson] = 0;
+        List<int[]>[] g = new List[n];
+        for(int i=0;i<n;i++)
+        {
+            g[i]=new ArrayList<>();
+        }
+        for(int[] m : meetings)
+        {
+            g[m[0]].add(new int[]{m[1],m[2]});
+            g[m[1]].add(new int[]{m[0],m[2]});
+        }
+        q.add(new int[]{0,0});
+        q.add(new int[]{firstPerson,0});
+        time[0] = 0;
+        time[firstPerson] = 0;
+        while(!pq.isEmpty())
+        {
+            int[] cur = q.remove();
+            if(time[cur[0]]!=cur[1]) continue;
+           
+            for(int[] nei : g[cur[0]])
+            {
+                if(nei[1]>= cur[1] && (time[nei[0]]== -1 || time[nei[0]] > nei[1]))
+                {
+                    time[nei[0]] = nei[1];
+                    pq.add(nei);
+                }
+            }
+        }
+        
+        List<Integer> ans = new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            if(time[i]!=-1) ans.add(i);
+        }
+        return ans;
+    }
+}
 //My Solution: union untill there is no earlier time for any of person to know the secret
 class Solution {
     int[] parent;
