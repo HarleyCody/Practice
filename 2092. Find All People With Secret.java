@@ -20,7 +20,7 @@ class Solution {
         q.add(new int[]{firstPerson,0});
         time[0] = 0;
         time[firstPerson] = 0;
-        while(!pq.isEmpty())
+        while(!q.isEmpty())
         {
             int[] cur = q.remove();
             if(time[cur[0]]!=cur[1]) continue;
