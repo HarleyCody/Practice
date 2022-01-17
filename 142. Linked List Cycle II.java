@@ -4,21 +4,20 @@ public class Solution{
 		ListNode slowNode = head;
 		ListNode fastNode = head;
 		while(fastNode != null && fastNode.next != null){
-		fastNode = fastNode.next.next;
-		slowNode = slowNode.next;
-		if(slowNode == fastNode){
-			break;
+			fastNode = fastNode.next.next;
+			slowNode = slowNode.next;
+			if(slowNode == fastNode){
+				break;
+			}
 		}
-	}
-	if(fastNode == null || fastNode.next == null){
-		return null;
-	}
-	slowNode = head;
-	while(slowNode != fastNode){
-		slowNode = slowNode.next;
-		fastNode = fastNode.next;
-	}
-
-	return fastNode;
+		if(fastNode == null || fastNode.next == null){
+			return null;
+		}
+		slowNode = head;
+		while(slowNode != fastNode){
+			slowNode = slowNode.next;
+			fastNode = fastNode.next;
+		}
+		return fastNode;
 	}
 }
