@@ -1,10 +1,5 @@
 /*
-3 3 1 
-3 * 2 * 1 = 6
-2 3 0
-com 2 2 2 = 8;
-duplicate 0 2 
-n == goal  ans = n * (n - 1) *(n - 2) … 1;
+Best Solution:
 Dynamic Programming: dp[i][j] : number of play list when list length is i and has j unique songs
 dp[i][j] = dp[i - 1][j - 1] * (N - j + 1);
 dp[i][j] += dp[i - 1][j] * Math.max(j - K, 0);
