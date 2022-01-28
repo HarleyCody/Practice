@@ -1,0 +1,46 @@
+//My Solution: Union found to detect cycle;
+class Solution{
+	int[] parent;
+	public boolean containsCycle(char[][] grid){
+        int row = grid.length;
+        int col = grid[0].length;
+        parent = new int[row * col];
+        for(int r = 0; r < row; ++r){
+            for(int c = 0; c < col; ++c){
+                int idx = r * col + c;
+                parent[idx] = idx;
+            }
+        }
+
+        for(int r = 0; r < row; ++r){
+            for(int c = 0; c < col; ++c){
+                int curIdx = r * col + c;
+                if(r > 0 && c > 0){
+                    if(find(curIdx - col) == find(curIdx - 1) &&
+                       grid[r][c] == grid[r - 1][c]){
+                        return true;
+                    }
+                }
+                if(r > 0 && grid[r][c] == grid[r - 1][c]){
+                    union(curIdx, curIdx - col);
+                }
+                if(c > 0 && grid[r][c] == grid[r][c - 1]){
+                    union(curIdx, curIdx - 1);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private int find(int x){
+        if(x == parent[x]) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+    private void union(int x, int y){
+        int px = find(x);
+        int py = find(y);
+        parent[py] = px;
+    }
+}
