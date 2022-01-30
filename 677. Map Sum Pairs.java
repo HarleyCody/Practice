@@ -1,3 +1,44 @@
+//Best Solution: Use dfs to get the sum of prefix word. Calcualte the every child node that go through the current node
+class MapSum {
+    private class TrieNode{
+        TrieNode[] children = new TrieNode[26];
+        int weight=0;
+    }
+    TrieNode root = null;
+    public MapSum() {
+        root=new TrieNode();
+    }
+    
+    public void insert(String key, int val) {
+        TrieNode curr = root;
+        for(char c : key.toCharArray()){
+            if(curr.children[c-'a']==null){
+                curr.children[c-'a'] = new TrieNode();
+            }
+            curr=curr.children[c-'a'];
+        }
+        curr.weight=val;
+    }
+    
+    public int sum(String prefix) {
+        TrieNode curr = root;
+        for(char c : prefix.toCharArray()){
+            if(curr.children[c-'a']==null)return 0;
+            curr=curr.children[c-'a'];
+        }
+        return dfs(curr);
+        
+    }
+    private int dfs(TrieNode curr){
+        int sum=0;
+        for(int i =0 ;i<26;i++){
+            if(curr.children[i] != null){
+                sum += dfs(curr.children[i]);
+            }
+        }
+        return sum+curr.weight;
+    }
+}
 //My Solution: Record oldVal by map and use trie to store the prefix sum
 class MapSum{
 	class TrieNode{
