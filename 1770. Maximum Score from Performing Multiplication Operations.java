@@ -1,3 +1,28 @@
+//My Solution: 1D dp: current status only changed by previous status so donot need 0 ~ i - 2 status. DP. dp[j] means pick j from left at length i
+// dp[j] = max([j] + current use right, [j] + current use left) from right to left as j can be changed by j - 1
+class Solution{
+	public int maximumScore(int[] nums, int[] multipliers){
+		int len = multipliers.length;
+        int[] dp = new int[len + 1];
+        int ans = Integer.MIN_VALUE;
+        for(int i = 1; i <= len; ++i){
+            int multiplier = multipliers[i - 1];
+            
+            dp[i] = dp[i - 1] + multiplier * nums[i - 1];
+            for(int j = i - 1; 0 < j; --j){
+                dp[j] = Math.max(dp[j] + multiplier * nums[nums.length - i + j], dp[j - 1] + multiplier * nums[j - 1]);
+            }
+            
+            dp[0] = dp[0] + multiplier * nums[nums.length - i];
+        }
+        for(int i = 0; i <= len; ++i){
+            ans = Math.max(ans, dp[i]);
+        }
+
+        return ans;
+    }
+}
+
 //My Solution: DP. dp[i][j] means pick j from left at length i
 // dp[i][j] = max(dp[i - 1][j] + current use right, dp[i - 1][j] + current use left)
 class Solution{
