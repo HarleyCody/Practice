@@ -1,3 +1,32 @@
+//Best Solution: record kth and last kth with O(n). after the kth is found, main tain the window size of left and right to continue to get the lastKth.
+class Solution { // READ THE PROBLEM NUNCE
+    public ListNode swapNodes(ListNode head, int k) {
+        // Setup dummy nodes
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+
+        ListNode fast = head;
+        ListNode slow = head;
+        int i = 0;
+        while ( i < k ) { // create the offsets
+            dummy = dummy.next;
+            fast = fast.next;
+            i++;
+        }
+        
+        while (fast != null) { // iterate until end of list
+            slow = slow.next;
+            fast = fast.next;
+        }
+        // swap values accordingly
+        int tmpVal = dummy.val;
+        dummy.val = slow.val;
+        slow.val = tmpVal;
+        
+        return head;
+    }
+}
+
 //My Solution: Record the pos of kth and lastKth. and swap the value
 class Solution{
 	public ListNode swapNodes(ListNode head, int k){
